@@ -16,29 +16,29 @@ public class UsuarioServicioImpl implements UsuarioServicio{
 	
 	@Override
 	public ArrayList<Usuario> obtenerUsuarios() {
-		return dataAccess.obtenerUsuarios();
+		return dataAccess.obtenerAll();
 	}
 
 	@Override
 	public Usuario obtenerUnRegistro(Integer idUsuario) {
-		return dataAccess.obtenerUsuarioPorId(idUsuario);
+		return dataAccess.obtenerById(idUsuario);
 	}
 
 	@Override
 	public void insertarUsuario(Usuario usuario) {
-		 dataAccess.insertarUsuario(usuario);
+		 dataAccess.insertar(usuario);
 		
 	}
 
 	@Override
 	public void eliminarUsuario(Integer idUser) {
-		dataAccess.eliminarUsuario(idUser);
+		dataAccess.eliminar(idUser);
 		
 	}
 
 	@Override
 	public void actualizarUsuario(Usuario usuario) {
-		dataAccess.actualizarUsuario(usuario);
+		dataAccess.actualizar(usuario);
 		
 	}
 

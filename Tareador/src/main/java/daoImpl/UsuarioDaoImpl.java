@@ -20,36 +20,36 @@ public class UsuarioDaoImpl implements UsuarioDao {
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED)
-	public void insertarUsuario(Usuario usuario) {
+	public void insertar(Usuario usuario) {
 		this.hibernateTemplate.save(usuario);
 		
 	}
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
-	public Usuario obtenerUsuarioPorId(Integer idUsuario) {
+	public Usuario obtenerById(Integer idUsuario) {
 		return this.hibernateTemplate.get(Usuario.class, idUsuario);
 	}
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
-	public ArrayList<Usuario> obtenerUsuarios() {
+	public ArrayList<Usuario> obtenerAll() {
 		return (ArrayList<Usuario>) this.hibernateTemplate.loadAll(Usuario.class);
 	}
 
 	
 	@Override
 	@Transactional(propagation=Propagation.REQUIRES_NEW)
-	public void eliminarUsuario(Integer idUsuario) {
-		Usuario user = new Usuario();
-		user.setIdUsuario(idUsuario);
-		this.hibernateTemplate.delete(user);
+	public void eliminar(Integer idUsuario) {
+		Usuario item = new Usuario();
+		item.setIdUsuario(idUsuario);
+		this.hibernateTemplate.delete(item);
 	}
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED)
-	public void actualizarUsuario(Usuario persona) {
-		this.hibernateTemplate.update(persona);
+	public void actualizar(Usuario usuario) {
+		this.hibernateTemplate.update(usuario);
 	}
 
 

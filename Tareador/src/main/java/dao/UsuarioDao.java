@@ -7,20 +7,20 @@ import dominio.Usuario;
 
 public interface UsuarioDao {
 
-	//Alta de persona
-	public void insertarUsuario(Usuario usuario);
+	//Alta de usuario
+	public void insertar(Usuario usuario);
 
-	//Obtiene una persona por dni
-	public Usuario obtenerUsuarioPorId(Integer idUsuario);
+	//Obtiene un usuario por id
+	public Usuario obtenerById(Integer idUsuario);
 
-	//Obtiene todas las presonas
-	public ArrayList<Usuario> obtenerUsuarios();
+	//Obtiene todos los usuarios
+	public ArrayList<Usuario> obtenerAll();
 
-	//Elimina una presona a aprtir del dni
-	public void eliminarUsuario(Integer idUsuario);
+	//Elimina un usuario a aprtir del id
+	public void eliminar(Integer idUsuario);
 
-	//Actualiza los datos de una persona
-	public void actualizarUsuario(Usuario usuario);
+	//Actualiza los datos de un usuario
+	public void actualizar(Usuario usuario);
 	
 
 }
