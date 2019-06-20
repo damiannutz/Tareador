@@ -6,14 +6,14 @@ import dominio.Usuario;
 
 public interface UsuarioServicio {
 
-	ArrayList<Usuario> obtenerUsuarios();
+	ArrayList<Usuario> obtenerAll();
 
-	Usuario obtenerUnRegistro(Integer idUsuario);
+	Usuario obtenerById(Integer idUsuario);
 
-	void insertarUsuario(Usuario usuario);
+	void insertar(Usuario usuario);
 
-    void eliminarUsuario(Integer idUser) ;
+    void eliminar(Integer idUser) ;
 
-	void actualizarUsuario(Usuario usuario);
+	void actualizar(Usuario usuario);
 	
 }

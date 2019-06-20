@@ -42,7 +42,7 @@ public class UserController {
 	@RequestMapping("IrLogin.html")
 	public ModelAndView redireccion(){
 		ModelAndView MV = new ModelAndView();
-		MV.addObject("listaUsuarios",this.service.obtenerUsuarios());
+		MV.addObject("listaUsuarios",this.service.obtenerAll());
 		MV.setViewName("Index"); 
 		return MV;
 	}
@@ -60,7 +60,7 @@ public class UserController {
 		
 		try{
 			
-			service.insertarUsuario(x);
+			service.insertar(x);
 			Message = "Usuario agregado";
 		}
 		catch(Exception e)
@@ -74,7 +74,7 @@ public class UserController {
 	
 		MV.setViewName("Usuarios");
 		MV.addObject("Mensaje", Message);
-		MV.addObject("listaUsuarios",this.service.obtenerUsuarios());
+		MV.addObject("listaUsuarios",this.service.obtenerAll());
 		MV.setViewName("Usuarios"); 
 		return MV;
 		
@@ -84,8 +84,8 @@ public class UserController {
 	@RequestMapping(value ="/eliminarUsuario.html" , method= { RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView eliminarUsuario(Integer id, String nombreU, String passU){
 		ModelAndView MV = new ModelAndView();
-		service.eliminarUsuario(id);
-		MV.addObject("listaUsuarios",this.service.obtenerUsuarios());
+		service.eliminar(id);
+		MV.addObject("listaUsuarios",this.service.obtenerAll());
 		MV.setViewName("Usuarios"); 
 		MV.addObject("Mensaje", "Usuario eliminado");
 		return MV;
@@ -93,12 +93,12 @@ public class UserController {
 	
 	@RequestMapping(value = { "/delete-user-{ssoId}" }, method = RequestMethod.GET)
     public ModelAndView deleteUser(@PathVariable Integer ssoId) {
-		service.eliminarUsuario(ssoId);
+		service.eliminar(ssoId);
 		ModelAndView MV = new ModelAndView();
 		MV.setViewName("Usuarios");
 		
 		//Actualiza los usuarios
-		MV.addObject("listaUsuarios",this.service.obtenerUsuarios());
+		MV.addObject("listaUsuarios",this.service.obtenerAll());
 		MV.setViewName("Usuarios"); 
 		return MV;
     }
@@ -109,7 +109,7 @@ public class UserController {
 	@RequestMapping(value ="/recargaGrillaUsuarios.html" , method= { RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView recargarUsuario(){
 		ModelAndView MV = new ModelAndView();
-		MV.addObject("listaUsuarios",this.service.obtenerUsuarios());
+		MV.addObject("listaUsuarios",this.service.obtenerAll());
 		MV.setViewName("Usuarios"); 
 		return MV;
 		

@@ -22,13 +22,52 @@
 	
 	
 
-	<!-- CREO EL SERVICIO PARA USUARIO -->
+	<!-- CREO LOS SERVICIOS -->
+	
+	<bean id="serviceComentarioTareaBean" class="servicioImpl.ComentarioTareaServicioImpl">
+		<property name="dataAccess" ref="dataAccessComentarioTareaBean"></property>
+	</bean>
+		
+	<bean id="serviceDepartamentoBean" class="servicioImpl.DepartamentoServicioImpl">
+		<property name="dataAccess" ref="dataAccessDepartamentoBean"></property>
+	</bean>
+	
+	
+	<bean id="serviceEstadoTareaBean" class="servicioImpl.EstadoTareaServicioImpl">
+		<property name="dataAccess" ref="dataAccessEstadoTareaBean"></property>
+	</bean>
+	
+	<bean id="servicePrioridadBean" class="servicioImpl.PrioridadServicioImpl">
+		<property name="dataAccess" ref="dataAccessPrioridadBean"></property>
+	</bean>
+	
+	
+	<bean id="serviceProyectoBean" class="servicioImpl.ProyectoServicioImpl">
+		<property name="dataAccess" ref="dataAccessProyectoBean"></property>
+	</bean>
+	
+	<bean id="serviceRolBean" class="servicioImpl.RolServicioImpl">
+		<property name="dataAccess" ref="dataAccessRolBean"></property>
+	</bean>
+	
+	<bean id="serviceTareaBean" class="servicioImpl.TareaServicioImpl">
+		<property name="dataAccess" ref="dataAccessTareaBean"></property>
+	</bean>
+		
+	<bean id="serviceTipoTareaBean" class="servicioImpl.TipoTareaServicioImpl">
+		<property name="dataAccess" ref="dataAccessTipoTareaBean"></property>
+	</bean>
+	
+	<bean id="serviceTipoUsuarioBean" class="servicioImpl.TipoUsuarioServicioImpl">
+		<property name="dataAccess" ref="dataAccessTipoUsuarioBean"></property>
+	</bean>
+	
 	<bean id="serviceUsuarioBean" class="servicioImpl.UsuarioServicioImpl">
 		<property name="dataAccess" ref="dataAccessUsuarioBean"></property>
 	</bean>
 	
 
-	<!-- EL SERVICIO NECESITA EL DAO  -->
+	<!-- LOS SERVICIOS NECESITAN EL DAO  -->
 		
 	<bean id="dataAccessComentarioTareaBean" class="daoImpl.ComentarioTareaDaoImpl" 
 		scope="singleton"> 
