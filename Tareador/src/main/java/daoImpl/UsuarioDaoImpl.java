@@ -1,4 +1,4 @@
-package frgp.utn.edu.ar.daoImpl;
+package daoImpl;
 
 import java.util.ArrayList;
 
@@ -7,8 +7,8 @@ import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import frgp.utn.edu.ar.dao.UsuarioDao;
-import frgp.utn.edu.ar.dominio.Usuario;
+import dao.UsuarioDao;
+import dominio.Usuario;
 
 public class UsuarioDaoImpl implements UsuarioDao {
 
@@ -27,8 +27,8 @@ public class UsuarioDaoImpl implements UsuarioDao {
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
-	public Usuario obtenerUsuarioPorNombre(String nombreUser) {
-		return this.hibernateTemplate.get(Usuario.class, nombreUser);
+	public Usuario obtenerUsuarioPorId(Integer idUsuario) {
+		return this.hibernateTemplate.get(Usuario.class, idUsuario);
 	}
 
 	@Override

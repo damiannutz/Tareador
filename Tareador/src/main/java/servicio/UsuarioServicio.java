@@ -1,14 +1,14 @@
-package frgp.utn.edu.ar.servicio;
+package servicio;
 
 import java.util.ArrayList;
 
-import frgp.utn.edu.ar.dominio.Usuario;
+import dominio.Usuario;
 
 public interface UsuarioServicio {
 
 	ArrayList<Usuario> obtenerUsuarios();
 
-	Usuario obtenerUnRegistro(String nombreUser);
+	Usuario obtenerUnRegistro(Integer idUsuario);
 
 	void insertarUsuario(Usuario usuario);
 

@@ -1,8 +1,8 @@
-package frgp.utn.edu.ar.dao;
+package dao;
 
 import java.util.ArrayList;
 
-import frgp.utn.edu.ar.dominio.Usuario;
+import dominio.Usuario;
 
 
 public interface UsuarioDao {
@@ -11,7 +11,7 @@ public interface UsuarioDao {
 	public void insertarUsuario(Usuario usuario);
 
 	//Obtiene una persona por dni
-	public Usuario obtenerUsuarioPorNombre(String nombreUser);
+	public Usuario obtenerUsuarioPorId(Integer idUsuario);
 
 	//Obtiene todas las presonas
 	public ArrayList<Usuario> obtenerUsuarios();

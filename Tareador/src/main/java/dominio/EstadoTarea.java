@@ -1,10 +1,8 @@
-package frgp.utn.edu.ar.dominio;
+package dominio;
 
 import javax.persistence.*;
 
-
-
-import frgp.utn.edu.ar.dominio.Departamento;
+import dominio.Departamento;
 @Entity
 @Table(name = "estados_tareas")
 public class EstadoTarea {

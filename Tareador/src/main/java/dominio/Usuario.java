@@ -1,4 +1,4 @@
-package frgp.utn.edu.ar.dominio;
+package dominio;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -15,10 +15,10 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import frgp.utn.edu.ar.dominio.Departamento;
-import frgp.utn.edu.ar.dominio.Proyecto;
-import frgp.utn.edu.ar.dominio.Rol;
-import frgp.utn.edu.ar.dominio.TipoUsuario;
+import dominio.Departamento;
+import dominio.Proyecto;
+import dominio.Rol;
+import dominio.TipoUsuario;
 
 
 @Entity
@@ -158,8 +158,8 @@ public class Usuario {
 		super();
 	}
 	public Usuario(Integer idUsuario, String nombre, String apellido, String email, String nombreUsuario,
-			String contrasenia, Boolean isActivo, frgp.utn.edu.ar.dominio.Departamento departamento,
-			frgp.utn.edu.ar.dominio.TipoUsuario tipoUsuario, Set<Proyecto> lsProyectos, Set<Rol> lsRoles) {
+			String contrasenia, Boolean isActivo, dominio.Departamento departamento,
+			dominio.TipoUsuario tipoUsuario, Set<Proyecto> lsProyectos, Set<Rol> lsRoles) {
 		super();
 		IdUsuario = idUsuario;
 		Nombre = nombre;

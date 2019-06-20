@@ -1,4 +1,4 @@
-package frgp.utn.edu.ar.controllers;
+package controllers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,11 +18,10 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
 
+import dominio.Usuario;
+import servicio.UsuarioServicio;
 
 import org.springframework.web.bind.annotation.PathVariable;
-
-import frgp.utn.edu.ar.dominio.Usuario;
-import frgp.utn.edu.ar.servicio.UsuarioServicio;
 
 @Controller
 public class UserController {

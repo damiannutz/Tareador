@@ -23,13 +23,13 @@
 	
 
 	<!-- CREO EL SERVICIO PARA USUARIO -->
-	<bean id="serviceBean" class="frgp.utn.edu.ar.servicioImpl.UsuarioServicioImpl">
+	<bean id="serviceBean" class="servicioImpl.UsuarioServicioImpl">
 		<property name="dataAccess" ref="dataAccessBean"></property>
 	</bean>
 	
 
 	<!-- EL SERVICIO NECESITA EL DAO  -->
-	<bean id="dataAccessBean" class="frgp.utn.edu.ar.daoImpl.UsuarioDaoImpl" 
+	<bean id="dataAccessBean" class="daoImpl.UsuarioDaoImpl" 
 		scope="singleton"> 
 		<property name="sessionFactory" ref="sessionFactoryBean"></property> 
 	</bean>
@@ -53,16 +53,16 @@
 		<!-- En esta propiedad deberian agregarse todas las clases anotadas con JPA. -->
 		<property name="annotatedClasses">
 			<list>
-				<value>frgp.utn.edu.ar.dominio.Rol</value>
-				<value>frgp.utn.edu.ar.dominio.TipoUsuario</value>
-				<value>frgp.utn.edu.ar.dominio.Departamento</value>
-				<value>frgp.utn.edu.ar.dominio.Proyecto</value>
-				<value>frgp.utn.edu.ar.dominio.Prioridad</value>
-				<value>frgp.utn.edu.ar.dominio.Usuario</value>
-				<value>frgp.utn.edu.ar.dominio.EstadoTarea</value>
-				<value>frgp.utn.edu.ar.dominio.TipoTarea</value>
-				<value>frgp.utn.edu.ar.dominio.ComentarioTarea</value>
-				<value>frgp.utn.edu.ar.dominio.Tarea</value>
+				<value>dominio.Rol</value>
+				<value>dominio.TipoUsuario</value>
+				<value>dominio.Departamento</value>
+				<value>dominio.Proyecto</value>
+				<value>dominio.Prioridad</value>
+				<value>dominio.Usuario</value>
+				<value>dominio.EstadoTarea</value>
+				<value>dominio.TipoTarea</value>
+				<value>dominio.ComentarioTarea</value>
+				<value>dominio.Tarea</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">

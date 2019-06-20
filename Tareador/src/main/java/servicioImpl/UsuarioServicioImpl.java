@@ -1,10 +1,10 @@
-package frgp.utn.edu.ar.servicioImpl;
+package servicioImpl;
 
 import java.util.ArrayList;
 
-import frgp.utn.edu.ar.dao.UsuarioDao;
-import frgp.utn.edu.ar.dominio.Usuario;
-import frgp.utn.edu.ar.servicio.UsuarioServicio;
+import dao.UsuarioDao;
+import dominio.Usuario;
+import servicio.UsuarioServicio;
 
 public class UsuarioServicioImpl implements UsuarioServicio{
 
@@ -20,8 +20,8 @@ public class UsuarioServicioImpl implements UsuarioServicio{
 	}
 
 	@Override
-	public Usuario obtenerUnRegistro(String nombreUser) {
-		return dataAccess.obtenerUsuarioPorNombre(nombreUser);
+	public Usuario obtenerUnRegistro(Integer idUsuario) {
+		return dataAccess.obtenerUsuarioPorId(idUsuario);
 	}
 
 	@Override

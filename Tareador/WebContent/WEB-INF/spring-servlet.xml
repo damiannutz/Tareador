@@ -7,10 +7,10 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
 
-<context:component-scan base-package="frgp.utn.edu.ar.controllers">
+<context:component-scan base-package="controllers">
 </context:component-scan>
 
-<!-- Si solo esta la carpeta controller: <context:component-scan base-package="frgp.utn.edu.ar.controllers"></context:component-scan> -->
+<!-- Si solo esta la carpeta controller: <context:component-scan base-package="controllers"></context:component-scan> -->
 
 
 
