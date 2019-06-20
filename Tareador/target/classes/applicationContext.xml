@@ -23,16 +23,64 @@
 	
 
 	<!-- CREO EL SERVICIO PARA USUARIO -->
-	<bean id="serviceBean" class="servicioImpl.UsuarioServicioImpl">
-		<property name="dataAccess" ref="dataAccessBean"></property>
+	<bean id="serviceUsuarioBean" class="servicioImpl.UsuarioServicioImpl">
+		<property name="dataAccess" ref="dataAccessUsuarioBean"></property>
 	</bean>
 	
 
 	<!-- EL SERVICIO NECESITA EL DAO  -->
-	<bean id="dataAccessBean" class="daoImpl.UsuarioDaoImpl" 
+		
+	<bean id="dataAccessComentarioTareaBean" class="daoImpl.ComentarioTareaDaoImpl" 
+		scope="singleton"> 
+		<property name="sessionFactory" ref="sessionFactoryBean"></property> 
+	</bean>	
+		
+	<bean id="dataAccessDepartamentoBean" class="daoImpl.DepartamentoDaoImpl" 
+		scope="singleton"> 
+		<property name="sessionFactory" ref="sessionFactoryBean"></property> 
+	</bean>	
+		
+	<bean id="dataAccessEstadoTareaBean" class="daoImpl.EstadoTareaDaoImpl" 
+		scope="singleton"> 
+		<property name="sessionFactory" ref="sessionFactoryBean"></property> 
+	</bean>	
+		
+	<bean id="dataAccessPrioridadBean" class="daoImpl.PrioridadDaoImpl" 
+		scope="singleton"> 
+		<property name="sessionFactory" ref="sessionFactoryBean"></property> 
+	</bean>	
+		
+	<bean id="dataAccessProyectoBean" class="daoImpl.ProyectoDaoImpl" 
+		scope="singleton"> 
+		<property name="sessionFactory" ref="sessionFactoryBean"></property> 
+	</bean>	
+					
+	<bean id="dataAccessRolBean" class="daoImpl.RolDaoImpl" 
 		scope="singleton"> 
 		<property name="sessionFactory" ref="sessionFactoryBean"></property> 
 	</bean>
+		
+	<bean id="dataAccessTareaBean" class="daoImpl.TareaDaoImpl" 
+		scope="singleton"> 
+		<property name="sessionFactory" ref="sessionFactoryBean"></property> 
+	</bean>	
+				
+	<bean id="dataAccessTipoTareaBean" class="daoImpl.TipoTareaDaoImpl" 
+		scope="singleton"> 
+		<property name="sessionFactory" ref="sessionFactoryBean"></property> 
+	</bean>
+		
+	<bean id="dataAccessTipoUsuarioBean" class="daoImpl.TipoUsuarioDaoImpl" 
+		scope="singleton"> 
+		<property name="sessionFactory" ref="sessionFactoryBean"></property> 
+	</bean>
+	
+	<bean id="dataAccessUsuarioBean" class="daoImpl.UsuarioDaoImpl" 
+		scope="singleton"> 
+		<property name="sessionFactory" ref="sessionFactoryBean"></property> 
+	</bean>
+
+
 
 	<!-- Define un dataSource, en este bean se configura los parametros de la db -->
 	<bean id="dataSourceBean"
