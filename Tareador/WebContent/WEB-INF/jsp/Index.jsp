@@ -96,7 +96,16 @@
                     <h2 class="section-heading">Trabaje con cualquier equipo</h2>
                     <hr class="light">
                     <p class="text-faded">Ya sea para un trabajo, un proyecto o incluso las próximas vacaciones en familia, Tareador ayuda a tu equipo a permanecer organizado.</p>
-                    <a href="login.jsp" class="page-scroll btn btn-default btn-xl sr-button">Log In</a>
+                    <a class="page-scroll btn btn-default btn-xl sr-button" href="<c:url value='/IrLogin.html' />"  >LogIn</a>
+                    <form action="IrLogin.html" method="post">
+                    	<table>
+                    		<tr>
+                    			<td>
+                    				<input type="submit" name="btnAceptar" value="Log In">
+                    			</td>
+                   			</tr>       
+                    	</table>
+                    </form>
                 </div>
             </div>
         </div>

@@ -18,13 +18,15 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
 
-import dominio.Usuario;
+import dominio.*;
 import servicio.UsuarioServicio;
 
 import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class UserController {
+	
+	
 
 	@Autowired
 	public  UsuarioServicio service;
@@ -39,13 +41,80 @@ public class UserController {
 	
 	//Inicio
 	
-	@RequestMapping("IrLogin.html")
+	@RequestMapping("Index.html")
 	public ModelAndView redireccion(){
 		ModelAndView MV = new ModelAndView();
-		MV.addObject("listaUsuarios",this.service.obtenerAll());
-		MV.setViewName("Index"); 
+		MV.setViewName("userin"); 
 		return MV;
 	}
+	@RequestMapping("IrLogin.html")
+	public ModelAndView redireccionLogin(){
+		ModelAndView MV = new ModelAndView();
+		MV.setViewName("login"); 
+		return MV;
+	}
+	@RequestMapping("IrAltaUsuario.html")
+	public ModelAndView redireccionAltaUsuario(){
+		ModelAndView MV = new ModelAndView();
+		MV.setViewName("AltaUsuario"); 
+		return MV;
+	}
+	@RequestMapping("IrAdministrarUsuarios.html")
+	public ModelAndView redireccionAdministrarUsuario(){
+		ModelAndView MV = new ModelAndView();
+		MV.setViewName("AdministrarUsuarios"); 
+		return MV;
+	}
+	@RequestMapping("IrListarUsuarios.html")
+	public ModelAndView redireccionListarUsuarios(){
+		ModelAndView MV = new ModelAndView();
+		MV.setViewName("ListarUsuario");
+		return MV;
+	}
+	@RequestMapping("IrGestionarUsuario.html")
+	public ModelAndView redireccionGestionarUsuario(){
+		ModelAndView MV = new ModelAndView();
+		MV.setViewName("GestionarUsuario");
+		return MV;
+	}
+	@RequestMapping("IrAdministrarProyectos.html")
+	public ModelAndView redireccionAdministrarProyectos(){
+		ModelAndView MV = new ModelAndView();
+		MV.setViewName("AdministrarProyectos");
+		return MV;
+	}
+	@RequestMapping("IrAltaProyecto.html")
+	public ModelAndView redireccionAltaProyecto(){
+		ModelAndView MV = new ModelAndView();
+		MV.setViewName("AltaProyectos");
+		return MV;
+	}
+	@RequestMapping("IrListarProyectos.html")
+	public ModelAndView redireccionListarProyectos(){
+		ModelAndView MV = new ModelAndView();
+		MV.setViewName("ListarProyectos");
+		return MV;
+	}
+	@RequestMapping("IrAdministrarDepartamentos.html")
+	public ModelAndView redireccionAdministrarDepartamentos(){
+		ModelAndView MV = new ModelAndView();
+		MV.setViewName("AdministrarDepartamentos");
+		return MV;
+	}
+	@RequestMapping("IrAltaDepartamento.html")
+	public ModelAndView redireccionAltaDepartamento(){
+		ModelAndView MV = new ModelAndView();
+		MV.setViewName("AltaDepartamento");
+		return MV;
+	}
+	@RequestMapping("IrListarDepartamentos.html")
+	public ModelAndView redireccionListarDepartamentos(){
+		ModelAndView MV = new ModelAndView();
+		MV.setViewName("ListarDepartamentos");
+		return MV;
+	}
+
+
 	
 	
 	@RequestMapping(value ="/altaUsuario.html" , method= { RequestMethod.GET, RequestMethod.POST})
