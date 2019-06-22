@@ -1,7 +1,6 @@
 package dominio;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -22,7 +21,7 @@ import dominio.TipoUsuario;
 
 
 @Entity
-@Table(name = "Usuario")
+@Table(name = "Usuarios")
 
 public class Usuario {
 
@@ -66,13 +65,13 @@ public class Usuario {
 
 	  @ManyToMany(cascade= {CascadeType.ALL})
 		@JoinTable(name="usuarios_x_proyectos",joinColumns={@JoinColumn(name="id_usuario")}, inverseJoinColumns={@JoinColumn(name="id_proyecto")})
-	  private Set<Proyecto> lsProyectos = new HashSet<Proyecto>();
+	  private List<Proyecto> lsProyectos = new ArrayList<Proyecto>();
 	  
 
 		
 	    @ManyToMany(cascade= {CascadeType.ALL})
 		@JoinTable(name="Roles_x_Usuarios",joinColumns={@JoinColumn(name="id_usuario")}, inverseJoinColumns={@JoinColumn(name="id_rol")})
-  		private Set<Rol> lsRoles = new HashSet<Rol>();
+  		private List<Rol> lsRoles = new ArrayList<Rol>();
 	  
 	 
 	  public int getIdUsuario() {
@@ -141,17 +140,17 @@ public class Usuario {
 			}
 		
 		
-	  	public Set<Proyecto> getLsProyectos() {
+	  	public List<Proyecto> getLsProyectos() {
 			return lsProyectos;
 		}
-		public void setLsProyectos(Set<Proyecto> lsProyectos) {
+		public void setLsProyectos(List<Proyecto> lsProyectos) {
 			this.lsProyectos = lsProyectos;
 		}
 		
-    	public Set<Rol> getLsRoles() {
+    	public List<Rol> getLsRoles() {
 			return lsRoles;
 		}
-		public void setLsRoles(Set<Rol> lsRoles) {
+		public void setLsRoles(List<Rol> lsRoles) {
 			this.lsRoles = lsRoles;
 		}
 	public Usuario() {
@@ -159,7 +158,7 @@ public class Usuario {
 	}
 	public Usuario(Integer idUsuario, String nombre, String apellido, String email, String nombreUsuario,
 			String contrasenia, Boolean isActivo, dominio.Departamento departamento,
-			dominio.TipoUsuario tipoUsuario, Set<Proyecto> lsProyectos, Set<Rol> lsRoles) {
+			dominio.TipoUsuario tipoUsuario, List<Proyecto> lsProyectos, List<Rol> lsRoles) {
 		super();
 		IdUsuario = idUsuario;
 		Nombre = nombre;

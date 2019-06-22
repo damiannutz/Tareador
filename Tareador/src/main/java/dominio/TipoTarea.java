@@ -6,7 +6,7 @@ import dominio.Departamento;
 
 @Entity
 
-@Table(name = "Tipo_Tareas")
+@Table(name = "Tipos_Tareas")
 public class TipoTarea {
 
 	@Id

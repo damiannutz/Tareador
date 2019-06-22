@@ -19,6 +19,11 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
 
 import dominio.*;
+import servicio.EstadoTareaServicio;
+import servicio.PrioridadServicio;
+import servicio.RolServicio;
+import servicio.TipoTareaServicio;
+import servicio.TipoUsuarioServicio;
 import servicio.UsuarioServicio;
 
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,22 +31,74 @@ import org.springframework.web.bind.annotation.PathVariable;
 @Controller
 public class UserController {
 	
-	
-
 	@Autowired
-	public  UsuarioServicio service;
+	public  UsuarioServicio usuarioService;
 	
-	public void init(ServletConfig config) {
-		ApplicationContext ctx = WebApplicationContextUtils
-				.getRequiredWebApplicationContext(config.getServletContext());
+//	public void init(ServletConfig config) {
+//		ApplicationContext ctx = WebApplicationContextUtils
+//				.getRequiredWebApplicationContext(config.getServletContext());
+//		
+//		this.service = (UsuarioServicio) ctx.getBean("serviceBean");
+//	}
+//	
+	
+	
+//	@Autowired
+//	public EstadoTareaServicio estadoTareaServicio;
+//	
+//	@Autowired
+//	public PrioridadServicio prioridadServicio;
+//	
+//	@Autowired
+//	public RolServicio rolServicio;
+//	
+//	@Autowired
+//	public TipoTareaServicio tipoTareaServicio;
+//	
+//	@Autowired
+//	public TipoUsuarioServicio tipoUsuarioServicio;
+
 		
-		this.service = (UsuarioServicio) ctx.getBean("serviceBean");
-	}
+//	public void inicializar() {
+//		revisarSiSeCreoTodo();
+//	}
+//	
+//	public void revisarSiSeCreoTodo() {
+//	
+//		List<TipoUsuario> lstTiposUsuario = tipoUsuarioServicio.obtenerAll();
+//		
+//		if(lstTiposUsuario == null || lstTiposUsuario.size() == 0)
+//			crearTodo();
+//		
+//	}
+//	
+//	public void crearTodo() {
+//		insertTiposUsuarios();
+//		
+//	}
+//	
+//	private List<TipoUsuario> insertTiposUsuarios() {
+//
+//		
+//		List<TipoUsuario> lstTipoUsuarios = new ArrayList<TipoUsuario>();		
+//		
+//		lstTipoUsuarios.add(new TipoUsuario(TipoUsuario.tipo_super , "Super Usuario"));
+//		lstTipoUsuarios.add(new TipoUsuario(TipoUsuario.tipo_admin , "Administrador"));
+//		lstTipoUsuarios.add(new TipoUsuario(TipoUsuario.tipo_user , "Usuario"));
+//		
+//		for(TipoUsuario item : lstTipoUsuarios){
+//			tipoUsuarioServicio.insertar(item);
+//		}
+//
+//		return lstTipoUsuarios;
+//	}
+//	
+	
 	
 	
 	//Inicio
 	
-	@RequestMapping("Index.html")
+	@RequestMapping(value={"Index.html", "Inicio.html"})
 	public ModelAndView redireccion(){
 		ModelAndView MV = new ModelAndView();
 		MV.setViewName("userin"); 
@@ -129,7 +186,7 @@ public class UserController {
 		
 		try{
 			
-			service.insertar(x);
+			usuarioService.insertar(x);
 			Message = "Usuario agregado";
 		}
 		catch(Exception e)
@@ -143,7 +200,7 @@ public class UserController {
 	
 		MV.setViewName("Usuarios");
 		MV.addObject("Mensaje", Message);
-		MV.addObject("listaUsuarios",this.service.obtenerAll());
+		MV.addObject("listaUsuarios",this.usuarioService.obtenerAll());
 		MV.setViewName("Usuarios"); 
 		return MV;
 		
@@ -153,8 +210,8 @@ public class UserController {
 	@RequestMapping(value ="/eliminarUsuario.html" , method= { RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView eliminarUsuario(Integer id, String nombreU, String passU){
 		ModelAndView MV = new ModelAndView();
-		service.eliminar(id);
-		MV.addObject("listaUsuarios",this.service.obtenerAll());
+		usuarioService.eliminar(id);
+		MV.addObject("listaUsuarios",this.usuarioService.obtenerAll());
 		MV.setViewName("Usuarios"); 
 		MV.addObject("Mensaje", "Usuario eliminado");
 		return MV;
@@ -162,12 +219,12 @@ public class UserController {
 	
 	@RequestMapping(value = { "/delete-user-{ssoId}" }, method = RequestMethod.GET)
     public ModelAndView deleteUser(@PathVariable Integer ssoId) {
-		service.eliminar(ssoId);
+		usuarioService.eliminar(ssoId);
 		ModelAndView MV = new ModelAndView();
 		MV.setViewName("Usuarios");
 		
 		//Actualiza los usuarios
-		MV.addObject("listaUsuarios",this.service.obtenerAll());
+		MV.addObject("listaUsuarios",this.usuarioService.obtenerAll());
 		MV.setViewName("Usuarios"); 
 		return MV;
     }
@@ -178,7 +235,7 @@ public class UserController {
 	@RequestMapping(value ="/recargaGrillaUsuarios.html" , method= { RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView recargarUsuario(){
 		ModelAndView MV = new ModelAndView();
-		MV.addObject("listaUsuarios",this.service.obtenerAll());
+		MV.addObject("listaUsuarios",this.usuarioService.obtenerAll());
 		MV.setViewName("Usuarios"); 
 		return MV;
 		
