@@ -126,24 +126,7 @@ public class UserController {
 		MV.setViewName("GestionarUsuario");
 		return MV;
 	}
-	@RequestMapping("IrAdministrarProyectos.html")
-	public ModelAndView redireccionAdministrarProyectos(){
-		ModelAndView MV = new ModelAndView();
-		MV.setViewName("AdministrarProyectos");
-		return MV;
-	}
-	@RequestMapping("IrAltaProyecto.html")
-	public ModelAndView redireccionAltaProyecto(){
-		ModelAndView MV = new ModelAndView();
-		MV.setViewName("AltaProyectos");
-		return MV;
-	}
-	@RequestMapping("IrListarProyectos.html")
-	public ModelAndView redireccionListarProyectos(){
-		ModelAndView MV = new ModelAndView();
-		MV.setViewName("ListarProyectos");
-		return MV;
-	}
+	
 	
 	
 	

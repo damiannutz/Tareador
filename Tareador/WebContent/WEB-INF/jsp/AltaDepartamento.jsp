@@ -52,7 +52,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                 	<li>
-                        <a class="page-scroll" href="AdministrarDepartamentos.jsp">VOLVER</a>
+                        <a class="page-scroll" href="IrListarDepartamentos.html">VOLVER</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="#about">userName</a>
@@ -79,9 +79,9 @@
 			<div align="center">
 			<h3 id="homeHeading">   </h3>
 						
+				<form method="post" action="save-departamento.html">
 					<table>
 			
-						<form method="post" action="save-departamento.html">
 						
 						<tr>
 						<td>Codigo:</td>
@@ -119,8 +119,8 @@
 						
 						</td> 
 							</tr>
-							</form>
 		</table>
+	</form>
 
 			                
             </div>

@@ -64,7 +64,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                 	<li>
-                        <a class="page-scroll" href="AdministrarProyectos.jsp">VOLVER</a>
+                        <a class="page-scroll" href="IrAdministrarProyectos.html">VOLVER</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="#about">userName</a>
@@ -88,43 +88,35 @@
 <table >
 <tr>
  <th style="padding-bottom: 5px;">
- 	<form action="UsuariosTareadorServlet?ListarUsuarios=ListarUsuarios.jsp" method="post" >
- 		<input type="submit" name="ListarUsuarios" value="Actualizar Lista" class="btn btn-primary">
+ 	<form action="IrListarProyectos.html" method="post" >
+ 		<input type="submit" name="ListarProyectos" value="Actualizar Lista" class="btn btn-primary">
 	</form>
 </th>
  <th style="padding-left: 5px;   padding-right: 5px; padding-bottom: 5px;">
-	<form action="AltaProyecto.jsp" method="post" >
-	 	<input type="submit" name="NuevoUsuario" value="Nuevo Proyecto" class="btn btn-primary">
+	<form action="IrAltaProyecto.html" method="post" >
+	 	<input type="submit" name="NuevoProyecto" value="Nuevo Proyecto" class="btn btn-primary">
 	</form>
 </th>
 
-						
 						<td >Departamento:</td>
 							<td style="padding-left: 5px;   padding-right: 5px;">
-								<select id="cmbDepartamento"  class="btn btn-primary dropdown-toggle">
 							
-									
-
-									<option value="TODOS" selected="selected" >Todos </option>
-									<option value="IT"  >Sistemas </option>
-									<option value="DEV" >DESARROLLO </option> 
-								    <option value="RRHH" >Recursos Humanos </option> 
+							
+							<select  id="cmbDepartamento"  name="cmbDepartamento" class="btn btn-primary dropdown-toggle">
+								<option value="TODOS" selected="selected" >Todos </option>
+								<c:forEach items="${lstDepartamentos}" var="item">
+										       	<option value="${item.idDepartamento}">${item.descripcion} </option>
+			   					</c:forEach>
+								
+							</select>
+							
+											
+<!-- 									<option value="TODOS" selected="selected" >Todos </option> -->
+<!-- 									<option value="IT"  >Sistemas </option> -->
+<!-- 									<option value="DEV" >DESARROLLO </option>  -->
+<!-- 								    <option value="RRHH" >Recursos Humanos </option>  -->
 
 						
-							</select>
-							</td>
-					
-					
-						<td>Usuario:</td>
-						<td style="padding-left: 5px;   padding-right: 5px; padding-bottom:5px;">
-								<select id="cmbTipoUsuario" required="required" class="btn btn-primary dropdown-toggle">
-
-									<option value="TODOS" selected="selected" > Todos</option>
-                                    <option value="ADMIN"  >Administrador </option>
-									<option value="SUPER" >Super Administrador </option> 
-								    <option value="USER" >Usuario standard </option> 
-						
-							</select>
 							</td>
 					
 </tr>
@@ -140,27 +132,36 @@
 		<tr>
 
 		   <th>Nombre</th>
-		   <th>Descripcion</th>
-		   
+		    <th>Departamento</th>
 		   <th>Opciones</th>
 	 	</tr>
 	</thead>
 	<tbody>
 
 	
-		<form method="get" action="UsuariosTareadorServlet?verUsuario=">
-			<tr style="text-align: left" data-dto="" data-user="" >
-			<td></td><td></td>
-			<td style="text-align: right"> 
-
+	
+		<c:forEach items="${lstProyectos}" var="item">
+				<tr style="text-align: left" data-dto="${item.departamento.idDepartamento}"  >
+			
+				<td>${item.descripcion}</td>
+				<td>${item.departamento.descripcion}</td>
+				<td >
+			<!--	<a href="<c:url value='/edit-proyecto-${item.getIdProyecto()}' />">Editar</a> -->
+					<button type="submit" class="btn btn-primary"  onclick="callUsuarios()"> +Usuario</button>
+					<button type="button" class="btn btn-primary"  onclick="callEditar(${item.getIdProyecto()})"> Editar</button>
+				</td>
+				</tr>
+				
+			</c:forEach>
+	
 	
 
-			<button type="submit" class="btn btn-primary"  onclick="callUsuarios()"> +Usuario</button>
-			<button type="submit" class="btn btn-primary"  onclick="callTareas()"> +Tarea</button>
-			<button type="submit" class="btn btn-primary"  onclick="callServlet()"> Editar</button>
+<!-- 		<form method="get" action="UsuariosTareadorServlet?verUsuario="> -->
+<!-- 			<button type="submit" class="btn btn-primary"  onclick="callUsuarios()"> +Usuario</button> -->
+<!-- 			<button type="submit" class="btn btn-primary"  onclick="callServlet()"> Editar</button> -->
+<!-- 		</form> -->
 			</td>
 			</tr>
-		</form>
 		
 	</tbody>
 </table>
@@ -174,24 +175,25 @@
 
 <script type="text/javascript">
 
-function callServlet(idUsuario){
+function callEditar(idProyecto){
 	
-	{
-		 document.getElementById("adminForm").action="GestionarProyecto.jsp";
-		 document.getElementById("adminForm").method = "POST";
-		 document.getElementById("adminForm").submit();
-
-		}
+	 form = document.createElement('form');
+     form.setAttribute('method', 'POST');
+     form.setAttribute('action', 'edit-proyecto.html');
+     myvar = document.createElement('input');
+     myvar.setAttribute('name', 'idProyecto');
+     myvar.setAttribute('type', 'hidden');
+     myvar.setAttribute('value', idProyecto);
+     form.appendChild(myvar);
+     document.body.appendChild(form);
+     form.submit();   
+		 
+// 		 document.getElementById("adminForm").action="/edit-proyecto-" + idProyecto;
+// 		 document.getElementById("adminForm").method = "GET";
+// 		 document.getElementById("adminForm").submit();
+		 
 }
-function callTareas(idUsuario){
-	
-	{
-		 document.getElementById("adminForm").action="ListarTareasXProyecto.jsp";
-		 document.getElementById("adminForm").method = "POST";
-		 document.getElementById("adminForm").submit();
 
-		}
-}
 function callUsuarios(idUsuario){
 	
 	{
@@ -268,6 +270,8 @@ function callUsuarios(idUsuario){
 			
 		    });
 		  
+		    
+		    
 		
 		$("#cmbDepartamento").on('change',function(){
 			
@@ -294,30 +298,6 @@ function callUsuarios(idUsuario){
 			
 		});
 		
-		$("#cmbTipoUsuario").on('change',function(){
-			
-			
-			
-			$("#DataTables_Table_0_wrapper").find('tbody').find('tr').each(function(index,element){
-				
-				
-				if($("#cmbTipoUsuario").val() == $(element).attr('data-user')){
-					$(element).removeAttr('hidden');
-				}else if($("#cmbTipoUsuario").val() == "TODOS"){
-					
-					$(element).removeAttr('hidden');
-					
-				}else{
-					$(element).attr('hidden','true');
-				}
-				
-					
-			});
-			
-
-			
-		
-		}); 
 		
 		}); 
 
