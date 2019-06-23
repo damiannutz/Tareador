@@ -1,6 +1,7 @@
 package dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import dominio.TipoTarea;
 
@@ -15,9 +16,13 @@ public interface TipoTareaDao {
 		//Obtiene todos los TipoTareas
 		public ArrayList<TipoTarea> obtenerAll();
 
+		public List<TipoTarea> obtenerAllActivos() ;
+		
 		//Elimina un TipoTarea a aprtir del id
 		public void eliminar(Integer idTipoTarea);
 
+		public void bajaLogica(Integer idTipoTarea) ;
+		
 		//Actualiza los datos de un TipoTarea
 		public void actualizar(TipoTarea TipoTarea);
 	

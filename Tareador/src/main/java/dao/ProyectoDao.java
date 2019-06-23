@@ -1,6 +1,7 @@
 package dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import dominio.Proyecto;
 
@@ -15,9 +16,13 @@ public interface ProyectoDao {
 	//Obtiene todos los Proyectos
 	public ArrayList<Proyecto> obtenerAll();
 
+	public List<Proyecto> obtenerAllActivos();
+	
 	//Elimina un Proyecto a aprtir del id
 	public void eliminar(Integer idProyecto);
 
+	public void bajaLogica(Integer idProyecto); 
+	
 	//Actualiza los datos de un Proyecto
 	public void actualizar(Proyecto Proyecto);
 	

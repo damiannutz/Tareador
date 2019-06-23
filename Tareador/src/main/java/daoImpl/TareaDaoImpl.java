@@ -1,13 +1,17 @@
 package daoImpl;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import dao.TareaDao;
+import dominio.Rol;
 import dominio.Tarea;
 
 public class TareaDaoImpl implements TareaDao {
@@ -37,7 +41,12 @@ public class TareaDaoImpl implements TareaDao {
 	public ArrayList<Tarea> obtenerAll() {
 		return (ArrayList<Tarea>) this.hibernateTemplate.loadAll(Tarea.class);
 	}
-
+	
+	@Override
+	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
+	public List<Tarea> obtenerAllActivos() {
+		return (List<Tarea>)  this.hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Tarea.class).add(Restrictions.eq("IsActivo", true)));
+	}
 	
 	@Override
 	@Transactional(propagation=Propagation.REQUIRES_NEW)
@@ -47,6 +56,17 @@ public class TareaDaoImpl implements TareaDao {
 		this.hibernateTemplate.delete(item);
 	}
 
+	
+	@Override
+	@Transactional(propagation=Propagation.REQUIRES_NEW)
+	public void bajaLogica(Integer idTarea) {
+		
+		Tarea item = this.hibernateTemplate.get(Tarea.class, idTarea);
+		item.setIsActivo(false);
+		this.hibernateTemplate.update(item);
+	}
+
+	
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED)
 	public void actualizar(Tarea Tarea) {

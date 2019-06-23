@@ -1,8 +1,10 @@
 package daoImpl;
 
-import java.util.ArrayList;
+import java.util.*;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,6 +40,11 @@ public class RolDaoImpl implements RolDao {
 	}
 
 	
+	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
+	public List<Rol> obtenerAllActivos() {
+		return (List<Rol>)  this.hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Rol.class).add(Restrictions.eq("Is_Activo", true)));
+	}
+	
 	@Override
 	@Transactional(propagation=Propagation.REQUIRES_NEW)
 	public void eliminar(Integer idRol) {
@@ -46,6 +53,17 @@ public class RolDaoImpl implements RolDao {
 		this.hibernateTemplate.delete(item);
 	}
 
+
+	@Override
+	@Transactional(propagation=Propagation.REQUIRES_NEW)
+	public void bajaLogica(Integer idRol) {
+		
+		Rol item = this.hibernateTemplate.get(Rol.class, idRol);
+		item.setIsActivo(false);
+		this.hibernateTemplate.update(item);
+	}
+
+	
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED)
 	public void actualizar(Rol Rol) {
@@ -53,4 +71,9 @@ public class RolDaoImpl implements RolDao {
 	}
 
 
+	
+
+
+	
+	
 }

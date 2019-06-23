@@ -3,6 +3,7 @@ package servicioImpl;
 import java.util.ArrayList;
 
 import dao.UsuarioDao;
+import dominio.TipoTarea;
 import dominio.Usuario;
 import servicio.UsuarioServicio;
 
@@ -19,6 +20,12 @@ public class UsuarioServicioImpl implements UsuarioServicio{
 		return dataAccess.obtenerAll();
 	}
 
+	
+	@Override
+	public ArrayList<Usuario> obtenerAllActivos() {
+		return (ArrayList)dataAccess.obtenerAllActivos();
+	}
+	
 	@Override
 	public Usuario obtenerById(Integer idUsuario) {
 		return dataAccess.obtenerById(idUsuario);
@@ -31,11 +38,17 @@ public class UsuarioServicioImpl implements UsuarioServicio{
 	}
 
 	@Override
-	public void eliminar(Integer idUser) {
-		dataAccess.eliminar(idUser);
+	public void eliminar(Integer idUsuario) {
+		dataAccess.eliminar(idUsuario);
 		
 	}
-
+	@Override
+	public  void bajaLogica(Integer idUsuario) {
+		dataAccess.bajaLogica(idUsuario);
+	}
+	
+	
+	
 	@Override
 	public void actualizar(Usuario usuario) {
 		dataAccess.actualizar(usuario);

@@ -19,6 +19,12 @@ public class RolServicioImpl implements RolServicio {
 		return dataAccess.obtenerAll();
 	}
 
+	
+	@Override
+	public ArrayList<Rol> obtenerAllActivos() {
+		return (ArrayList)dataAccess.obtenerAllActivos();
+	}
+	
 	@Override
 	public Rol obtenerById(Integer idRol) {
 		return dataAccess.obtenerById(idRol);
@@ -31,9 +37,8 @@ public class RolServicioImpl implements RolServicio {
 	}
 
 	@Override
-	public void eliminar(Integer idUser) {
-		dataAccess.eliminar(idUser);
-		
+	public void eliminar(Integer idRol) {
+		dataAccess.eliminar(idRol);
 	}
 
 	@Override
@@ -42,4 +47,12 @@ public class RolServicioImpl implements RolServicio {
 		
 	}
 
+	
+	@Override
+	public  void bajaLogica(Integer idRol) {
+		dataAccess.bajaLogica(idRol);
+	}
+
+
+	
 }

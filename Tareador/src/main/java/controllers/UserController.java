@@ -27,17 +27,8 @@ import org.springframework.web.util.WebUtils;
 import com.cloudinary.Search;
 
 import dominio.*;
-<<<<<<< HEAD
-import servicio.DepartamentoServicio;
-import servicio.EstadoTareaServicio;
-import servicio.PrioridadServicio;
-import servicio.RolServicio;
-import servicio.TipoTareaServicio;
-import servicio.TipoUsuarioServicio;
-import servicio.UsuarioServicio;
-=======
+
 import servicio.*;
->>>>>>> origin/master
 
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;

@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,7 +44,8 @@ public class DepartamentoDaoImpl implements DepartamentoDao {
 
 	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
 	public List<Departamento> obtenerAllActivos() {
-		return (List<Departamento>) this.hibernateTemplate.loadAll(Departamento.class).stream().filter(r->r.getIsActivo()).collect(Collectors.toList());
+		return (List<Departamento>)  this.hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Departamento.class).add(Restrictions.eq("isActivo", true)));
+		//return (List<Departamento>) this.hibernateTemplate.loadAll(Departamento.class).stream().filter(r->r.getIsActivo()).collect(Collectors.toList());
 	}
 
 	

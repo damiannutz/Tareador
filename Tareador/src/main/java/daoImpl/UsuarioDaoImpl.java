@@ -1,8 +1,10 @@
 package daoImpl;
 
-import java.util.ArrayList;
+import java.util.*;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,11 +41,27 @@ public class UsuarioDaoImpl implements UsuarioDao {
 
 	
 	@Override
+	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
+	public List<Usuario> obtenerAllActivos() {
+		return (List<Usuario>)  this.hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Usuario.class).add(Restrictions.eq("IsActivo", true)));
+	}
+	
+	
+	@Override
 	@Transactional(propagation=Propagation.REQUIRES_NEW)
 	public void eliminar(Integer idUsuario) {
 		Usuario item = new Usuario();
 		item.setIdUsuario(idUsuario);
 		this.hibernateTemplate.delete(item);
+	}
+	
+	@Override
+	@Transactional(propagation=Propagation.REQUIRES_NEW)
+	public void bajaLogica(Integer idUsuario) {
+		
+		Usuario item = this.hibernateTemplate.get(Usuario.class, idUsuario);
+		item.setIsActivo(false);
+		this.hibernateTemplate.update(item);
 	}
 
 	@Override

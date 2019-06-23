@@ -3,6 +3,7 @@ package servicioImpl;
 import java.util.ArrayList;
 
 import dao.PrioridadDao;
+import dominio.EstadoTarea;
 import dominio.Prioridad;
 import servicio.PrioridadServicio;
 
@@ -20,6 +21,11 @@ public class PrioridadServicioImpl implements PrioridadServicio {
 	}
 
 	@Override
+	public ArrayList<Prioridad> obtenerAllActivos() {
+		return (ArrayList)dataAccess.obtenerAllActivos();
+	}
+	
+	@Override
 	public Prioridad obtenerById(Integer idPrioridad) {
 		return dataAccess.obtenerById(idPrioridad);
 	}
@@ -31,11 +37,17 @@ public class PrioridadServicioImpl implements PrioridadServicio {
 	}
 
 	@Override
-	public void eliminar(Integer idUser) {
-		dataAccess.eliminar(idUser);
+	public void eliminar(Integer idPrioridad) {
+		dataAccess.eliminar(idPrioridad);
 		
 	}
 
+	@Override
+	public  void bajaLogica(Integer idPrioridad) {
+		dataAccess.bajaLogica(idPrioridad);
+	}
+	
+	
 	@Override
 	public void actualizar(Prioridad Prioridad) {
 		dataAccess.actualizar(Prioridad);

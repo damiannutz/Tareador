@@ -3,6 +3,7 @@ package servicioImpl;
 import java.util.ArrayList;
 
 import dao.TipoTareaDao;
+import dominio.Tarea;
 import dominio.TipoTarea;
 import servicio.TipoTareaServicio;
 
@@ -20,6 +21,11 @@ public class TipoTareaServicioImpl implements TipoTareaServicio {
 	}
 
 	@Override
+	public ArrayList<TipoTarea> obtenerAllActivos() {
+		return (ArrayList)dataAccess.obtenerAllActivos();
+	}
+	
+	@Override
 	public TipoTarea obtenerById(Integer idTipoTarea) {
 		return dataAccess.obtenerById(idTipoTarea);
 	}
@@ -31,11 +37,16 @@ public class TipoTareaServicioImpl implements TipoTareaServicio {
 	}
 
 	@Override
-	public void eliminar(Integer idUser) {
-		dataAccess.eliminar(idUser);
+	public void eliminar(Integer idTipoTarea) {
+		dataAccess.eliminar(idTipoTarea);
 		
 	}
 
+	@Override
+	public  void bajaLogica(Integer idTipoTarea) {
+		dataAccess.bajaLogica(idTipoTarea);
+	}
+	
 	@Override
 	public void actualizar(TipoTarea TipoTarea) {
 		dataAccess.actualizar(TipoTarea);

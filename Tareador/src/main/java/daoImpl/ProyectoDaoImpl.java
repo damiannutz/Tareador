@@ -1,13 +1,17 @@
 package daoImpl;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import dao.ProyectoDao;
+import dominio.Prioridad;
 import dominio.Proyecto;
 
 public class ProyectoDaoImpl implements ProyectoDao {
@@ -37,6 +41,11 @@ public class ProyectoDaoImpl implements ProyectoDao {
 		return (ArrayList<Proyecto>) this.hibernateTemplate.loadAll(Proyecto.class);
 	}
 
+	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
+	public List<Proyecto> obtenerAllActivos() {
+		return (List<Proyecto>)  this.hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Proyecto.class).add(Restrictions.eq("isActivo", true)));
+	}
+
 	
 	@Override
 	@Transactional(propagation=Propagation.REQUIRES_NEW)
@@ -46,6 +55,15 @@ public class ProyectoDaoImpl implements ProyectoDao {
 		this.hibernateTemplate.delete(item);
 	}
 
+	@Override
+	@Transactional(propagation=Propagation.REQUIRES_NEW)
+	public void bajaLogica(Integer idProyecto) {
+		
+		Proyecto item = this.hibernateTemplate.get(Proyecto.class, idProyecto);
+		item.setIsActivo(false);
+		this.hibernateTemplate.update(item);
+	}
+	
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED)
 	public void actualizar(Proyecto Proyecto) {

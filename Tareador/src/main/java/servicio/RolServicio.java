@@ -8,11 +8,15 @@ public interface RolServicio {
 
 	ArrayList<Rol> obtenerAll();
 
+	ArrayList<Rol> obtenerAllActivos(); 
+	
 	Rol obtenerById(Integer idRol);
 
 	void insertar(Rol Rol);
 
-    void eliminar(Integer idUser) ;
+    void eliminar(Integer idRol) ;
+    
+    void bajaLogica(Integer idRol);
 
 	void actualizar(Rol Rol);
 }
