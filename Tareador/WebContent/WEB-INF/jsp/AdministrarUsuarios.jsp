@@ -68,7 +68,7 @@
                         <a class="page-scroll" href="userin.jsp">VOLVER</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#about">userName</a>
+                        <a class="page-scroll" href="#about"><%=session.getAttribute("Sessuser")%></a>
                     </li>
                    <li>
                         <a class="page-scroll" href="Login?CerrarSesion=1">Cerrar Sesion</a>

@@ -122,7 +122,15 @@
 			
 				<td>${item.getCodigo()}</td>
 				<td>${item.getDescripcion()}</td>
+<<<<<<< HEAD
 				<td ><input type="button" name="btnEliminar"   value="Eliminar" class="btn btn-primary"><a href="<c:url value='/edit-departamento-${item.getIdDepartamento()}' />">Editar</a></input></td>
+=======
+				<td >
+<%-- 				<a href="<c:url value='/edit-departamento-${item.getIdDepartamento()}' />">Editar</a>--%>
+
+			<button type="button" class="btn btn-primary"  onclick="callEditar(${item.getIdDepartamento()})"> Editar</button>
+				</td> 
+>>>>>>> origin/master
 				
 <!-- 				<button type="submit" class="btn btn-primary"  onclick="callServlet()"> Editar</button> -->
 				</tr>
@@ -142,15 +150,25 @@
 
 <script type="text/javascript">
 
-function callServlet(idUsuario){
+function callEditar(idDepartamento){
 	
-	{
-		 document.getElementById("adminForm").action="GestionarDepartamento.jsp";
-		 document.getElementById("adminForm").method = "POST";
-		 document.getElementById("adminForm").submit();
-
-		}
+	 form = document.createElement('form');
+    form.setAttribute('method', 'POST');
+    form.setAttribute('action', 'edit-departamento.html');
+    myvar = document.createElement('input');
+    myvar.setAttribute('name', 'idDepartamento');
+    myvar.setAttribute('type', 'hidden');
+    myvar.setAttribute('value', idDepartamento);
+    form.appendChild(myvar);
+    document.body.appendChild(form);
+    form.submit();   
+		 
+//		 document.getElementById("adminForm").action="/edit-proyecto-" + idProyecto;
+//		 document.getElementById("adminForm").method = "GET";
+//		 document.getElementById("adminForm").submit();
+		 
 }
+
 
 
 

@@ -12,6 +12,9 @@ public interface UsuarioDao {
 
 	//Obtiene un usuario por id
 	public Usuario obtenerById(Integer idUsuario);
+	
+	//Obtiene un usuario por NombreUsuario
+	public Usuario obtenerByUName(String UName);
 
 	//Obtiene todos los usuarios
 	public ArrayList<Usuario> obtenerAll();

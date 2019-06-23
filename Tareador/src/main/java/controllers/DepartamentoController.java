@@ -44,9 +44,20 @@ public class DepartamentoController {
 		MV.setViewName("AltaDepartamento");
 		return MV;
 	}
-	@RequestMapping(value={ "/edit-departamento-{idDepartamento}" }, method= { RequestMethod.GET})
-	public ModelAndView redireccionAltaDepartamento(@PathVariable Integer idDepartamento){
+	@RequestMapping("IrListarDepartamentos.html")
+	public ModelAndView redireccionListarDepartamentos(){
+		
+		List<Departamento> lstDepartamentos = departamentoServicio.obtenerAllActivos();
+		
+		ModelAndView MV = new ModelAndView();
+		MV.setViewName("ListarDepartamentos");
+		MV.addObject("lstDepartamentos", lstDepartamentos);
+		return MV;
+	}
 	
+	@RequestMapping(value={ "edit-departamento.html" }, method= { RequestMethod.GET,RequestMethod.POST})
+	public ModelAndView redireccionAltaDepartamento(Integer idDepartamento){
+
 		Departamento departamento = departamentoServicio.obtenerById(idDepartamento);
 		
 		ModelAndView MV = new ModelAndView();
@@ -57,6 +68,20 @@ public class DepartamentoController {
 		MV.setViewName("AltaDepartamento");
 		return MV;
 	}
+	
+//	@RequestMapping(value={ "/edit-departamento-{idDepartamento}" }, method= { RequestMethod.GET})
+//	public ModelAndView redireccionAltaDepartamento(@PathVariable Integer idDepartamento){
+//	
+//		Departamento departamento = departamentoServicio.obtenerById(idDepartamento);
+//		
+//		ModelAndView MV = new ModelAndView();
+//		MV.addObject("IdDepartamento", departamento.getIdDepartamento());
+//		MV.addObject("departamentoCodigo", departamento.getCodigo());
+//		MV.addObject("departamentoDescripcion", departamento.getDescripcion());
+//		MV.addObject("headerTitle", "Editar Departamento");
+//		MV.setViewName("AltaDepartamento");
+//		return MV;
+//	}
 //	@RequestMapping(value="/edit-departamento-{departamento}", method= { RequestMethod.GET, RequestMethod.POST})
 //	public ModelAndView redireccionAltaDepartamento(@PathVariable Departamento departamento){
 //	
@@ -98,17 +123,6 @@ public class DepartamentoController {
 	}
 	
 	
-	@RequestMapping("IrListarDepartamentos.html")
-	public ModelAndView redireccionListarDepartamentos(){
-		
-		List<Departamento> lstDepartamentos = departamentoServicio.obtenerAllActivos();
-		
-		ModelAndView MV = new ModelAndView();
-		MV.setViewName("ListarDepartamentos");
-		MV.addObject("lstDepartamentos", lstDepartamentos);
-		return MV;
-	}
-
 
 	
 	

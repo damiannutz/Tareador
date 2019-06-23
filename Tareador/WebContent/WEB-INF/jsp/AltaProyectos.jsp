@@ -64,7 +64,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                 	<li>
-                        <a class="page-scroll" href="userin.jsp">VOLVER</a>
+                        <a class="page-scroll" href="IrListarProyectos.html">VOLVER</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="#about">userName</a>
@@ -82,64 +82,72 @@
     <header>
         <div class="header-content">
             <div class="header-content-inner">
-                <h1 id="homeHeading">Nuevo Proyectos</h1>
+                <h1 id="homeHeading"><c:out value="${ headerTitle}"></c:out></h1>
                 <hr>
-                 <a href="ListarDepartamentos.jsp" class="btn btn-primary btn-xl page-scroll">LISTA DE PROYECTOS</a><br><br><br>
+                 <a href="IrListarDepartamentos.html" class="btn btn-primary btn-xl page-scroll">LISTA DE PROYECTOS</a><br><br><br>
           
-                
-			
 			<div align="center">
 			<h3 id="homeHeading">   </h3>
 						
+				<form method="post" action="save-proyecto.html">
 					<table>
+					
 						<tr>
-			
-						<td>
-			
-						<form method="post" action="UsuariosTareadorServlet?UserIdGestionado=">
-						
-						<tr>
-						<td>Nombre:</td>
-						<td><input maxlength="30" type="text" value="" style=" color: black " size="20" required="required" name="nombre"></td>
-						</tr>
-						
-						
-						
-						<tr>
-						<td>Descripcion:</td>
-						<td>
-							<textarea name="textarea" rows="5" cols="18" style=" color: black " required="required" name="descripcion"></textarea></td>
+							<td>Nombre:</td>
+							<td><input maxlength="30" type="text" style=" color: black " size="20" required="required" name="descripcion" value="<c:out value="${ ProyectoDescripcion.toString() }"/>"></td>
 						</tr>
 						<tr>
+							<td><br></td>
+						</tr>
 						
+						<tr>			
+									
 						<td style="padding-top:5px; padding-bottom:5px;">Departamento:</td>
 							<td style="padding-top:5px; padding-bottom:5px;">
-								<select name="cmbDepartamento"  class="btn btn-info dropdown-toggle">
+							
+								<select name="cmbDepartamentoId"  class="btn btn-info dropdown-toggle">
 								
-									<option value="" selected="selected" > </option>
-								
-										<option value="" > </option> 
+								<c:forEach items="${lstDepartamentos}" var="item">
+										<c:choose>
+										    <c:when test="${ ProyectoDepartamentoId != null && ProyectoDepartamentoId == item.getIdDepartamento() }">
+										       	<option value="<c:out value="${item.getIdDepartamento()}" />" selected="selected" >${item.getDescripcion()}</option>
+										    </c:when>    
+										    <c:otherwise>
+										        <option  value="<c:out value="${item.getIdDepartamento()}" />"  >${item.getDescripcion()}</option>
+										    </c:otherwise>
+										</c:choose>
 										
-						
+								</c:forEach>
+								
 							</select>
-							</td>
+								</td>
+							
 						</tr>
+						<tr>
+						<td>
+							<input type="hidden" style=" color: black " name="IdProyecto" value="<c:out value="${ IdProyecto }" />">
+						</td>
 						
-						
-						
+						</tr>
 						<tr>
 						<td colspan="2" align="center">
-						
-						<input type="submit" name="btnGuardarUsuario"  value="Guardar" class="btn btn-success"/>						
-						
-						<a type="button" href="/Lab5/ListarProyectos.jsp" id="btnCancelar" value="Cancelar"  class="btn btn-warning">Cancelar</a>
+							
+						<input type="submit" name="btnGuardarProyecto"  value="Guardar" class="btn btn-success"/>
 						
 						
-							</tr>
-							</form>
-						</td>
+						
+						<c:if test="${ IdProyecto != null }">
+						
+								<a type="button" href="<c:url value="/baja-proyecto-${IdProyecto}"/>" name="btnBorrarProyecto" value="Eliminar_Proyecto" class="btn btn-danger">Eliminar</a>
+						</c:if>
+						
+						<a type="button" href="IrListarProyectos.html" id="btnCancelar" value="Cancelar"  class="btn btn-warning">Cancelar</a>
+						
+						</td> 
 						</tr>
+						
 		</table>
+						</form>
 
 			                
             </div>
