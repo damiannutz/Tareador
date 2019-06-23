@@ -134,8 +134,8 @@
 		
 
 		<property name="username" value="root" />
-		<property name="password" value="root" />
-<!--  	<property name="password" value="38097441" />  -->
+	<!--  	<property name="password" value="root" />-->
+	<property name="password" value="38097441" />  
 	</bean>
 
 	<!-- Session factory de Hibernate -->

@@ -70,7 +70,8 @@ input:invalid, textarea:invalid {
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                 	<li>
-                        <a class="page-scroll" href="AdministrarUsuarios.jsp">VOLVER</a>
+             <a    class="page-scroll" href="<c:url value='/IrAdministrarUsuarios.html' />"  >VOLVER</a>
+                	
                     </li>
                     <li>
                         <a class="page-scroll" href="#about">userName</a>
@@ -90,8 +91,8 @@ input:invalid, textarea:invalid {
             <div class="header-content-inner">
                 <h1 id="homeHeading">Nuevo Usuario</h1>
                 <hr>
-                 <a href="ListarUsuarios.jsp" class="btn btn-primary btn-xl page-scroll">LISTA DE USUARIOS</a><br><br><br>
-          
+                <!--   <a href="ListarUsuarios.jsp" class="btn btn-primary btn-xl page-scroll">LISTA DE USUARIOS</a><br><br><br>-->
+                          <a class="btn btn-primary btn-xl page-scroll" href="<c:url value='/IrListarUsuarios.html' />"  >LISTA DE USUARIOS</a><br><br><br>
                 
 			
 			<div align="center">
@@ -176,11 +177,11 @@ input:invalid, textarea:invalid {
 						
 						<input type="button" name="btnGuardarUsuario"  myContextPath="${pageContext.request.contextPath}"  onclick="guardarUsuario(this)"  value="Guardar" class="btn btn-success"/>
 						
-						
+					
 							
 						
+			            <a  name="cancelar"  class="btn btn-primary btn-xl page-scroll" href="<c:url value='/IrAdministrarUsuarios.html' />"   >cancelar</a><br><br><br>
 						
-						<a type="button" href="/Lab5/ListarUsuarios.jsp" myContextPath="${pageContext.request.contextPath}" id="btnCancelar" value="Cancelar"  class="btn btn-warning">Cancelar</a>
 						
 						
 							</tr>
@@ -245,17 +246,6 @@ input:invalid, textarea:invalid {
 var guardarUsuario= function(element){
 	
 var CONTEXT_PATH =	$(element).attr('myContextPath');
-	debugger;
-//	var parameters = { nombreU: $('#inputNombre').val() , apellido: $('#inputApellido').val() , contraseña: $('#inputPassword').val() , correo:  $('#inputCorreo').val(), idDepartamento: $('#cmbDepartamento').val(), departamento: $('#cmbDepartamento').text(), tipoUsuario: $('#cmbTipoUsuario').text(), idTipoUsuario: $('#cmbTipoUsuario').val(),  };
-	
-
-	//var user = '{' "user" ':' '{' "Nombre" : $('#inputNombre').val() , Apellido: $('#inputApellido').val() , Contrasenia: $('#inputPassword').val() , Email:  $('#inputCorreo').val()}};//, idDepartamento: 1, departamento: 'Sistemas', tipoUsuario: 'Super usuario', idTipoUsuario: 'SUPER' } };
-	
-	
-//	var user = { "user" : { "Nombre" : ""$('#inputNombre').val()"", "Apellido"  : ""$('#inputApellido').val()"", "Contrasenia" : ""$('#inputPassword').val()"", "Email" : ""$('#inputCorreo').val()"" } };
-//	var user = { "user": { "Nombre": "$('#inputNombre').val()'", "Apellido": ""$('#inputApellido').val()"", "Contrasenia": ""$('#inputPassword').val()"", "Email": ""$('#inputCorreo').val()"", "Departamento": {  "descripcion": "", "codigo": "",  "idDepartamento": "" }, "TipoUsuario": {"idTipoUsuario": "", "descripcion": ""  }  }}      
-
-	//var user = { "user": { "Nombre": "", "Apellido": "", "Contrasenia": "", "Email": "", "Departamento": {  "descripcion": "", "codigo": "",  "idDepartamento": "" }, "TipoUsuario": {"idTipoUsuario": "", "descripcion": ""  }  }}      
 
 	var user  = new Object();
 	
