@@ -20,7 +20,7 @@ public class Proyecto {
 	@Column(name = "is_activo")
 	private Boolean isActivo;
 	
-	@ManyToOne(cascade= {CascadeType.ALL})
+	@ManyToOne(cascade= {CascadeType.PERSIST})
 	@JoinColumn(name="Id_Departamento", nullable = true  )
 	private Departamento departamento;
 	

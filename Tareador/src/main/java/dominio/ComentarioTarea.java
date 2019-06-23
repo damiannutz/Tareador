@@ -16,7 +16,7 @@ public class ComentarioTarea {
 	@Column(name="Id_Comentario_Tarea")
 	private Integer IdComentarioTarea;
 	
-	@ManyToOne(cascade= {CascadeType.ALL})
+	@ManyToOne(cascade= {CascadeType.PERSIST})
 	@JoinColumn(name="Id_Tarea")
 	private Tarea tarea;
 	

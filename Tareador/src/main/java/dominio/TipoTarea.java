@@ -20,7 +20,7 @@ public class TipoTarea {
 	@Column(name="Is_Activo")
 	private boolean IsActivo;
 	
-	@ManyToOne(cascade= {CascadeType.ALL})
+	@ManyToOne(cascade= {CascadeType.PERSIST})
 	@JoinColumn(name="Id_Departamento" , nullable = true  )
     private Departamento departamentos;
 

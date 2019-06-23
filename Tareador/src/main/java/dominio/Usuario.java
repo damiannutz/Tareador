@@ -54,11 +54,11 @@ public class Usuario {
 	@Column(name = "is_activo", nullable = true)
 	  private Boolean IsActivo;
 	  
-	@ManyToOne(cascade= {CascadeType.ALL})
+	@ManyToOne(cascade= {CascadeType.PERSIST})
 	@JoinColumn(name="Id_Departamento", nullable = true  )
 	  private Departamento Departamento;
 	
-	@ManyToOne(cascade= {CascadeType.ALL})
+	@ManyToOne(cascade= {CascadeType.PERSIST})
 	@JoinColumn(name="id_tipo_usuario")
 	  private TipoUsuario TipoUsuario;
 

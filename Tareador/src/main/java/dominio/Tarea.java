@@ -27,28 +27,28 @@ public class Tarea {
 	@Column(name="Is_Activo")
 	private boolean IsActivo;
 	
-	@ManyToOne(cascade= {CascadeType.ALL})
+	@ManyToOne(cascade= {CascadeType.PERSIST})
 	@JoinColumn(name="Id_Tipo_Tareas")
 	private TipoTarea tipoTarea;
 	
-	@ManyToOne(cascade= {CascadeType.ALL})
+	@ManyToOne(cascade= {CascadeType.PERSIST})
 	@JoinColumn(name="Id_Estado_Tareas")
 	private EstadoTarea estadoTarea;
 	
-	@ManyToOne(cascade= {CascadeType.ALL})
+	@ManyToOne(cascade= {CascadeType.PERSIST})
 	@JoinColumn(name="Id_Prioridad")
 	private Prioridad prioridad;
 	
-	@ManyToOne(cascade= {CascadeType.ALL})
+	@ManyToOne(cascade= {CascadeType.PERSIST})
 	@JoinColumn(name="Id_Proyecto")
 	private Proyecto proyecto;
 	
-	@ManyToOne(cascade= {CascadeType.ALL})
+	@ManyToOne(cascade= {CascadeType.PERSIST})
 	@JoinColumn(name="Id_Usuario_Reporta" , referencedColumnName = "Id_Usuario" )
 	private Usuario usuarioReporta;
 
 	
-	@ManyToOne(cascade= {CascadeType.ALL})
+	@ManyToOne(cascade= {CascadeType.PERSIST})
 	@JoinColumn(name="Id_Usuario_Asignado" , referencedColumnName = "Id_Usuario" )
 	private Usuario usuarioAsignado;
 

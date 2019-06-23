@@ -24,7 +24,7 @@ public class EstadoTarea {
 	@Column(name = "Is_Final")
 	private Boolean isFinal;
 	
-	@ManyToOne(cascade= {CascadeType.ALL})
+	@ManyToOne(cascade= {CascadeType.PERSIST})
 	@JoinColumn(name="id_departamento", nullable = true  )
 	private Departamento departamento; 
 	
