@@ -1,6 +1,6 @@
 package servicioImpl;
 
-import java.util.ArrayList;
+import java.util.*;
 
 import dao.DepartamentoDao;
 import dominio.Departamento;
@@ -20,6 +20,11 @@ public class DepartamentoServicioImpl implements DepartamentoServicio {
 	}
 
 	@Override
+	public ArrayList<Departamento> obtenerAllActivos() {
+		return (ArrayList)dataAccess.obtenerAllActivos();
+	}
+	
+	@Override
 	public Departamento obtenerById(Integer idDepartamento) {
 		return dataAccess.obtenerById(idDepartamento);
 	}
@@ -31,11 +36,16 @@ public class DepartamentoServicioImpl implements DepartamentoServicio {
 	}
 
 	@Override
-	public void eliminar(Integer idUser) {
-		dataAccess.eliminar(idUser);
+	public void eliminar(Integer idDepartamento) {
+		dataAccess.eliminar(idDepartamento);
 		
 	}
-
+	    
+	@Override
+	public  void bajaLogica(Integer idDepartamento) {
+		dataAccess.bajaLogica(idDepartamento);
+	}
+	
 	@Override
 	public void actualizar(Departamento Departamento) {
 		dataAccess.actualizar(Departamento);
