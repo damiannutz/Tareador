@@ -19,12 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
 
 import dominio.*;
-import servicio.EstadoTareaServicio;
-import servicio.PrioridadServicio;
-import servicio.RolServicio;
-import servicio.TipoTareaServicio;
-import servicio.TipoUsuarioServicio;
-import servicio.UsuarioServicio;
+import servicio.*;
 
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -58,42 +53,6 @@ public class UserController {
 //	@Autowired
 //	public TipoUsuarioServicio tipoUsuarioServicio;
 
-		
-//	public void inicializar() {
-//		revisarSiSeCreoTodo();
-//	}
-//	
-//	public void revisarSiSeCreoTodo() {
-//	
-//		List<TipoUsuario> lstTiposUsuario = tipoUsuarioServicio.obtenerAll();
-//		
-//		if(lstTiposUsuario == null || lstTiposUsuario.size() == 0)
-//			crearTodo();
-//		
-//	}
-//	
-//	public void crearTodo() {
-//		insertTiposUsuarios();
-//		
-//	}
-//	
-//	private List<TipoUsuario> insertTiposUsuarios() {
-//
-//		
-//		List<TipoUsuario> lstTipoUsuarios = new ArrayList<TipoUsuario>();		
-//		
-//		lstTipoUsuarios.add(new TipoUsuario(TipoUsuario.tipo_super , "Super Usuario"));
-//		lstTipoUsuarios.add(new TipoUsuario(TipoUsuario.tipo_admin , "Administrador"));
-//		lstTipoUsuarios.add(new TipoUsuario(TipoUsuario.tipo_user , "Usuario"));
-//		
-//		for(TipoUsuario item : lstTipoUsuarios){
-//			tipoUsuarioServicio.insertar(item);
-//		}
-//
-//		return lstTipoUsuarios;
-//	}
-//	
-	
 	
 	
 	//Inicio
@@ -152,26 +111,7 @@ public class UserController {
 		MV.setViewName("ListarProyectos");
 		return MV;
 	}
-	@RequestMapping("IrAdministrarDepartamentos.html")
-	public ModelAndView redireccionAdministrarDepartamentos(){
-		ModelAndView MV = new ModelAndView();
-		MV.setViewName("AdministrarDepartamentos");
-		return MV;
-	}
-	@RequestMapping("IrAltaDepartamento.html")
-	public ModelAndView redireccionAltaDepartamento(){
-		ModelAndView MV = new ModelAndView();
-		MV.setViewName("AltaDepartamento");
-		return MV;
-	}
-	@RequestMapping("IrListarDepartamentos.html")
-	public ModelAndView redireccionListarDepartamentos(){
-		ModelAndView MV = new ModelAndView();
-		MV.setViewName("ListarDepartamentos");
-		return MV;
-	}
-
-
+	
 	
 	
 	@RequestMapping(value ="/altaUsuario.html" , method= { RequestMethod.GET, RequestMethod.POST})

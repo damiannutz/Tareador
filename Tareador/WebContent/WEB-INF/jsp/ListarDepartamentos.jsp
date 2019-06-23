@@ -65,7 +65,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                 	<li>
-                        <a class="page-scroll" href="AdministrarDepartamentos.jsp">VOLVER</a>
+                        <a class="page-scroll" href="IrAdministrarDepartamentos.html">VOLVER</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="#about">userName</a>
@@ -89,45 +89,16 @@
 <table >
 <tr>
  <th style="padding-bottom: 5px;">
- 	<form action="UsuariosTareadorServlet?ListarUsuarios=ListarUsuarios.jsp" method="post" >
- 		<input type="submit" name="ListarUsuarios" value="Actualizar Lista" class="btn btn-primary">
+ 	<form action="IrListarDepartamentos.html" method="post" >
+ 		<input type="submit" name="ListarDepartamentos" value="Actualizar Lista" class="btn btn-primary">
 	</form>
 </th>
  <th style="padding-left: 5px;   padding-right: 5px; padding-bottom: 5px;">
-	<form action="AltaDepartamento.jsp" method="post" >
-	 	<input type="submit" name="NuevoUsuario" value="Nuevo Departamento" class="btn btn-primary">
+	<form action="IrAltaDepartamento.html" method="post" >
+	 	<input type="submit" name="NuevoDepartamento" value="Nuevo Departamento" class="btn btn-primary">
 	</form>
 </th>
 
-						
-						<td >Departamento:</td>
-							<td style="padding-left: 5px;   padding-right: 5px;">
-								<select id="cmbDepartamento"  class="btn btn-primary dropdown-toggle">
-							
-									
-
-									<option value="TODOS" selected="selected" >Todos </option>
-									<option value="IT"  >Sistemas </option>
-									<option value="DEV" >DESARROLLO </option> 
-								    <option value="RRHH" >Recursos Humanos </option> 
-
-						
-							</select>
-							</td>
-					
-					
-						<td>Usuario:</td>
-						<td style="padding-left: 5px;   padding-right: 5px; padding-bottom:5px;">
-								<select id="cmbTipoUsuario" required="required" class="btn btn-primary dropdown-toggle">
-
-									<option value="TODOS" selected="selected" > Todos</option>
-                                    <option value="ADMIN"  >Administrador </option>
-									<option value="SUPER" >Super Administrador </option> 
-								    <option value="USER" >Usuario standard </option> 
-						
-							</select>
-							</td>
-					
 </tr>
 
 </table>
@@ -139,26 +110,25 @@
 <table class="table display AllDataTables">
 	<thead>
 		<tr>
-
-		   <th>Nombre</th>
+			<th>Codigo</th>
 		   <th>Descripcion</th>
-		   
 		   <th>Opciones</th>
 	 	</tr>
 	</thead>
 	<tbody>
 
-	
-		<form method="get" action="UsuariosTareadorServlet?verUsuario=">
-			<tr style="text-align: left" data-dto="cc" data-user="cc" >
-			<td></td><td></td>
-			<td style="text-align: right"> 
+		<c:forEach items="${lstDepartamentos}" var="item">
+				<tr style="text-align: left" data-dto="cc" data-user="cc" >
+			
+				<td>${item.getCodigo()}</td>
+				<td>${item.getDescripcion()}</td>
+				<td ><a href="<c:url value='/edit-departamento-${item.getIdDepartamento()}' />">Editar</a></td>
+				
+<!-- 				<button type="submit" class="btn btn-primary"  onclick="callServlet()"> Editar</button> -->
+				</tr>
+				
+			</c:forEach>
 
-	
-			<button type="submit" class="btn btn-primary"  onclick="callServlet()"> Editar</button>
-			</td>
-			</tr>
-		</form>
 		
 	</tbody>
 </table>
@@ -249,67 +219,58 @@ function callServlet(idUsuario){
 		    });
 		  
 		
-		$("#cmbDepartamento").on('change',function(){
+// 		$("#cmbDepartamento").on('change',function(){
 			
 			
 			
-			$("#DataTables_Table_0_wrapper").find('tbody').find('tr').each(function(index,element){
+// 			$("#DataTables_Table_0_wrapper").find('tbody').find('tr').each(function(index,element){
 				
 				
-				if($("#cmbDepartamento").val() == $(element).attr('data-dto')){
-					$(element).removeAttr('hidden');
-				}else if($("#cmbDepartamento").val() == "TODOS"){
+// 				if($("#cmbDepartamento").val() == $(element).attr('data-dto')){
+// 					$(element).removeAttr('hidden');
+// 				}else if($("#cmbDepartamento").val() == "TODOS"){
 					
-					$(element).removeAttr('hidden');
+// 					$(element).removeAttr('hidden');
 					
-				}else{
-					$(element).attr('hidden','true');
-				}
+// 				}else{
+// 					$(element).attr('hidden','true');
+// 				}
 				
 					
-			});
+// 			});
 			
 		
 			
 			
-		});
+// 		});
 		
-		$("#cmbTipoUsuario").on('change',function(){
+// 		$("#cmbTipoUsuario").on('change',function(){
 			
 			
 			
-			$("#DataTables_Table_0_wrapper").find('tbody').find('tr').each(function(index,element){
+// 			$("#DataTables_Table_0_wrapper").find('tbody').find('tr').each(function(index,element){
 				
 				
-				if($("#cmbTipoUsuario").val() == $(element).attr('data-user')){
-					$(element).removeAttr('hidden');
-				}else if($("#cmbTipoUsuario").val() == "TODOS"){
+// 				if($("#cmbTipoUsuario").val() == $(element).attr('data-user')){
+// 					$(element).removeAttr('hidden');
+// 				}else if($("#cmbTipoUsuario").val() == "TODOS"){
 					
-					$(element).removeAttr('hidden');
+// 					$(element).removeAttr('hidden');
 					
-				}else{
-					$(element).attr('hidden','true');
-				}
+// 				}else{
+// 					$(element).attr('hidden','true');
+// 				}
 				
 					
-			});
+// 			});
 			
 
 			
+		
+// 		}); 
 		
 		}); 
-		
-		}); 
 
-		
-		
-		
-		
-
-	 
-
-	    
-	   
 	</script>
 
 

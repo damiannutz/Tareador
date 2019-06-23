@@ -31,19 +31,7 @@
 <script type="text/javascript" src="${jsURL}">
 </script>
 
-
-
-
-
-    
     <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
 
 </head>
 
@@ -82,9 +70,9 @@
     <header>
         <div class="header-content">
             <div class="header-content-inner">
-                <h1 id="homeHeading">Nuevo Departamento</h1>
+                <h1 id="homeHeading"><c:out value="${ headerTitle}"></c:out></h1>
                 <hr>
-                 <a href="ListarDepartamentos.jsp" class="btn btn-primary btn-xl page-scroll">LISTA DE DEPARTAMENTOS</a><br><br><br>
+                 <a href="IrListarDepartamentos.html" class="btn btn-primary btn-xl page-scroll">LISTA DE DEPARTAMENTOS</a><br><br><br>
           
                 
 			
@@ -92,49 +80,54 @@
 			<h3 id="homeHeading">   </h3>
 						
 					<table>
-						<tr>
 			
-						<td>
-			
-						<form method="post" action="UsuariosTareadorServlet?UserIdGestionado=">
+						<form method="post" action="save-departamento.html">
 						
 						<tr>
-						<td>Nombre:</td>
-						<td><input maxlength="30" type="text" value="" style=" color: black " size="20" required="required" name="nombre"></td>
+						<td>Codigo:</td>
+						<td><input maxlength="30" type="text" style=" color: black " size="20" required="required" name="codigo" value="<c:out value="${ departamentoCodigo.toString() }"/>"></td>
 						</tr>
-						
-						
 						
 						<tr>
 						<td>Descripcion:</td>
 						<td>
-							<textarea name="textarea" rows="5" cols="18" style=" color: black " required="required" name="descripcion"></textarea></td>
+							<textarea rows="5" cols="18" style=" color: black " required="required" name="descripcion" 
+							><c:out value="${ departamentoDescripcion.toString() }" /></textarea>
+							
+						</td>
 						</tr>
 						
+						<tr>
+						<td>
+							<input type="hidden" style=" color: black " name="idDepartamento" value="<c:out value="${ idDepartamento }" />">
+						</td>
 						
-						
-						
+						</tr>
 						<tr>
 						<td colspan="2" align="center">
-						
+							
 						<input type="submit" name="btnGuardarUsuario"  value="Guardar" class="btn btn-success"/>
 						
 						
 						
+						<c:if test="${ idDepartamento != null }">
 						
-						<a type="button" href="/Lab5/ListarDepartamentos.jsp" id="btnCancelar" value="Cancelar"  class="btn btn-warning">Cancelar</a>
+								<a type="button" href="<c:url value='/baja-departamento-${idDepartamento}' />" name="btnBorrarDepartamento" value="Eliminar_Departamento" class="btn btn-danger">Eliminar</a>
+						</c:if>
 						
+						<a type="button" href="IrListarDepartamentos.html" id="btnCancelar" value="Cancelar"  class="btn btn-warning">Cancelar</a>
 						
+						</td> 
 							</tr>
 							</form>
-						</td>
-						</tr>
 		</table>
 
 			                
             </div>
         </div>
     </header>
+
+
 
 
 

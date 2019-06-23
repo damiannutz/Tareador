@@ -150,7 +150,7 @@ public class GeneralController {
 		
 		List<Departamento> lstDepartamentos = new ArrayList<Departamento>();
 
-		lstDepartamentos.add(new Departamento(null,"IT", "sistemas" ,true));
+		lstDepartamentos.add(new Departamento(null,"IT", "Sistemas" ,true));
 		lstDepartamentos.add(new Departamento(null,"RRHH", "Recursos Humanos" ,true));
 		lstDepartamentos.add(new Departamento(null,"DEV" , "Desarrollo" ,true));
 		

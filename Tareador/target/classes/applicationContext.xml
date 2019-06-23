@@ -126,7 +126,8 @@
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 <!-- 		<property name="url" value="jdbc:mysql://localhost:3306/tareadorfinal?createDatabaseIfNotExist=true" /> -->
-		<property name="url" value="jdbc:mysql://localhost:3306/tareadorfinal?createDatabaseIfNotExist=TRUE&amp;useUnicode=TRUE&amp;useJDBCCompliantTimezoneShift=TRUE&amp;useLegacyDatetimeCode=FALSE&amp;serverTimezone=UTC" />
+<!-- 		<property name="url" value="jdbc:mysql://localhost:3306/tareadorfinal?createDatabaseIfNotExist=TRUE&amp;useUnicode=TRUE&amp;useJDBCCompliantTimezoneShift=TRUE&amp;useLegacyDatetimeCode=FALSE&amp;serverTimezone=UTC" /> -->
+		<property name="url" value="jdbc:mysql://localhost:3306/tareadorfinal?createDatabaseIfNotExist=true&amp;serverTimezone=UTC&amp;useJDBCCompliantTimezoneShift=TRUE" />
 		<property name="username" value="root" />
 		<property name="password" value="root" />
 <!-- 	<property name="password" value="38097441" /> -->

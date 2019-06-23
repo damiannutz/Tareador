@@ -85,7 +85,7 @@
             <div class="header-content-inner">
                 <h1 id="homeHeading">Administrar Departamentos</h1>
                 <hr>
-                <form action="IrAltaDepartamento.htm" method="post" >
+                <form action="IrAltaDepartamento.html" method="post" >
 	 				<input type="submit" name="NuevoDepartamento" value="Nuevo Departamento" class="btn btn-primary btn-xl page-scroll">
 				</form>
 				<br><br>

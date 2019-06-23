@@ -1,7 +1,10 @@
 package daoImpl;
 
-import java.util.ArrayList;
+import java.util.*;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.transaction.annotation.Propagation;
@@ -37,6 +40,13 @@ public class DepartamentoDaoImpl implements DepartamentoDao {
 		return (ArrayList<Departamento>) this.hibernateTemplate.loadAll(Departamento.class);
 	}
 
+	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
+	public List<Departamento> obtenerAllActivos() {
+		return (List<Departamento>) this.hibernateTemplate.loadAll(Departamento.class).stream().filter(r->r.getIsActivo()).collect(Collectors.toList());
+	}
+
+	
+	
 	
 	@Override
 	@Transactional(propagation=Propagation.REQUIRES_NEW)
@@ -45,7 +55,16 @@ public class DepartamentoDaoImpl implements DepartamentoDao {
 		item.setIdDepartamento(idDepartamento);
 		this.hibernateTemplate.delete(item);
 	}
-
+	
+	@Override
+	@Transactional(propagation=Propagation.REQUIRES_NEW)
+	public void bajaLogica(Integer idDepartamento) {
+		
+		Departamento dep = this.hibernateTemplate.get(Departamento.class, idDepartamento);
+		dep.setIsActivo(false);
+		this.hibernateTemplate.update(dep);
+	}
+	
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED)
 	public void actualizar(Departamento Departamento) {
