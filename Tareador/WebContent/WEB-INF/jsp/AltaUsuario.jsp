@@ -106,64 +106,81 @@ input:invalid, textarea:invalid {
 						
 						<tr>
 						<td>Nombre:</td>
-						<td><input maxlength="30" type="text" value="" style=" color: black " size="20" required="required" name="nombre"></td>
+						<td><input maxlength="30" type="text" value="" style=" color: black " size="20" required="required" id="inputNombre" name="nombre"></td>
 						</tr>
 						<tr>
 						<td>Apellido:</td>
-						<td><input maxlength="30" type="text" value="" style=" color: black " size="20" required="required" name="apellido"></td>
+						<td><input maxlength="30" type="text" value="" style=" color: black " size="20" required="required" id="inputApellido" name="apellido"></td>
 						</tr>
 						<tr>
 						<td>Correo:</td>
-						<td><input maxlength="40" type="text" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Mail invalido" size="20" value="" style=" color: black " required="required" name="correo"></td>
+						<td><input id="inputCorreo" maxlength="40" type="text" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Mail invalido" size="20" value="" style=" color: black " required="required" name="correo"></td>
 						</tr>
 						<tr>
 						<td>Usuario:</td>
-						<td><input  pattern="^[A-Za-z][A-Za-z0-9._%+-]*$" title="No se permiten espacios"   maxlength="30" type="text" size="20" value="" style=" color: black " required="required" name="usuario"></td>
+						<td><input id="inputUsuario"  pattern="^[A-Za-z][A-Za-z0-9._%+-]*$" title="No se permiten espacios"   maxlength="30" type="text" size="20" value="" style=" color: black " required="required" name="usuario"></td>
 <!-- 						  pattern="^[A-Za-z][A-Za-z0-9]*$" -->
 						</tr>
 						<tr>
 						<td>Contraseña:</td>
-						<td><input maxlength="25" pattern=".{6,}" title="Seis o mas caracteres" type="password" value="" style=" color: black " required="required" size="20" name="contrasenia" /></td>
+						<td><input maxlength="25" id="inputPassword" pattern=".{6,}" title="Seis o mas caracteres" type="password" value="" style=" color: black " required="required" size="20" name="contrasenia" /></td>
 						</tr>
 						
 						<tr>
 						
 						<td style="padding-top:5px; padding-bottom:5px;">Departamento:</td>
 							<td style="padding-top:5px; padding-bottom:5px;">
-								<select name="cmbDepartamento"  class="btn btn-info dropdown-toggle">
+								<select  id="cmbDepartamento" name="cmTipoUsuario" required="required" class="btn btn-info dropdown-toggle">
 								
-									<option value="" selected="selected" > </option>
-								
-										<option value="" > </option> 
+
 										
-						
-							</select>
-							</td>
-						</tr>
-						<tr ">
-						<td style="padding-top:5px; padding-bottom:5px;">Tipo de usuario:</td>
-						<td style="padding-top:5px; padding-bottom:5px;">
-								<select name="cmbTipoUsuario" required="required" class="btn btn-info dropdown-toggle">
+							<c:forEach items="${departamentos}" var="item">
 								
-									<option value="" selected="selected" > </option>
 								
-										<option value="" > </option> 
+								<option value="${item.idDepartamento}" >${item.descripcion}</option>
+								
+								
+							
+							</c:forEach>
 									
 						
-							</select>
+							</select> 	
+							</td>
+						</tr>
+						<tr >
+						<td style="padding-top:5px; padding-bottom:5px;">Tipo de usuario:</td>
+						<td style="padding-top:5px; padding-bottom:5px;">
+						
+						
+						<select  id="cmbTipoUsuario" name="cmTipoUsuario" required="required" class="btn btn-info dropdown-toggle">
+								
+
+										
+							<c:forEach items="${tiposUsuario}" var="item">
+								
+								
+								<option value="${item.idTipoUsuario}" selected="selected" >${item.descripcion}</option>
+								
+								
+							
+							</c:forEach>
+									
+						
+							</select> 	
+							
 							</td>
 						</tr>
 						
 						<tr>
 						<td colspan="2" align="center">
 						
-						<input type="submit" name="btnGuardarUsuario"  value="Guardar" class="btn btn-success"/>
+						<input type="button" name="btnGuardarUsuario"  myContextPath="${pageContext.request.contextPath}"  onclick="guardarUsuario(this)"  value="Guardar" class="btn btn-success"/>
 						
 						
 							
 						
 						
-						<a type="button" href="/Lab5/ListarUsuarios.jsp" id="btnCancelar" value="Cancelar"  class="btn btn-warning">Cancelar</a>
+						<a type="button" href="/Lab5/ListarUsuarios.jsp" myContextPath="${pageContext.request.contextPath}" id="btnCancelar" value="Cancelar"  class="btn btn-warning">Cancelar</a>
 						
 						
 							</tr>
@@ -176,23 +193,129 @@ input:invalid, textarea:invalid {
             </div>
         </div>
     </header>
+    
+    
+    
+        <!-- jQuery -->
+<script src="<c:url value="/resources/jquery/jquery.min.js" />" type="text/javascript"></script>
 
-
-
-
-    <!-- jQuery -->
-    <script src="vendor/jquery/jquery.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="<c:url value="/resources/bootstrap/js/bootstrap.min.js" />" type="text/javascript"></script>
+
+
 
     <!-- Plugin JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    
+    <script src="<c:url value="/resources/vendor/scrollreveal/scrollreveal.min.js" />" type="text/javascript"></script>
+
+    
+    <script src="<c:url value="/resources/bootstrap/js/bootstrap.min.js" />" type="text/javascript"></script>
+
+    <script src="<c:url value="/resources/magnific-popup/jquery.magnific-popup.min.js" />" type="text/javascript"></script>
+
+
+    <!-- Theme JavaScript -->
+        <script src="<c:url value="/resources/js/creative.min.js" />" type="text/javascript"></script>
+    
+    
+    
+    
+
+
+
+
+    <!-- jQuery 
+    <script src="vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript 
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
     <script src="vendor/scrollreveal/scrollreveal.min.js"></script>
     <script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
 
-    <!-- Theme JavaScript -->
-    <script src="js/creative.min.js"></script>
+    <!-- Theme JavaScript 
+    <script src="js/creative.min.js"></script>-->
+
+<script type=text/javascript>
+
+var guardarUsuario= function(element){
+	
+var CONTEXT_PATH =	$(element).attr('myContextPath');
+	debugger;
+//	var parameters = { nombreU: $('#inputNombre').val() , apellido: $('#inputApellido').val() , contraseña: $('#inputPassword').val() , correo:  $('#inputCorreo').val(), idDepartamento: $('#cmbDepartamento').val(), departamento: $('#cmbDepartamento').text(), tipoUsuario: $('#cmbTipoUsuario').text(), idTipoUsuario: $('#cmbTipoUsuario').val(),  };
+	
+
+	//var user = '{' "user" ':' '{' "Nombre" : $('#inputNombre').val() , Apellido: $('#inputApellido').val() , Contrasenia: $('#inputPassword').val() , Email:  $('#inputCorreo').val()}};//, idDepartamento: 1, departamento: 'Sistemas', tipoUsuario: 'Super usuario', idTipoUsuario: 'SUPER' } };
+	
+	
+//	var user = { "user" : { "Nombre" : ""$('#inputNombre').val()"", "Apellido"  : ""$('#inputApellido').val()"", "Contrasenia" : ""$('#inputPassword').val()"", "Email" : ""$('#inputCorreo').val()"" } };
+//	var user = { "user": { "Nombre": "$('#inputNombre').val()'", "Apellido": ""$('#inputApellido').val()"", "Contrasenia": ""$('#inputPassword').val()"", "Email": ""$('#inputCorreo').val()"", "Departamento": {  "descripcion": "", "codigo": "",  "idDepartamento": "" }, "TipoUsuario": {"idTipoUsuario": "", "descripcion": ""  }  }}      
+
+	//var user = { "user": { "Nombre": "", "Apellido": "", "Contrasenia": "", "Email": "", "Departamento": {  "descripcion": "", "codigo": "",  "idDepartamento": "" }, "TipoUsuario": {"idTipoUsuario": "", "descripcion": ""  }  }}      
+
+	var user  = new Object();
+	
+	user.nombreUsuario= $('#inputUsuario').val();
+	user.nombre= $('#inputNombre').val();
+	user.apellido= $('#inputApellido').val();
+	user.contrasenia = $('#inputPassword').val();
+    user.email =  $('#inputCorreo').val();
+    user.departamento= new Object();
+    user.tipoUsuario= new Object();
+        
+    user.departamento.idDepartamento = $("#cmbDepartamento").val();
+    user.departamento.descripcion = $("#cmbDepartamento option:selected").text();
+    
+    user.tipoUsuario.idTipoUsuario= $("#cmbTipoUsuario").val();
+    user.tipoUsuario.descripcion= $("#cmbTipoUsuario option:selected").text();
+
+    user.isActivo= true;
+
+    
+/*	$.ajax({type: "POST",
+	    url: CONTEXT_PATH+"/AgregarUsuario",
+	    data: parameters,
+	    contentType : 'application/json; charset=utf-8',
+	    dataType : 'json',
+	    success: function (response) {
+	        if (response != null) {
+	            if (response.errorMsg != null && response.errorMsg != "") { // Login Error
+	                alert(response.errorMsg);
+	            } else {
+	                 // Here i need to call spring controller method and to redirect to another page
+	
+	                 // I have tried
+	               /*  $.ajax({type: "GET",
+	                        url: CONTEXT_PATH+"navigateMainPage",
+	                        data:JSON.stringify(loginDO),
+	                        contentType : 'application/json; charset=utf-8',
+	                        dataType : 'json'
+	                });
+	            }
+	        }
+	    }
+	});*/
+	
+	
+	$.ajax({ url: CONTEXT_PATH+"/AgregarUsuario",
+		type: "POST",
+		dataType: "json",
+		data: JSON.stringify(user),
+		contentType: "application/json; charset=utf-8",
+		success: function (result) {
+			if (result.success) 
+			{ alert(result.message); } 
+			else { alert(result.message) } }, 
+			error:function(error) { alert(error.message); } });
+	
+	
+}
+			
+</script>
 
 </body>
 

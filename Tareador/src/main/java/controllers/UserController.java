@@ -1,5 +1,7 @@
 package controllers;
 
+import java.awt.PageAttributes.MediaType;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -7,18 +9,25 @@ import java.util.Map;
 import javax.persistence.Convert;
 import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.hibernate.exception.spi.ConversionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
 
+import com.cloudinary.Search;
+
 import dominio.*;
+import servicio.DepartamentoServicio;
 import servicio.EstadoTareaServicio;
 import servicio.PrioridadServicio;
 import servicio.RolServicio;
@@ -26,13 +35,30 @@ import servicio.TipoTareaServicio;
 import servicio.TipoUsuarioServicio;
 import servicio.UsuarioServicio;
 
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.codehaus.jettison.json.JSONObject;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 public class UserController {
 	
 	@Autowired
 	public  UsuarioServicio usuarioService;
+	
+	@Autowired
+	public  DepartamentoServicio departamentoService;
+	
+	@Autowired
+	public  TipoUsuarioServicio tipoUsuarioService;
+	
+	
+	
+	
 	
 //	public void init(ServletConfig config) {
 //		ApplicationContext ctx = WebApplicationContextUtils
@@ -113,6 +139,11 @@ public class UserController {
 	@RequestMapping("IrAltaUsuario.html")
 	public ModelAndView redireccionAltaUsuario(){
 		ModelAndView MV = new ModelAndView();
+		
+		MV.addObject("departamentos", departamentoService.obtenerAll());
+		MV.addObject("tiposUsuario", tipoUsuarioService.obtenerAll());
+
+		
 		MV.setViewName("AltaUsuario"); 
 		return MV;
 	}
@@ -174,19 +205,28 @@ public class UserController {
 
 	
 	
-	@RequestMapping(value ="/altaUsuario.html" , method= { RequestMethod.GET, RequestMethod.POST})
-	public ModelAndView validarUsuario(String nombreU, String passU){
-		ModelAndView MV = new ModelAndView();
+	//@RequestMapping(value ="/AgregarUsuario" , method= { RequestMethod.POST})
+//	@ResponseBody
+	//public   String AgregarUsuario(@RequestBody final Usuario user) {
+//	public ModelAndView AgregarUsuario(String nombreU, String apellido, String contraseña, String correo,Integer idDepartamento, String departamento,String tipoUsuario, String idTipoUsuario ){
+	
 		
-		Usuario x = new Usuario();
-		x.setNombre(nombreU);
-		x.setContrasenia(passU);
+		@RequestMapping(value={"/AgregarUsuario"},method = RequestMethod.POST,  consumes  = "application/json")
+	//	public ModelAndView AgregarUsuario(@RequestBody Usuario user) {			
+			@ResponseBody public String searchAddress(HttpServletRequest request, HttpServletResponse response, @RequestBody String userJson) throws JsonParseException, JsonMappingException, IOException {
+			
+			byte[] jsonData = userJson.toString().getBytes();
+
+		        ObjectMapper mapper = new ObjectMapper();
+		        Usuario usuario = mapper.readValue(jsonData, Usuario.class); 
+
+		ModelAndView MV = new ModelAndView();
 		
 		String Message="";
 		
 		try{
 			
-			usuarioService.insertar(x);
+			usuarioService.insertar(usuario);
 			Message = "Usuario agregado";
 		}
 		catch(Exception e)
@@ -202,9 +242,13 @@ public class UserController {
 		MV.addObject("Mensaje", Message);
 		MV.addObject("listaUsuarios",this.usuarioService.obtenerAll());
 		MV.setViewName("Usuarios"); 
-		return MV;
+		
+	//	return MV;
+		return "adads";
 		
 	}
+	
+	
 	
      
 	@RequestMapping(value ="/eliminarUsuario.html" , method= { RequestMethod.GET, RequestMethod.POST})
