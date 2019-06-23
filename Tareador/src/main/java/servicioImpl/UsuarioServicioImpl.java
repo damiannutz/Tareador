@@ -30,6 +30,11 @@ public class UsuarioServicioImpl implements UsuarioServicio{
 	public Usuario obtenerById(Integer idUsuario) {
 		return dataAccess.obtenerById(idUsuario);
 	}
+	
+	@Override
+	public Usuario obtenerByUName(String UName) {
+		return dataAccess.obtenerByUName(UName);
+	}
 
 	@Override
 	public void insertar(Usuario usuario) {

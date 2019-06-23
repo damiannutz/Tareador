@@ -65,7 +65,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a class="page-scroll" href="#about">userName</a>
+                        <a class="page-scroll" href="#about"><%=session.getAttribute("Sessuser")%></a>
                     </li>
                     <li>
                         <a class="page-scroll" href="Login?CerrarSesion=1">Cerrar Sesion</a>

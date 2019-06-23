@@ -19,6 +19,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.ModelAndView;
@@ -40,6 +41,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
+@SessionAttributes("Sessuser")
 public class UserController {
 	
 	@Autowired
@@ -86,7 +88,7 @@ public class UserController {
 	@RequestMapping(value={"Index.html", "Inicio.html"})
 	public ModelAndView redireccion(){
 		ModelAndView MV = new ModelAndView();
-		MV.setViewName("userin"); 
+		MV.setViewName("Index"); 
 		return MV;
 	}
 	@RequestMapping("IrLogin.html")
@@ -224,5 +226,70 @@ public class UserController {
 		return MV;
 		
 	}
+	
+	@RequestMapping(value ="IngresoUsuario.html" , method= { RequestMethod.GET, RequestMethod.POST})
+	public ModelAndView validarUsuario(String nombreU, String passU){
+		ModelAndView MV = new ModelAndView();
+
+		boolean flagname = false;
+		boolean flagpass = false;
+		Usuario x = new Usuario();
+		x.setNombre(nombreU);
+		x.setContrasenia(passU);
+		String Message="";
+		ArrayList<Usuario> listausuarios = usuarioService.obtenerAll();
+
+		
+		
+
+		
+		int cantidad = listausuarios.size();
+		Integer cant = cantidad;
+		Message = listausuarios.get(4).getNombreUsuario();
+		
+	    for(int n=0;n<listausuarios.size();n++) {
+	    	if (listausuarios.get(n).getNombreUsuario().compareTo(nombreU) == 0) {
+	    		if(listausuarios.get(n).getContrasenia().compareTo(passU) == 0) {
+	    			flagpass = true;
+	    		}
+	    		flagname = true;
+	    		x.setIdUsuario(listausuarios.get(n).getIdUsuario());
+	    	}
+
+
+	      }
+		if (flagpass) {
+			
+		
+			try{
+				x = usuarioService.obtenerById(x.getIdUsuario());
+				//Message = "bien";
+				MV.setViewName("userin");
+				MV.addObject("Mensaje", Message);
+				MV.addObject("Usuario",x);
+				MV.setViewName("userin"); 
+				MV.addObject("Sessuser",x.getNombreUsuario());
+			}
+			catch(Exception e)
+			{
+				//Message = "No se pudo insertar el usuario";
+			}
+			finally
+			{
+			
+			}
+		}
+		else {
+			//Message = "Usuario incorrecto";
+			MV.setViewName("login");
+			MV.addObject("Mensaje", Message);
+			MV.addObject("Usuario",x);
+			MV.setViewName("login"); 
+			
+		}
+		
+		return MV;
+	}
+	
 	
 }

@@ -11,6 +11,8 @@ public interface UsuarioServicio {
 	ArrayList<Usuario> obtenerAllActivos();
 
 	Usuario obtenerById(Integer idUsuario);
+	
+	Usuario obtenerByUName(String UName);
 
 	void insertar(Usuario usuario);
 

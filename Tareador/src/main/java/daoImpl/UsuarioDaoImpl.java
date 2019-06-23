@@ -32,6 +32,12 @@ public class UsuarioDaoImpl implements UsuarioDao {
 	public Usuario obtenerById(Integer idUsuario) {
 		return this.hibernateTemplate.get(Usuario.class, idUsuario);
 	}
+	
+	@Override
+	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
+	public Usuario obtenerByUName(String UName) {
+		return this.hibernateTemplate.get(Usuario.class, UName);
+	}
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
