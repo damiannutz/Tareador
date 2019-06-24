@@ -24,6 +24,21 @@
     <!-- Plugin CSS -->
 <link href="<c:url value="/resources/vendor/magnific-popup/magnific-popup.css" />" rel="stylesheet">
 
+<link href="<c:url value="/resources/css/dataTables.bootstrap.min.css" />" rel="stylesheet">
+
+<link href="<c:url value="/resources/vendor/font-awesome/css/font-awesome.min.css" />" rel="stylesheet">
+
+<link href="<c:url value="/resources/vendor/magnific-popup/magnific-popup.css" />" rel="stylesheet">
+
+
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+
+
+
+
+
+
 
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -46,6 +61,7 @@
     <![endif]-->
 
 </head>
+
 <body id="page-top">
 
 
@@ -57,14 +73,14 @@
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand page-scroll" href="Inicio.html">Tareador</a>
+                <a class="navbar-brand page-scroll" href="Index.jsp">Tareador</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                 	<li>
-                        <a class="page-scroll" href="IrAdministrarRoles.html">VOLVER</a>
+                        <a class="page-scroll" href="AdministrarUsuarios.jsp">VOLVER</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="#about">userName</a>
@@ -83,21 +99,64 @@
         <div class="header-content">
             <div class="header-content-inner">
             <br><br>
-                <h2 id="homeHeading">Listado de Roles</h2>
+                <h2 id="homeHeading">Listado de Usuarios</h2>
     
 <table >
 <tr>
  <th style="padding-bottom: 5px;">
- 	<form action="IrListarRoles.html" method="post" >
- 		<input type="submit" name="ListarRoles" value="Actualizar Lista" class="btn btn-primary">
+ 	<form action="UsuariosTareadorServlet?ListarUsuarios=ListarUsuarios.jsp" method="post" >
+ 		                          <a style="border-top-width: 40px;" name="ListarUsuarios"  class="btn btn-primary btn-xl page-scroll" href="<c:url value='/IrListarUsuarios.html' />"  >LISTA DE USUARIOS</a><br><br><br>
+
 	</form>
 </th>
  <th style="padding-left: 5px;   padding-right: 5px; padding-bottom: 5px;">
-	<form action="IrAltaRol.html" method="post" >
-	 	<input type="submit" name="NuevoRol" value="Nuevo Rol" class="btn btn-primary">
+	<form action="IrAltaUsuario.html" method="post" >
+	 	<input type="submit" name="NuevoUsuario" value="Nuevo Usuario" class="btn btn-primary">
 	</form>
 </th>
 
+						
+						<td >Departamento:</td>
+							<td style="padding-left: 5px;   padding-right: 5px;">
+							<select  id="cmbDepartamento" name="cmTipoUsuario" required="required" class="btn btn-info dropdown-toggle">
+								
+
+										
+							<c:forEach items="${departamentos}" var="item">
+								
+								
+								<option value="${item.idDepartamento}" >${item.descripcion}</option>
+								
+								
+							
+							</c:forEach>
+									
+						
+							</select> 	
+							
+							
+							</td>
+					
+					
+						<td>Tipo de usuario:</td>
+						<td style="padding-left: 5px;   padding-right: 5px; padding-bottom:5px;">
+
+													<select  id="cmbTipoUsuario" name="cmTipoUsuario" required="required" class="btn btn-info dropdown-toggle">
+								
+
+										
+							<c:forEach items="${tiposUsuario}" var="item">
+								
+								
+								<option value="${item.idTipoUsuario}" selected="selected" >${item.descripcion}</option>
+								
+								
+							
+							</c:forEach>
+									
+						
+							</select> 	
+							</td>
 					
 </tr>
 
@@ -110,39 +169,45 @@
 <table class="table display AllDataTables">
 	<thead>
 		<tr>
-		    <th>Codigo</th>
+		   <th>Apellido</th>
+		   <th>Usuario</th>
 		   <th>Nombre</th>
+		   <th>Email</th>
+		   
 		   <th>Opciones</th>
 	 	</tr>
 	</thead>
 	<tbody>
 
 	
-		<tr>
-			<td>
-				<c:forEach items="${lstRoles}" var="item">
-					<tr style="text-align: left"  >
-			
-					<td>${item.codigo}</td>
-					<td>${item.descripcion}</td>
-					<td >
-				<!--	<a href="<c:url value='/edit-rol-${item.getIdRol()}' />">Editar</a> -->
-						<button type="submit" class="btn btn-primary"  onclick="callUsuarios(${item.getIdRol()})"> +Usuario</button>
-						<button type="button" class="btn btn-primary"  onclick="callEditar(${item.getIdRol()})"> Editar</button>
-					</td>
-					</tr>
-				
-				</c:forEach>
-	
-	
 
-<!-- 		<form method="get" action="UsuariosTareadorServlet?verUsuario="> -->
-<!-- 			<button type="submit" class="btn btn-primary"  onclick="callUsuarios()"> +Usuario</button> -->
-<!-- 			<button type="submit" class="btn btn-primary"  onclick="callServlet()"> Editar</button> -->
-<!-- 		</form> -->
+
+
+
+			
+			
+			<c:forEach items="${usuarios}" var="Usuario">
+				
+
+	<tr style="text-align: left" data-dto="${Usuario.departamento.idDepartamento}" data-user="${Usuario.tipoUsuario.idTipoUsuario}" >
+			
+				<td> ${Usuario.apellido} </td>
+				<td>${Usuario.nombreUsuario}</td>
+				<td>${Usuario.nombre}</td>
+				<td>${Usuario.email}
+				</td>
+							
+			<td> 
+
+				<td ><button type="submit" class="btn btn-primary"  onclick="callAgregar(${Usuario.idUsuario},${idRol})"> +Usuario</button></td>
+				<!--<td ><a href="<c:url value='/AgregarProyectoUsuario/${Usuario.idUsuario}/${idProyecto}' />">+ Usuario</a></td>-->
+
 			</td>
-		</tr>
-		
+					</tr>
+			</c:forEach>
+
+
+	
 	</tbody>
 </table>
 
@@ -155,44 +220,40 @@
 
 <script type="text/javascript">
 
-function callEditar(idRol){
-	
-	 form = document.createElement('form');
-     form.setAttribute('method', 'POST');
-     form.setAttribute('action', 'edit-rol.html');
-     myvar = document.createElement('input');
-     myvar.setAttribute('name', 'idRol');
-     myvar.setAttribute('type', 'hidden');
-     myvar.setAttribute('value', idRol);
-     form.appendChild(myvar);
-     document.body.appendChild(form);
-     form.submit();   
-		 
-// 		 document.getElementById("adminForm").action="/edit-rol-" + idRol;
-// 		 document.getElementById("adminForm").method = "GET";
-// 		 document.getElementById("adminForm").submit();
-		 
-}
-
-function callUsuarios(idRol){
+function callServlet(idUsuario){
 	
 	{
-		form = document.createElement('form');
-	     form.setAttribute('method', 'POST');
-	     form.setAttribute('action', 'agregar-usuario-rol.html');
-	     myvar = document.createElement('input');
-	     myvar.setAttribute('name', 'idRol');
-	     myvar.setAttribute('type', 'hidden');
-	     myvar.setAttribute('value', idRol);
-	     form.appendChild(myvar);
-	     document.body.appendChild(form);
-	     form.submit();
+		 document.getElementById("adminForm").action="GestionarUsuario.jsp";
+		 document.getElementById("adminForm").method = "POST";
+		 document.getElementById("adminForm").submit();
 
 		}
 }
 
+function callAgregar(idUsuario, idRol){
+	
+	{
+		form = document.createElement('form');
+	     form.setAttribute('method', 'POST');
+	     form.setAttribute('action', 'AgregarProyectoRol.html');
+	     myvar = document.createElement('input');
+	     myvar.setAttribute('name', 'idUsuario');
+	     myvar.setAttribute('type', 'hidden');
+	     myvar.setAttribute('value', idUsuario);
+	     myvar2 = document.createElement('input');
+	     myvar2.setAttribute('name', 'idRol');
+	     myvar2.setAttribute('type', 'hidden');
+	     myvar2.setAttribute('value', idRol);
+	     form.appendChild(myvar);
+	     form.appendChild(myvar2);
+	     document.body.appendChild(form);
+	     form.submit();
+
+	}
+}
 
 </script>
+
 
 <script src="<c:url value="/resources/jquery/jquery.min.js" />" type="text/javascript"></script>
 
@@ -221,6 +282,7 @@ function callUsuarios(idRol){
     <script src="<c:url value="/resources/js/jquery.dataTables.min.js" />" type="text/javascript"></script>
     
     <script src="<c:url value="/resources/js/dataTables.bootstrap.min.js" />" type="text/javascript"></script>
+
 
 	<script>
 		$(document).ready( function () {
@@ -257,10 +319,87 @@ function callUsuarios(idRol){
 			
 		    });
 		  
+		
+		$("#cmbDepartamento").on('change',function(){
+			
+			
+			
+			$("#DataTables_Table_0_wrapper").find('tbody').find('tr').each(function(index,element){
+				
+				
+				if($("#cmbDepartamento").val() == $(element).attr('data-dto')){
+					$(element).removeAttr('hidden');
+				}else if($("#cmbDepartamento").val() == "TODOS"){
+					
+					$(element).removeAttr('hidden');
+					
+				}else{
+					$(element).attr('hidden','true');
+				}
+				
+					
+			});
+			
+		
+			
+			
+		});
+		
+		$("#cmbTipoUsuario").on('change',function(){
+			
+			
+			
+			$("#DataTables_Table_0_wrapper").find('tbody').find('tr').each(function(index,element){
+				
+				
+				if($("#cmbTipoUsuario").val() == $(element).attr('data-user')){
+					$(element).removeAttr('hidden');
+				}else if($("#cmbTipoUsuario").val() == "TODOS"){
+					
+					$(element).removeAttr('hidden');
+					
+				}else{
+					$(element).attr('hidden','true');
+				}
+				
+					
+			});
+			
+
+			
+		
+		}); 
+		
 		}); 
 
 		
+		var editarUsuario= function(element){
+			var CONTEXT_PATH =	$(element).attr('myContextPath');
+
+			debugger;
+			var userId="1";
+			$.ajax({ url: CONTEXT_PATH+"/EditarUsuario",
+				type: "POST",
+				dataType: "json",
+				data: JSON.stringify(userId),
+				contentType: "application/json; charset=utf-8",
+				success: function (result) {
+					if (result.success) 
+					{ alert(result.message); } 
+					else { alert(result.message) } }, 
+					error:function(error) { alert(error.message); } });
+			
+			
+		}
 		
+		
+		
+		
+
+	 
+
+	    
+	   
 	</script>
 
 

@@ -56,6 +56,9 @@ public class UserController {
 	
 	@Autowired
 	public ProyectoServicio proyectoServicio;
+	
+	@Autowired
+	public RolServicio rolServicio;
 		
 //	public void init(ServletConfig config) {
 //		ApplicationContext ctx = WebApplicationContextUtils
@@ -404,10 +407,9 @@ public class UserController {
 	    //idProyecto = lstProy.size();
 	    
 	    //user.setLsProyectos(lstProy);
-	    user.setApellido("hola");
-	    usuarioService.actualizar(user);
+	    
 		try{
-			
+			usuarioService.actualizar(user);
 		}
 		catch(Exception e)
 		{
@@ -417,14 +419,35 @@ public class UserController {
 	    
 	    String usuario = idUsuario.toString();
 	    String proyecto = idProyecto.toString();
-	    
-		
-		
-
-		
-
 		
 		MV.setViewName("forward:/IrListarProyectos.html"); 
+		return MV;
+	}
+	
+	@RequestMapping(value={ "AgregarProyectoRol.html" }, method= { RequestMethod.GET,RequestMethod.POST})
+
+	 public ModelAndView agregarProyectoRol(Integer idUsuario, Integer idRol){
+
+		Set <Rol> lstProy = new HashSet<Rol>();
+		ModelAndView MV = new ModelAndView();
+		Rol proy = rolServicio.obtenerById(idRol);
+	    Usuario user =	usuarioService.obtenerById(idUsuario);
+	    lstProy = user.getLsRoles();
+	    lstProy.add(proy);
+	    //idProyecto = lstProy.size();
+	    
+	    //user.setLsProyectos(lstProy);
+	    
+		try{
+			usuarioService.actualizar(user);
+		}
+		catch(Exception e)
+		{
+			//Message = "No se pudo insertar el usuario";
+		}
+	    
+		
+		MV.setViewName("forward:/IrListarRoles.html"); 
 		return MV;
 	}
 	

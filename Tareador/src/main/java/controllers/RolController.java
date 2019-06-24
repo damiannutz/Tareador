@@ -28,6 +28,15 @@ public class RolController {
 	@Autowired
 	public RolServicio rolServicio;
 	
+	@Autowired
+	public DepartamentoServicio departamentoServicio;
+	
+	@Autowired
+	public  UsuarioServicio usuarioService;
+	
+	@Autowired
+	public  TipoUsuarioServicio tipoUsuarioService;
+	
 	
 	@RequestMapping("IrAdministrarRoles.html")
 	public ModelAndView redireccionAdministrarRoles(){
@@ -102,6 +111,23 @@ public class RolController {
 		return MV;
 	}
 	
+	@RequestMapping(value={ "agregar-usuario-rol.html" }, method= { RequestMethod.GET,RequestMethod.POST})
+	public ModelAndView redireccionAgregarUsuarioProyecto(Integer idRol){
+	
+		Rol rol = rolServicio.obtenerById(idRol);
+
+		
+		ModelAndView MV = new ModelAndView();
+		List<Usuario> userList = usuarioService.obtenerAll();
+		MV.addObject("departamentos", departamentoServicio.obtenerAll());
+		MV.addObject("tiposUsuario", tipoUsuarioService.obtenerAll());
+		MV.addObject("usuarios", userList);
+		MV.addObject("idRol", idRol);
+
+		MV.addObject("headerTitle", "Agregar Rol");
+		MV.setViewName("AgregarUsuarioARol");
+		return MV;
+	}
 	
 	
 }
