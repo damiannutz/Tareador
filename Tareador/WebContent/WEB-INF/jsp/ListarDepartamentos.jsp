@@ -58,7 +58,7 @@
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand page-scroll" href="Index.jsp">Tareador</a>
+                <a class="navbar-brand page-scroll" href="Inicio.html">Tareador</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -122,17 +122,14 @@
 			
 				<td>${item.getCodigo()}</td>
 				<td>${item.getDescripcion()}</td>
-<<<<<<< HEAD
-				<td ><input type="button" name="btnEliminar"   value="Eliminar" class="btn btn-primary"><a href="<c:url value='/edit-departamento-${item.getIdDepartamento()}' />">Editar</a></input></td>
-=======
-				<td >
-<%-- 				<a href="<c:url value='/edit-departamento-${item.getIdDepartamento()}' />">Editar</a>--%>
 
+				
+
+				<td >
 			<button type="button" class="btn btn-primary"  onclick="callEditar(${item.getIdDepartamento()})"> Editar</button>
 				</td> 
->>>>>>> origin/master
+
 				
-<!-- 				<button type="submit" class="btn btn-primary"  onclick="callServlet()"> Editar</button> -->
 				</tr>
 				
 			</c:forEach>

@@ -26,6 +26,7 @@
 
 
 
+
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Customer Registration</title>
 <script type="text/javascript" src="${jsURL}">
@@ -58,7 +59,7 @@
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand page-scroll" href="Index.jsp">Tareador</a>
+                <a class="navbar-brand" href="Inicio.html">Tareador</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->

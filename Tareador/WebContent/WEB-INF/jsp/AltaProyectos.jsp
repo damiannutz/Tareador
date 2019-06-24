@@ -57,7 +57,7 @@
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand page-scroll" href="Index.jsp">Tareador</a>
+                <a class="navbar-brand page-scroll" href="Inicio.html">Tareador</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -84,7 +84,7 @@
             <div class="header-content-inner">
                 <h1 id="homeHeading"><c:out value="${ headerTitle}"></c:out></h1>
                 <hr>
-                 <a href="IrListarDepartamentos.html" class="btn btn-primary btn-xl page-scroll">LISTA DE PROYECTOS</a><br><br><br>
+                 <a href="IrListarProyectos.html" class="btn btn-primary btn-xl page-scroll">LISTA DE PROYECTOS</a><br><br><br>
           
 			<div align="center">
 			<h3 id="homeHeading">   </h3>

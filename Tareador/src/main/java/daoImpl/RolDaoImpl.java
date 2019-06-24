@@ -42,7 +42,7 @@ public class RolDaoImpl implements RolDao {
 	
 	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
 	public List<Rol> obtenerAllActivos() {
-		return (List<Rol>)  this.hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Rol.class).add(Restrictions.eq("Is_Activo", true)));
+		return (List<Rol>)  this.hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Rol.class).add(Restrictions.eq("IsActivo", true)));
 	}
 	
 	@Override

@@ -130,12 +130,11 @@
 <!-- 		<property name="url" value="jdbc:mysql://localhost:3306/tareadorfinal?createDatabaseIfNotExist=TRUE&amp;useUnicode=TRUE&amp;useJDBCCompliantTimezoneShift=TRUE&amp;useLegacyDatetimeCode=FALSE&amp;serverTimezone=UTC" />-->
 
 <!-- 		<property name="url" value="jdbc:mysql://localhost:3306/tareadorfinal?createDatabaseIfNotExist=true" /> -->
-<!-- 		<property name="url" value="jdbc:mysql://localhost:3306/tareadorfinal?createDatabaseIfNotExist=TRUE&amp;useUnicode=TRUE&amp;useJDBCCompliantTimezoneShift=TRUE&amp;useLegacyDatetimeCode=FALSE&amp;serverTimezone=UTC" /> -->
-		
+
 
 		<property name="username" value="root" />
-		<property name="password" value="root" />
-<!--  	<property name="password" value="38097441" />  -->
+	 	<property name="password" value="root" />
+<!-- 	<property name="password" value="38097441" />   -->
 	</bean>
 
 	<!-- Session factory de Hibernate -->

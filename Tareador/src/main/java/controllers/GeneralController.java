@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.hibernate.Session;
@@ -248,12 +249,12 @@ public class GeneralController {
 				,"santoro"				//apellido
 				,"santoro@mail.com"		//mail
 				,"juanisantoro"			//nombre usuario
-				,"1234"					//contraseña	
+				,"12341234"					//contraseña	
 				,true					//isActivo
 				,lstDepartamentos.stream().filter(r-> r.getCodigo().equals("IT")).findFirst().get()				//Departamento
 				,lstTiposUsuario.stream().filter(r-> r.getIdTipoUsuario().equals(TipoUsuario.tipo_super)).findFirst().get()//tipoUsuario
 				,null
-				,lstRoles
+				,lstRoles.stream().collect(Collectors.toSet())
 				));
 		
 
@@ -261,109 +262,109 @@ public class GeneralController {
 				,"nutz"				//apellido
 				,"damian@mail.com"		//mail
 				,"damiannutz"			//nombre usuario
-				,"1234"					//contraseña	
+				,"12341234"					//contraseña	
 				,true					//isActivo
 				,null//,lstDepartamentos.stream().filter(r-> r.getCodigo().equals("IT")).findFirst().get()				//Departamento
 				,lstTiposUsuario.stream().filter(r-> r.getIdTipoUsuario().equals(TipoUsuario.tipo_super)).findFirst().get() //tipoUsuario	
 				,null
-				,lstRoles
+				,lstRoles.stream().collect(Collectors.toSet())
 				));
 		
 		lstUsuario.add(new Usuario(null,"pedro" 		//nombre
 				,"mastroberti"				//apellido
 				,"pedro@mail.com"		//mail
 				,"pedromastroberti"			//nombre usuario
-				,"1234"					//contraseña	
+				,"12341234"					//contraseña	
 				,true					//isActivo
 				,null//,lstDepartamentos.stream().filter(r-> r.getCodigo().equals("IT")).findFirst().get()				//Departamento
 				,lstTiposUsuario.stream().filter(r-> r.getIdTipoUsuario().equals(TipoUsuario.tipo_super)).findFirst().get() //tipoUsuario
 				,null
-				,lstRoles
+				,lstRoles.stream().collect(Collectors.toSet())
 				));
 				
 		lstUsuario.add(new Usuario(null,"ADMIN" 		//nombre
 				,"ADMIN"				//apellido
 				,"admin@mail.com"		//mail
 				,"admin"			//nombre usuario
-				,"1234"					//contraseña	
+				,"12341234"					//contraseña	
 				,true					//isActivo
 				,null//,lstDepartamentos.stream().filter(r-> r.getCodigo().equals("IT")).findFirst().get()				//Departamento
 				,lstTiposUsuario.stream().filter(r-> r.getIdTipoUsuario().equals(TipoUsuario.tipo_admin)).findFirst().get() //tipoUsuario	
 				,null
-				,lstRoles
+				,lstRoles.stream().collect(Collectors.toSet())
 				)); 
 		
 		lstUsuario.add(new Usuario(null,"USUARIO_1_IT" 		//nombre
 				,"USUARIO_1_IT"				//apellido
-				,"USUARIO_1_IT@mail.com"		//mail
+				,"usuario_1_it@mail.com"		//mail
 				,"USUARIO_1_IT"			//nombre usuario
-				,"1234"					//contraseña	
+				,"12341234"					//contraseña	
 				,true					//isActivo
 				,lstDepartamentos.stream().filter(r-> r.getCodigo().equals("IT")).findFirst().get()				//Departamento
 				,lstTiposUsuario.stream().filter(r-> r.getIdTipoUsuario().equals(TipoUsuario.tipo_super)).findFirst().get() //tipoUsuario
-				,lstProyectos.stream().filter(r-> r.getDescripcion().contains("Proyecto IT")).collect(Collectors.toList())
-				,lstRoles.stream().filter(r-> !r.getCodigo().contains("ADM")).collect(Collectors.toList()) //roles usuarios basicos
+				,lstProyectos.stream().filter(r-> r.getDescripcion().contains("Proyecto IT")).collect(Collectors.toSet())
+				,lstRoles.stream().filter(r-> !r.getCodigo().contains("ADM")).collect(Collectors.toSet()) //roles usuarios basicos
 				));
 
 		
 		lstUsuario.add(new Usuario(null,"USUARIO_2_IT" 		//nombre
 				,"USUARIO_2_IT"				//apellido
-				,"USUARIO_2_IT@mail.com"		//mail
+				,"usuario_2_it@mail.com"		//mail
 				,"USUARIO_2_IT"			//nombre usuario
-				,"1234"					//contraseña	
+				,"12341234"					//contraseña	
 				,true					//isActivo
 				,lstDepartamentos.stream().filter(r-> r.getCodigo().equals("IT")).findFirst().get()					//Departamento
 				,lstTiposUsuario.stream().filter(r-> r.getIdTipoUsuario().equals(TipoUsuario.tipo_super)).findFirst().get() //tipoUsuario	
-				,lstProyectos.stream().filter(r-> r.getDescripcion().equalsIgnoreCase("Proyecto IT 2")).collect(Collectors.toList())
-				,lstRoles.stream().filter(r-> !r.getCodigo().contains("ADM")).collect(Collectors.toList())
+				,lstProyectos.stream().filter(r-> r.getDescripcion().equalsIgnoreCase("Proyecto IT 2")).collect(Collectors.toSet())
+				,lstRoles.stream().filter(r-> !r.getCodigo().contains("ADM")).collect(Collectors.toSet())
 				));
 	
 		lstUsuario.add(new Usuario(null,"USUARIO_1_DEV" 		//nombre
 				,"USUARIO_1_DEV"				//apellido
-				,"USUARIO_1_DEV@mail.com"		//mail
+				,"usuario_1_dev@mail.com"		//mail
 				,"USUARIO_1_DEV"			//nombre usuario
-				,"1234"					//contraseña	
+				,"12341234"					//contraseña	
 				,true					//isActivo
 				,lstDepartamentos.stream().filter(r-> r.getCodigo().equals("DEV")).findFirst().get()					//Departamento
 				,lstTiposUsuario.stream().filter(r-> r.getIdTipoUsuario().equals(TipoUsuario.tipo_super)).findFirst().get() //tipoUsuario	
-				,lstProyectos.stream().filter(r-> r.getDescripcion().contains("Proyecto DEV")).collect(Collectors.toList())
-				,lstRoles.stream().filter(r-> !r.getCodigo().contains("ADM")).collect(Collectors.toList())
+				,lstProyectos.stream().filter(r-> r.getDescripcion().contains("Proyecto DEV")).collect(Collectors.toSet())
+				,lstRoles.stream().filter(r-> !r.getCodigo().contains("ADM")).collect(Collectors.toSet())
 				));
 		
 		lstUsuario.add(new Usuario(null,"USUARIO_2_DEV" 		//nombre
 				,"USUARIO_2_DEV"				//apellido
-				,"USUARIO_2_DEV@mail.com"		//mail
+				,"usuario_2_dev@mail.com"		//mail
 				,"USUARIO_2_DEV"			//nombre usuario
-				,"1234"					//contraseña	
+				,"12341234"					//contraseña	
 				,true					//isActivo
 				,lstDepartamentos.stream().filter(r-> r.getCodigo().equals("DEV")).findFirst().get()					//Departamento
 				,lstTiposUsuario.stream().filter(r-> r.getIdTipoUsuario().equals(TipoUsuario.tipo_super)).findFirst().get() //tipoUsuario
-				,lstProyectos.stream().filter(r-> r.getDescripcion().equalsIgnoreCase("Proyecto DEV 1")).collect(Collectors.toList())
-				,lstRoles.stream().filter(r-> !r.getCodigo().contains("ADM")).collect(Collectors.toList())
+				,lstProyectos.stream().filter(r-> r.getDescripcion().equalsIgnoreCase("Proyecto DEV 1")).collect(Collectors.toSet())
+				,lstRoles.stream().filter(r-> !r.getCodigo().contains("ADM")).collect(Collectors.toSet())
 				));
 	
 		lstUsuario.add(new Usuario(null,"USUARIO_1_RRHH" 		//nombre
 				,"USUARIO_1_RRHH"				//apellido
-				,"USUARIO_1_RRHH@mail.com"		//mail
+				,"usuario_1_rrhh@mail.com"		//mail
 				,"USUARIO_1_RRHH"			//nombre usuario
-				,"1234"					//contraseña	
+				,"12341234"					//contraseña	
 				,true					//isActivo
 				,lstDepartamentos.stream().filter(r-> r.getCodigo().equals("RRHH")).findFirst().get()					//Departamento
 				,lstTiposUsuario.stream().filter(r-> r.getIdTipoUsuario().equals(TipoUsuario.tipo_super)).findFirst().get() //tipoUsuario	
-				,lstProyectos.stream().filter(r-> r.getDescripcion().contains("Proyecto RRHH")).collect(Collectors.toList())
-				,lstRoles.stream().filter(r-> !r.getCodigo().contains("ADM")).collect(Collectors.toList())
+				,lstProyectos.stream().filter(r-> r.getDescripcion().contains("Proyecto RRHH")).collect(Collectors.toSet())
+				,lstRoles.stream().filter(r-> !r.getCodigo().contains("ADM")).collect(Collectors.toSet())
 				));
 	
 		lstUsuario.add(new Usuario(null,"USUARIO_2_RRHH" 		//nombre
 				,"USUARIO_2_RRHH"				//apellido
-				,"USUARIO_2_RRHH@mail.com"		//mail
+				,"usuario_2_rrhh@mail.com"		//mail
 				,"USUARIO_2_RRHH"			//nombre usuario
-				,"1234"					//contraseña	
+				,"12341234"					//contraseña	
 				,true					//isActivo
 				,lstDepartamentos.stream().filter(r-> r.getCodigo().equals("RRHH")).findFirst().get()					//Departamento
 				,lstTiposUsuario.stream().filter(r-> r.getIdTipoUsuario().equals(TipoUsuario.tipo_super)).findFirst().get() //tipoUsuario	
-				,lstProyectos.stream().filter(r-> r.getDescripcion().equalsIgnoreCase("Proyecto RRHH")).collect(Collectors.toList())
-				,lstRoles.stream().filter(r-> !r.getCodigo().contains("ADM")).collect(Collectors.toList())
+				,lstProyectos.stream().filter(r-> r.getDescripcion().equalsIgnoreCase("Proyecto RRHH")).collect(Collectors.toSet())
+				,lstRoles.stream().filter(r-> !r.getCodigo().contains("ADM")).collect(Collectors.toSet())
 				));
 		
 		return lstUsuario;
