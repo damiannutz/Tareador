@@ -147,7 +147,7 @@
 				<td>${item.departamento.descripcion}</td>
 				<td >
 			<!--	<a href="<c:url value='/edit-proyecto-${item.getIdProyecto()}' />">Editar</a> -->
-					<button type="submit" class="btn btn-primary"  onclick="callUsuarios()"> +Usuario</button>
+					<button type="submit" class="btn btn-primary"  onclick="callUsuarios(${item.getIdProyecto()})"> +Usuario</button>
 					<button type="button" class="btn btn-primary"  onclick="callEditar(${item.getIdProyecto()})"> Editar</button>
 				</td>
 				</tr>
@@ -197,11 +197,18 @@ function callEditar(idProyecto){
 function callUsuarios(idUsuario){
 	
 	{
-		 document.getElementById("adminForm").action="ListarUsuarios.jsp";
-		 document.getElementById("adminForm").method = "POST";
-		 document.getElementById("adminForm").submit();
+		form = document.createElement('form');
+	     form.setAttribute('method', 'POST');
+	     form.setAttribute('action', 'agreg-usuario-proyecto.html');
+	     myvar = document.createElement('input');
+	     myvar.setAttribute('name', 'idProyecto');
+	     myvar.setAttribute('type', 'hidden');
+	     myvar.setAttribute('value', idProyecto);
+	     form.appendChild(myvar);
+	     document.body.appendChild(form);
+	     form.submit();   
 
-		}
+	}
 }
 
 
