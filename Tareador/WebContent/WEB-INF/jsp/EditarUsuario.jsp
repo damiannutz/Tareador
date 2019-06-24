@@ -63,7 +63,7 @@ input:invalid, textarea:invalid {
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand page-scroll" href="Inicio.html">Tareador</a>
+                <a class="navbar-brand page-scroll" href="Index.jsp">Tareador</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -132,34 +132,20 @@ input:invalid, textarea:invalid {
 						<tr>
 						<td style="padding-top:5px; padding-bottom:5px;">Departamento:</td>
 							<td style="padding-top:5px; padding-bottom:5px;">
-								<select  id="cmbDepartamento" name="cmDepartamento" required="required" class="btn btn-info dropdown-toggle">
-								
-										<c:forEach items="${departamentos}" var="item">
-										<c:choose>
-										    <c:when test="${ idDepartamento != null && idDepartamento == item.idDepartamento }">
-										       	<option id="cmbDepartamento" value="<c:out value="${item.idDepartamento}" />"  selected="selected" >${item.descripcion}</option>
-<!-- 										       	selectedDep -->
-										    </c:when>    
-										    <c:otherwise>
-										        <option  value="${item.idDepartamento}">${item.descripcion}</option>
-										    </c:otherwise>
-										</c:choose>
-										
-										</c:forEach>
-								
+								<select  id="cmbDepartamento" name="cmTipoUsuario" required="required" class="btn btn-info dropdown-toggle">
 								
 
-<%-- 											   <option id="selectedDep"  value="<c:out value="${ idDepartamento.toString() }" />" value="${idDepartamento}" selected="selected"><c:out value="${ nombreDepartamento.toString() }" /></option> --%>
+											   <option id="selectedDep"  value="<c:out value="${ idDepartamento.toString() }" />" value="${idDepartamento}" selected="selected"><c:out value="${ nombreDepartamento.toString() }" /></option>
 										
-<%-- 							<c:forEach items="${departamentos}" var="item"> --%>
+							<c:forEach items="${departamentos}" var="item">
 								
 								
-<%-- 								<option value="${item.idDepartamento}" >${item.descripcion}</option> --%>
+								<option value="${item.idDepartamento}" >${item.descripcion}</option>
 								
 								
 								
 							
-<%-- 							</c:forEach> --%>
+							</c:forEach>
 									
 						
 							</select> 	
@@ -173,27 +159,20 @@ input:invalid, textarea:invalid {
 						<select  id="cmbTipoUsuario" name="cmTipoUsuario" required="required" class="btn btn-info dropdown-toggle">
 								
 
-<%-- 												<option id="selectedTipo"  value="<c:out value="${ idTipo.toString() }" />"  selected="selected" ><c:out value="${ descripcionTipo.toString() }" /></option> --%>
+												<option id="selectedTipo"  value="<c:out value="${ idTipo.toString() }" />"  selected="selected" ><c:out value="${ descripcionTipo.toString() }" /></option>
 										
-<%-- 							<c:forEach items="${tiposUsuario}" var="item"> --%>
+							<c:forEach items="${tiposUsuario}" var="item">
 								
-<%-- 								<option value="${item.idTipoUsuario}" >${item.descripcion}</option> --%>
-															
-<%-- 							</c:forEach> --%>
+								<option value="${item.idTipoUsuario}" >${item.descripcion}</option>
 								
-									<c:forEach items="${tiposUsuario}" var="item">
-										<c:choose>
-										    <c:when test="${ idTipo != null && idTipo == item.idTipoUsuario }">
-										       	<option id="cmbTipoUsuario" value="<c:out value="${item.idTipoUsuario}" />"  selected="selected" >${item.descripcion}</option>
-<!-- 										       	selectedTipo -->
-										    </c:when>    
-										    <c:otherwise>
-										        <option  value="${item.idTipoUsuario}">${item.descripcion}</option>
-										    </c:otherwise>
-										</c:choose>
-										
-										</c:forEach>
 								
+
+		
+								
+								
+								
+							
+							</c:forEach>
 									
 						
 							</select> 	
@@ -204,11 +183,9 @@ input:invalid, textarea:invalid {
 						<tr>
 						<td colspan="2" align="center">
 						
+						<input type="button"  id="btnEliminar" data-id="/EliminarUsuario-${idUsuario}"  value="Eliminar" class="btn btn-danger" onclick="eliminarUsuario()"></button>					
+						
 						<input type="button" name="btnGuardarUsuario"  myContextPath="${pageContext.request.contextPath}"  onclick="guardarUsuario(this)"  value="Guardar" class="btn btn-success"/>
-						
-						<input type="button" name="btnEliminar" value="Eliminar Usuario"  class="btn btn-danger" onclick="href="<c:url value='/EliminarUsuario-${idUsuario}'/> />
-											
-						
 						<input hidden="true" id="idUsuario" value="<c:out value="${ idUsuario.toString() }" />" />
 						
 							
@@ -280,21 +257,23 @@ input:invalid, textarea:invalid {
 $( document ).ready(function() {
 debugger;
 	$("#cmbDepartamento").children().each(function(index,elem){
-// 		if($("#selectedDep").text() == $(elem).text()){
-		if($("#cmbDepartamento").text() == $(elem).text()){
+		if($("#selectedDep").text() == $(elem).text()){
 		$(elem).remove();
 		}
 		});
 		
 		
 	$("#cmbTipoUsuario").children().each(function(index,elem){
-// 		if($("#selectedTipo").text() == $(elem).text()){
-		if($("#cmbTipoUsuario").text() == $(elem).text()){
+		if($("#selectedTipo").text() == $(elem).text()){
 		$(elem).remove();
 		}
 		});
 });
 
+var eliminarUsuario= function(){
+	debugger;
+	alert('Eliminado correctamente'); window.location.replace("http://localhost:8080/Tareador/"+$("#btnEliminar").attr('data-id')+"")
+}
 
 
 var guardarUsuario= function(element){
@@ -362,14 +341,11 @@ var CONTEXT_PATH =	$(element).attr('myContextPath');
 		data: JSON.stringify(user),
 		contentType: "application/json; charset=utf-8",
 		success: function (result) {
-// 			if (result.success) 
-// 			{ alert(result.message); } 
-// 			else { alert(result.message) } }, 
-// 			error:function(error) { alert(error.message); } 
-			
-			alert(result); 
-			 
-			}});
+			if (result.success) 
+			{ alert('en el true'); } 
+			else { alert('en el false') } }, 
+			error:function(error) {alert('Editado correctamente'); window.location.replace("http://localhost:8080/Tareador/IrListarUsuarios.html");
+; } });
 	
 	
 }

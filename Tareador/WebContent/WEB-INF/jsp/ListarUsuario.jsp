@@ -105,7 +105,7 @@
 <tr>
  <th style="padding-bottom: 5px;">
  	<form action="UsuariosTareadorServlet?ListarUsuarios=ListarUsuarios.jsp" method="post" >
- 		                          <a style="border-top-width: 40px;" name="ListarUsuarios"  class="btn btn-primary btn-xl page-scroll" href="<c:url value='/IrListarUsuarios.html' />"  >LISTA DE USUARIOS</a><br><br><br>
+ 		                          <a style="border-top-width: 0px;margin-top: 38px;" name="ListarUsuarios"  class="btn btn-primary btn-xl page-scroll" href="<c:url value='/IrListarUsuarios.html' />"  >LISTA DE USUARIOS</a><br><br><br>
 
 	</form>
 </th>
@@ -197,12 +197,12 @@
 				<td>${Usuario.email}
 				</td>
 							
-			<td> 
+			
 
 	
 				<td ><a href="<c:url value='/EditarUsuario-${Usuario.idUsuario} ' />">Editar</a></td>
 
-			</td>
+			
 					</tr>
 			</c:forEach>
 
