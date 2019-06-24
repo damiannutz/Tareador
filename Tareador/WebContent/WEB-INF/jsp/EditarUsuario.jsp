@@ -89,7 +89,7 @@ input:invalid, textarea:invalid {
     <header>
         <div class="header-content">
             <div class="header-content-inner">
-                <h1 id="homeHeading">Nuevo Usuario</h1>
+                <h1 id="homeHeading">Editar Usuario</h1>
                 <hr>
                 <!--   <a href="ListarUsuarios.jsp" class="btn btn-primary btn-xl page-scroll">LISTA DE USUARIOS</a><br><br><br>-->
                           <a class="btn btn-primary btn-xl page-scroll" href="<c:url value='/IrListarUsuarios.html' />"  >LISTA DE USUARIOS</a><br><br><br>
@@ -99,6 +99,7 @@ input:invalid, textarea:invalid {
 			<h3 id="homeHeading">   </h3>
 						
 					<table>
+					
 						<tr>
 			
 						<td>
@@ -107,38 +108,40 @@ input:invalid, textarea:invalid {
 						
 						<tr>
 						<td>Nombre:</td>
-						<td><input maxlength="30" type="text" value="" style=" color: black " size="20" required="required" id="inputNombre" name="nombre"></td>
+						<td><input maxlength="30" type="text" value="<c:out value="${ nombre.toString() }" />" style=" color: black " size="20" required="required" id="inputNombre" name="nombre"></td>
 						</tr>
 						<tr>
 						<td>Apellido:</td>
-						<td><input maxlength="30" type="text" value="" style=" color: black " size="20" required="required" id="inputApellido" name="apellido"></td>
+						<td><input maxlength="30" type="text" value="<c:out value="${ apellido.toString() }" />" style=" color: black " size="20" required="required" id="inputApellido" name="apellido"></td>
 						</tr>
 						<tr>
 						<td>Correo:</td>
-						<td><input id="inputCorreo" maxlength="40" type="text" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Mail invalido" size="20" value="" style=" color: black " required="required" name="correo"></td>
+						<td><input id="inputCorreo" maxlength="40" type="text" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Mail invalido" size="20"  value="<c:out value="${ email.toString() }"/>" style=" color: black " required="required" name="correo"></td>
 						</tr>
 						<tr>
 						<td>Usuario:</td>
-						<td><input id="inputUsuario"  pattern="^[A-Za-z][A-Za-z0-9._%+-]*$" title="No se permiten espacios"   maxlength="30" type="text" size="20" value="" style=" color: black " required="required" name="usuario"></td>
+						<td><input id="inputUsuario"  pattern="^[A-Za-z][A-Za-z0-9._%+-]*$" title="No se permiten espacios"   maxlength="30" type="text" size="20"  value="<c:out value="${ nombreUsuario.toString() }" />"  style=" color: black " required="required" name="usuario"></td>
 <!-- 						  pattern="^[A-Za-z][A-Za-z0-9]*$" -->
 						</tr>
 						<tr>
 						<td>Contraseña:</td>
-						<td><input maxlength="25" id="inputPassword" pattern=".{6,}" title="Seis o mas caracteres" type="password" value="" style=" color: black " required="required" size="20" name="contrasenia" /></td>
+						<td><input maxlength="25"  value="<c:out value="${ contrasenia.toString() }" />" id="inputPassword" pattern=".{6,}" title="Seis o mas caracteres" type="password"  style=" color: black " required="required" size="20" name="contrasenia" /></td>
 						</tr>
+												
 						
 						<tr>
-						
 						<td style="padding-top:5px; padding-bottom:5px;">Departamento:</td>
 							<td style="padding-top:5px; padding-bottom:5px;">
 								<select  id="cmbDepartamento" name="cmTipoUsuario" required="required" class="btn btn-info dropdown-toggle">
 								
 
+											   <option id="selectedDep"  value="<c:out value="${ idDepartamento.toString() }" />" value="${idDepartamento}" selected="selected"><c:out value="${ nombreDepartamento.toString() }" /></option>
 										
 							<c:forEach items="${departamentos}" var="item">
 								
 								
 								<option value="${item.idDepartamento}" >${item.descripcion}</option>
+								
 								
 								
 							
@@ -156,11 +159,16 @@ input:invalid, textarea:invalid {
 						<select  id="cmbTipoUsuario" name="cmTipoUsuario" required="required" class="btn btn-info dropdown-toggle">
 								
 
+												<option id="selectedTipo"  value="<c:out value="${ idTipo.toString() }" />"  selected="selected" ><c:out value="${ descripcionTipo.toString() }" /></option>
 										
 							<c:forEach items="${tiposUsuario}" var="item">
 								
+								<option value="${item.idTipoUsuario}" >${item.descripcion}</option>
 								
-								<option value="${item.idTipoUsuario}" selected="selected" >${item.descripcion}</option>
+								
+
+		
+								
 								
 								
 							
@@ -175,12 +183,14 @@ input:invalid, textarea:invalid {
 						<tr>
 						<td colspan="2" align="center">
 						
-						<input type="button" name="btnGuardarUsuario"  myContextPath="${pageContext.request.contextPath}"  onclick="guardarUsuario(this)"  value="Guardar" class="btn btn-success"/>
+						<input type="button" name="btnEliminar"   value="Eliminar" class="btn btn-danger" onclick="href="<c:url value='/EliminarUsuario-${idUsuario} ' />" "></button>					
 						
-					
+						<input type="button" name="btnGuardarUsuario"  myContextPath="${pageContext.request.contextPath}"  onclick="guardarUsuario(this)"  value="Guardar" class="btn btn-success"/>
+						<input hidden="true" id="idUsuario" value="<c:out value="${ idUsuario.toString() }" />" />
+						
 							
 						
-			            <a  name="cancelar"  class="btn btn-primary btn-xl page-scroll" href="<c:url value='/IrAdministrarUsuarios.html' />"   >cancelar</a><br><br><br>
+                          <a  name="cancelar"  class="btn btn-primary btn-xl page-scroll" href="<c:url value='/IrListarUsuarios.html' />"   >cancelar</a><br><br><br>
 						
 						
 						
@@ -243,12 +253,42 @@ input:invalid, textarea:invalid {
 
 <script type=text/javascript>
 
+
+$( document ).ready(function() {
+debugger;
+	$("#cmbDepartamento").children().each(function(index,elem){
+		if($("#selectedDep").text() == $(elem).text()){
+		$(elem).remove();
+		}
+		});
+		
+		
+	$("#cmbTipoUsuario").children().each(function(index,elem){
+		if($("#selectedTipo").text() == $(elem).text()){
+		$(elem).remove();
+		}
+		});
+});
+
+
+
 var guardarUsuario= function(element){
 	
 var CONTEXT_PATH =	$(element).attr('myContextPath');
+	debugger;
+//	var parameters = { nombreU: $('#inputNombre').val() , apellido: $('#inputApellido').val() , contraseña: $('#inputPassword').val() , correo:  $('#inputCorreo').val(), idDepartamento: $('#cmbDepartamento').val(), departamento: $('#cmbDepartamento').text(), tipoUsuario: $('#cmbTipoUsuario').text(), idTipoUsuario: $('#cmbTipoUsuario').val(),  };
+	
+
+	//var user = '{' "user" ':' '{' "Nombre" : $('#inputNombre').val() , Apellido: $('#inputApellido').val() , Contrasenia: $('#inputPassword').val() , Email:  $('#inputCorreo').val()}};//, idDepartamento: 1, departamento: 'Sistemas', tipoUsuario: 'Super usuario', idTipoUsuario: 'SUPER' } };
+	
+	
+//	var user = { "user" : { "Nombre" : ""$('#inputNombre').val()"", "Apellido"  : ""$('#inputApellido').val()"", "Contrasenia" : ""$('#inputPassword').val()"", "Email" : ""$('#inputCorreo').val()"" } };
+//	var user = { "user": { "Nombre": "$('#inputNombre').val()'", "Apellido": ""$('#inputApellido').val()"", "Contrasenia": ""$('#inputPassword').val()"", "Email": ""$('#inputCorreo').val()"", "Departamento": {  "descripcion": "", "codigo": "",  "idDepartamento": "" }, "TipoUsuario": {"idTipoUsuario": "", "descripcion": ""  }  }}      
+
+	//var user = { "user": { "Nombre": "", "Apellido": "", "Contrasenia": "", "Email": "", "Departamento": {  "descripcion": "", "codigo": "",  "idDepartamento": "" }, "TipoUsuario": {"idTipoUsuario": "", "descripcion": ""  }  }}      
 
 	var user  = new Object();
-	
+	user.idUsuario= $("#idUsuario").val();
 	user.nombreUsuario= $('#inputUsuario').val();
 	user.nombre= $('#inputNombre').val();
 	user.apellido= $('#inputApellido').val();
@@ -291,7 +331,7 @@ var CONTEXT_PATH =	$(element).attr('myContextPath');
 	});*/
 	
 	
-	$.ajax({ url: CONTEXT_PATH+"/AgregarUsuario",
+	$.ajax({ url: CONTEXT_PATH+"/EditarUsuario",
 		type: "POST",
 		dataType: "json",
 		data: JSON.stringify(user),

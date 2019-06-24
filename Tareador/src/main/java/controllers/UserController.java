@@ -114,9 +114,57 @@ public class UserController {
 		MV.setViewName("AdministrarUsuarios"); 
 		return MV;
 	}
+	
+	@RequestMapping(value={ "/EliminarUsuario-{idUsuario}" }, method= { RequestMethod.GET})
+	 public void eliminarUsuario(@PathVariable Integer idUsuario) throws JsonParseException, JsonMappingException, IOException {
+
+	usuarioService.bajaLogica(idUsuario);
+	}
+	
+	@RequestMapping(value={ "/EditarUsuario-{idUsuario}" }, method= { RequestMethod.GET})
+
+	 public ModelAndView editarUsuario(@PathVariable Integer idUsuario) throws JsonParseException, JsonMappingException, IOException {
+ 
+ 
+		ModelAndView MV = new ModelAndView();
+
+	    Usuario user =	usuarioService.obtenerById(idUsuario);
+	    MV.addObject("idUsuario", idUsuario);
+		MV.addObject("departamentos", departamentoService.obtenerAll());
+		MV.addObject("tiposUsuario", tipoUsuarioService.obtenerAll());
+		MV.addObject("nombre", user.getNombre());
+		MV.addObject("apellido", user.getApellido());
+		MV.addObject("email", user.getEmail());
+		MV.addObject("contrasenia", user.getContrasenia());
+		MV.addObject("nombreUsuario", user.getNombreUsuario());
+		
+		if(user.getDepartamento() != null) {
+			MV.addObject("idDepartamento", user.getDepartamento().getIdDepartamento());
+			MV.addObject("nombreDepartamento", user.getDepartamento().getDescripcion());
+		}
+	
+if(user.getTipoUsuario() !=null) {
+	MV.addObject("idTipo", user.getTipoUsuario().getIdTipoUsuario());
+	MV.addObject("descripcionTipo", user.getTipoUsuario().getDescripcion());
+
+}
+
+		
+
+		
+		MV.setViewName("EditarUsuario"); 
+		return MV;
+	}
+	
 	@RequestMapping("IrListarUsuarios.html")
 	public ModelAndView redireccionListarUsuarios(){
 		ModelAndView MV = new ModelAndView();
+
+		List<Usuario> userList = usuarioService.obtenerAll();
+		MV.addObject("departamentos", departamentoService.obtenerAll());
+		MV.addObject("tiposUsuario", tipoUsuarioService.obtenerAll());
+		MV.addObject("usuarios", userList);
+		
 		MV.setViewName("ListarUsuario");
 		return MV;
 	}
@@ -152,6 +200,43 @@ public class UserController {
 		try{
 			
 			usuarioService.insertar(usuario);
+			Message = "Usuario agregado";
+		}
+		catch(Exception e)
+		{
+			Message = "No se pudo insertar el usuario";
+		}
+		finally
+		{
+		
+		}
+	
+		MV.setViewName("Usuarios");
+		MV.addObject("Mensaje", Message);
+		MV.addObject("listaUsuarios",this.usuarioService.obtenerAll());
+		MV.setViewName("Usuarios"); 
+		
+	//	return MV;
+		return "adads";
+		
+	}
+		
+		@RequestMapping(value={"/EditarUsuario"},method = RequestMethod.POST,  consumes  = "application/json")
+	//	public ModelAndView AgregarUsuario(@RequestBody Usuario user) {			
+			@ResponseBody public String editUser(HttpServletRequest request, HttpServletResponse response, @RequestBody String userJson) throws JsonParseException, JsonMappingException, IOException {
+			
+			byte[] jsonData = userJson.toString().getBytes();
+
+		        ObjectMapper mapper = new ObjectMapper();
+		        Usuario usuario = mapper.readValue(jsonData, Usuario.class); 
+
+		ModelAndView MV = new ModelAndView();
+		
+		String Message="";
+		
+		try{
+			
+			usuarioService.actualizar(usuario);
 			Message = "Usuario agregado";
 		}
 		catch(Exception e)

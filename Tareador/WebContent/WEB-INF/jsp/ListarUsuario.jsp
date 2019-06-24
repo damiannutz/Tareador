@@ -105,7 +105,8 @@
 <tr>
  <th style="padding-bottom: 5px;">
  	<form action="UsuariosTareadorServlet?ListarUsuarios=ListarUsuarios.jsp" method="post" >
- 		<input type="submit" name="ListarUsuarios" value="Actualizar Lista" class="btn btn-primary">
+ 		                          <a style="border-top-width: 40px;" name="ListarUsuarios"  class="btn btn-primary btn-xl page-scroll" href="<c:url value='/IrListarUsuarios.html' />"  >LISTA DE USUARIOS</a><br><br><br>
+
 	</form>
 </th>
  <th style="padding-left: 5px;   padding-right: 5px; padding-bottom: 5px;">
@@ -117,30 +118,44 @@
 						
 						<td >Departamento:</td>
 							<td style="padding-left: 5px;   padding-right: 5px;">
-								<select id="cmbDepartamento"  class="btn btn-primary dropdown-toggle">
+							<select  id="cmbDepartamento" name="cmTipoUsuario" required="required" class="btn btn-info dropdown-toggle">
+								
+
+										
+							<c:forEach items="${departamentos}" var="item">
+								
+								
+								<option value="${item.idDepartamento}" >${item.descripcion}</option>
+								
+								
 							
+							</c:forEach>
 									
-
-									<option value="TODOS" selected="selected" >Todos </option>
-									<option value="IT"  >Sistemas </option>
-									<option value="DEV" >DESARROLLO </option> 
-								    <option value="RRHH" >Recursos Humanos </option> 
-
 						
-							</select>
+							</select> 	
+							
+							
 							</td>
 					
 					
 						<td>Tipo de usuario:</td>
 						<td style="padding-left: 5px;   padding-right: 5px; padding-bottom:5px;">
-								<select id="cmbTipoUsuario" required="required" class="btn btn-primary dropdown-toggle">
 
-									<option value="TODOS" selected="selected" > Todos</option>
-                                    <option value="ADMIN"  >Administrador </option>
-									<option value="SUPER" >Super Administrador </option> 
-								    <option value="USER" >Usuario standard </option> 
+													<select  id="cmbTipoUsuario" name="cmTipoUsuario" required="required" class="btn btn-info dropdown-toggle">
+								
+
+										
+							<c:forEach items="${tiposUsuario}" var="item">
+								
+								
+								<option value="${item.idTipoUsuario}" selected="selected" >${item.descripcion}</option>
+								
+								
+							
+							</c:forEach>
+									
 						
-							</select>
+							</select> 	
 							</td>
 					
 </tr>
@@ -169,15 +184,29 @@
 
 
 		<form method="post" action="IrGestionarUsuario">
-			<tr style="text-align: left" data-dto="" data-user="" >
-			<td></td><td></td><td></td><td></td>
+			
+			
+			<c:forEach items="${usuarios}" var="Usuario">
+				
+
+	<tr style="text-align: left" data-dto="${Usuario.departamento.idDepartamento}" data-user="${Usuario.tipoUsuario.idTipoUsuario}" >
+			
+				<td> ${Usuario.apellido} </td>
+				<td>${Usuario.nombreUsuario}</td>
+				<td>${Usuario.nombre}</td>
+				<td>${Usuario.email}
+				</td>
+							
 			<td> 
 
 	
+				<td ><a href="<c:url value='/EditarUsuario-${Usuario.idUsuario} ' />">Editar</a></td>
 
-			<button type="submit" class="btn btn-primary" align="center"> Editar</button>
 			</td>
-			</tr>
+					</tr>
+			</c:forEach>
+
+		
 		</form>
 	
 	</tbody>
@@ -322,6 +351,25 @@ function callServlet(idUsuario){
 		
 		}); 
 
+		
+		var editarUsuario= function(element){
+			var CONTEXT_PATH =	$(element).attr('myContextPath');
+
+			debugger;
+			var userId="1";
+			$.ajax({ url: CONTEXT_PATH+"/EditarUsuario",
+				type: "POST",
+				dataType: "json",
+				data: JSON.stringify(userId),
+				contentType: "application/json; charset=utf-8",
+				success: function (result) {
+					if (result.success) 
+					{ alert(result.message); } 
+					else { alert(result.message) } }, 
+					error:function(error) { alert(error.message); } });
+			
+			
+		}
 		
 		
 		

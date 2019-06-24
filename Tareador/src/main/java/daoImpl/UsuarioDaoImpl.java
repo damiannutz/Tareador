@@ -5,16 +5,27 @@ import java.util.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import dao.UsuarioDao;
+import dominio.Departamento;
+import dominio.TipoUsuario;
 import dominio.Usuario;
+import servicio.DepartamentoServicio;
+import servicio.TipoUsuarioServicio;
 
 public class UsuarioDaoImpl implements UsuarioDao {
 
 	private HibernateTemplate hibernateTemplate = null;
+	
+	@Autowired
+	public  DepartamentoServicio departamentoService;
+	
+	@Autowired
+	public  TipoUsuarioServicio tipoUsuarioService;
 
 	public void setSessionFactory(SessionFactory sessionFactory) {
         this.hibernateTemplate = new HibernateTemplate(sessionFactory);
@@ -73,7 +84,15 @@ public class UsuarioDaoImpl implements UsuarioDao {
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED)
 	public void actualizar(Usuario usuario) {
-		this.hibernateTemplate.update(usuario);
+		
+	 Departamento dep=	departamentoService.obtenerById(usuario.getDepartamento().getIdDepartamento());
+		usuario.setDepartamento(dep);
+	
+	TipoUsuario tipo= tipoUsuarioService.obtenerById(usuario.getTipoUsuario().getIdTipoUsuario());
+	
+	usuario.setTipoUsuario(tipo);
+		
+		this.hibernateTemplate.saveOrUpdate(usuario);
 	}
 
 

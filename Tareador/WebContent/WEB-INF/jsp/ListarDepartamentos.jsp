@@ -122,11 +122,15 @@
 			
 				<td>${item.getCodigo()}</td>
 				<td>${item.getDescripcion()}</td>
+<<<<<<< HEAD
+				<td ><input type="button" name="btnEliminar"   value="Eliminar" class="btn btn-primary"><a href="<c:url value='/edit-departamento-${item.getIdDepartamento()}' />">Editar</a></input></td>
+=======
 				<td >
 <%-- 				<a href="<c:url value='/edit-departamento-${item.getIdDepartamento()}' />">Editar</a>--%>
 
 			<button type="button" class="btn btn-primary"  onclick="callEditar(${item.getIdDepartamento()})"> Editar</button>
 				</td> 
+>>>>>>> origin/master
 				
 <!-- 				<button type="submit" class="btn btn-primary"  onclick="callServlet()"> Editar</button> -->
 				</tr>
