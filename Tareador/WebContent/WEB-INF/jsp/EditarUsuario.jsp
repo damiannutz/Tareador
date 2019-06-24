@@ -204,10 +204,11 @@ input:invalid, textarea:invalid {
 						<tr>
 						<td colspan="2" align="center">
 						
-						<input type="button" name="btnEliminar"  class="btn btn-danger" onclick="href="<c:url value='/EliminarUsuario-${idUsuario}'/> />
+						<input type="button" name="btnGuardarUsuario"  myContextPath="${pageContext.request.contextPath}"  onclick="guardarUsuario(this)"  value="Guardar" class="btn btn-success"/>
+						
+						<input type="button" name="btnEliminar" value="Eliminar Usuario"  class="btn btn-danger" onclick="href="<c:url value='/EliminarUsuario-${idUsuario}'/> />
 											
 						
-						<input type="button" name="btnGuardarUsuario"  myContextPath="${pageContext.request.contextPath}"  onclick="guardarUsuario(this)"  value="Guardar" class="btn btn-success"/>
 						<input hidden="true" id="idUsuario" value="<c:out value="${ idUsuario.toString() }" />" />
 						
 							

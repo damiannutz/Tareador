@@ -5,6 +5,7 @@ import java.util.*;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -63,15 +64,15 @@ public class Usuario {
 	  private TipoUsuario TipoUsuario;
 
 
-	  @ManyToMany(cascade= {CascadeType.ALL})
+	  @ManyToMany(cascade= {CascadeType.ALL }, fetch = FetchType.EAGER)
 		@JoinTable(name="usuarios_x_proyectos",joinColumns={@JoinColumn(name="id_usuario")}, inverseJoinColumns={@JoinColumn(name="id_proyecto")})
-	  private List<Proyecto> lsProyectos = new ArrayList<Proyecto>();
+	  private Set<Proyecto> lsProyectos = new HashSet<Proyecto>();
 	  
 
 		
-	    @ManyToMany(cascade= {CascadeType.ALL})
+	    @ManyToMany(cascade= {CascadeType.ALL}, fetch = FetchType.EAGER)
 		@JoinTable(name="Roles_x_Usuarios",joinColumns={@JoinColumn(name="id_usuario")}, inverseJoinColumns={@JoinColumn(name="id_rol")})
-  		private List<Rol> lsRoles = new ArrayList<Rol>();
+  		private Set<Rol> lsRoles = new HashSet<Rol>();
 	  
 	 
 	  public int getIdUsuario() {
@@ -140,25 +141,25 @@ public class Usuario {
 			}
 		
 		
-	  	public List<Proyecto> getLsProyectos() {
+	  	public Set<Proyecto> getLsProyectos() {
 			return lsProyectos;
 		}
-		public void setLsProyectos(List<Proyecto> lsProyectos) {
+		public void setLsProyectos(Set<Proyecto> lsProyectos) {
 			this.lsProyectos = lsProyectos;
 		}
 		
-    	public List<Rol> getLsRoles() {
+    	public Set<Rol> getLsRoles() {
 			return lsRoles;
 		}
-		public void setLsRoles(List<Rol> lsRoles) {
+		public void setLsRoles(Set<Rol> lsRoles) {
 			this.lsRoles = lsRoles;
 		}
 	public Usuario() {
 		super();
 	}
 	public Usuario(Integer idUsuario, String nombre, String apellido, String email, String nombreUsuario,
-			String contrasenia, Boolean isActivo, dominio.Departamento departamento,
-			dominio.TipoUsuario tipoUsuario, List<Proyecto> lsProyectos, List<Rol> lsRoles) {
+			String contrasenia, Boolean isActivo, Departamento departamento,
+			dominio.TipoUsuario tipoUsuario, Set<Proyecto> lsProyectos, Set<Rol> lsRoles) {
 		super();
 		IdUsuario = idUsuario;
 		Nombre = nombre;

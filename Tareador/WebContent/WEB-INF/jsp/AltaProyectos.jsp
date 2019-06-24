@@ -84,7 +84,7 @@
             <div class="header-content-inner">
                 <h1 id="homeHeading"><c:out value="${ headerTitle}"></c:out></h1>
                 <hr>
-                 <a href="IrListarDepartamentos.html" class="btn btn-primary btn-xl page-scroll">LISTA DE PROYECTOS</a><br><br><br>
+                 <a href="IrListarProyectos.html" class="btn btn-primary btn-xl page-scroll">LISTA DE PROYECTOS</a><br><br><br>
           
 			<div align="center">
 			<h3 id="homeHeading">   </h3>

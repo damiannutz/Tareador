@@ -135,6 +135,18 @@ public class UserController {
 
 			}
 
+//		if(user.getLsProyectos() != null)
+//		{
+//			for(Proyecto p : user.getLsProyectos())
+//				System.out.println(p.getDescripcion());
+//		}
+//		
+//		if(user.getLsRoles() != null)
+//		{
+//			for(Rol r : user.getLsRoles())
+//				System.out.println(r.getDescripcion());
+//		}
+//		
 		MV.setViewName("EditarUsuario"); 
 		return MV;
 	}

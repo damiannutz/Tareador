@@ -83,9 +83,10 @@
                 <h1 id="homeHeading">Bienvenido Administrador</h1>
                 <hr>
                 <p>Desde aqui podra administrar todo lo que necesite para realizar grupos de trabajo y proyecyos en su empresa.</p>
-                <a class="btn btn-primary btn-xl page-scroll" href="<c:url value='/IrAdministrarUsuarios.html' />"  >ADMINISTRAR USUARIOS</a><br><br><br>
+                <a class="btn btn-primary btn-xl page-scroll" href="<c:url value='/IrAdministrarDepartamentos.html' />"  >ADMINISTRAR DEPARTAMENTOS</a><br><br><br>
                 <a class="btn btn-primary btn-xl page-scroll" href="<c:url value='/IrAdministrarProyectos.html' />"  >ADMINISTRAR PROYECTOS</a><br><br><br>
-                <a class="btn btn-primary btn-xl page-scroll" href="<c:url value='/IrAdministrarDepartamentos.html' />"  >ADMINISTRAR DEPARTAMENTOS</a>
+                <a class="btn btn-primary btn-xl page-scroll" href="<c:url value='/IrAdministrarRoles.html' />"  >ADMINISTRAR ROLES</a><br><br><br>
+                <a class="btn btn-primary btn-xl page-scroll" href="<c:url value='/IrAdministrarUsuarios.html' />"  >ADMINISTRAR USUARIOS</a>
             </div>
         </div>
     </header>
