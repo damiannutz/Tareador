@@ -127,7 +127,7 @@
 					<td>${item.descripcion}</td>
 					<td >
 				<!--	<a href="<c:url value='/edit-rol-${item.getIdRol()}' />">Editar</a> -->
-						<button type="submit" class="btn btn-primary"  onclick="callUsuarios()"> +Usuario</button>
+						<button type="submit" class="btn btn-primary"  onclick="callUsuarios(${item.getIdRol()})"> +Usuario</button>
 						<button type="button" class="btn btn-primary"  onclick="callEditar(${item.getIdRol()})"> Editar</button>
 					</td>
 					</tr>
@@ -174,12 +174,19 @@ function callEditar(idRol){
 		 
 }
 
-function callUsuarios(idUsuario){
+function callUsuarios(idRol){
 	
 	{
-		 document.getElementById("adminForm").action="ListarUsuarios.jsp";
-		 document.getElementById("adminForm").method = "POST";
-		 document.getElementById("adminForm").submit();
+		form = document.createElement('form');
+	     form.setAttribute('method', 'POST');
+	     form.setAttribute('action', 'agregar-usuario-rol.html');
+	     myvar = document.createElement('input');
+	     myvar.setAttribute('name', 'idRol');
+	     myvar.setAttribute('type', 'hidden');
+	     myvar.setAttribute('value', idRol);
+	     form.appendChild(myvar);
+	     document.body.appendChild(form);
+	     form.submit();
 
 		}
 }
