@@ -53,10 +53,7 @@ public class UserController {
 	@Autowired
 	public  TipoUsuarioServicio tipoUsuarioService;
 	
-	
-	
-	
-	
+		
 //	public void init(ServletConfig config) {
 //		ApplicationContext ctx = WebApplicationContextUtils
 //				.getRequiredWebApplicationContext(config.getServletContext());
@@ -66,29 +63,18 @@ public class UserController {
 //	
 	
 	
-//	@Autowired
-//	public EstadoTareaServicio estadoTareaServicio;
-//	
-//	@Autowired
-//	public PrioridadServicio prioridadServicio;
-//	
-//	@Autowired
-//	public RolServicio rolServicio;
-//	
-//	@Autowired
-//	public TipoTareaServicio tipoTareaServicio;
-//	
-//	@Autowired
-//	public TipoUsuarioServicio tipoUsuarioServicio;
-
-	
-	
 	//Inicio
 	
-	@RequestMapping(value={"Index.html", "Inicio.html"})
+	@RequestMapping(value={"Index.html"})
 	public ModelAndView redireccion(){
 		ModelAndView MV = new ModelAndView();
 		MV.setViewName("Index"); 
+		return MV;
+	}
+	@RequestMapping(value={"Inicio.html"})
+	public ModelAndView redireccionUserIn(){
+		ModelAndView MV = new ModelAndView();
+		MV.setViewName("userin"); 
 		return MV;
 	}
 	@RequestMapping("IrLogin.html")
@@ -143,15 +129,12 @@ public class UserController {
 			MV.addObject("nombreDepartamento", user.getDepartamento().getDescripcion());
 		}
 	
-if(user.getTipoUsuario() !=null) {
-	MV.addObject("idTipo", user.getTipoUsuario().getIdTipoUsuario());
-	MV.addObject("descripcionTipo", user.getTipoUsuario().getDescripcion());
+		if(user.getTipoUsuario() !=null) {
+			MV.addObject("idTipo", user.getTipoUsuario().getIdTipoUsuario());
+			MV.addObject("descripcionTipo", user.getTipoUsuario().getDescripcion());
 
-}
+			}
 
-		
-
-		
 		MV.setViewName("EditarUsuario"); 
 		return MV;
 	}
@@ -168,6 +151,21 @@ if(user.getTipoUsuario() !=null) {
 		MV.setViewName("ListarUsuario");
 		return MV;
 	}
+	@RequestMapping(value= "IrListarUsuariosMensaje.html" ,method= { RequestMethod.POST})
+	public ModelAndView redireccionListarUsuarios(String Mensaje){
+		ModelAndView MV = new ModelAndView();
+
+		List<Usuario> userList = usuarioService.obtenerAll();
+		MV.addObject("departamentos", departamentoService.obtenerAll());
+		MV.addObject("tiposUsuario", tipoUsuarioService.obtenerAll());
+		MV.addObject("usuarios", userList);
+		MV.addObject("Mensaje", Mensaje);
+		
+		
+		MV.setViewName("ListarUsuario");
+		return MV;
+	}
+	
 	@RequestMapping("IrGestionarUsuario.html")
 	public ModelAndView redireccionGestionarUsuario(){
 		ModelAndView MV = new ModelAndView();
@@ -186,14 +184,15 @@ if(user.getTipoUsuario() !=null) {
 		
 		@RequestMapping(value={"/AgregarUsuario"},method = RequestMethod.POST,  consumes  = "application/json")
 	//	public ModelAndView AgregarUsuario(@RequestBody Usuario user) {			
-			@ResponseBody public String searchAddress(HttpServletRequest request, HttpServletResponse response, @RequestBody String userJson) throws JsonParseException, JsonMappingException, IOException {
+			 
+			public @ResponseBody String searchAddress(HttpServletRequest request, HttpServletResponse response, @RequestBody String userJson) throws JsonParseException, JsonMappingException, IOException {
 			
 			byte[] jsonData = userJson.toString().getBytes();
 
 		        ObjectMapper mapper = new ObjectMapper();
 		        Usuario usuario = mapper.readValue(jsonData, Usuario.class); 
 
-		ModelAndView MV = new ModelAndView();
+		//ModelAndView MV = new ModelAndView();
 		
 		String Message="";
 		
@@ -211,32 +210,53 @@ if(user.getTipoUsuario() !=null) {
 		
 		}
 	
-		MV.setViewName("Usuarios");
-		MV.addObject("Mensaje", Message);
-		MV.addObject("listaUsuarios",this.usuarioService.obtenerAll());
-		MV.setViewName("Usuarios"); 
-		
+//		MV.setViewName("Usuarios");
+//		MV.addObject("Mensaje", Message);
+//		MV.addObject("listaUsuarios",this.usuarioService.obtenerAll());
+//		MV.setViewName("Usuarios"); 
+//		
 	//	return MV;
-		return "adads";
+		return Message;
+		//return redireccionListarUsuarios(Message);
 		
 	}
 		
 		@RequestMapping(value={"/EditarUsuario"},method = RequestMethod.POST,  consumes  = "application/json")
 	//	public ModelAndView AgregarUsuario(@RequestBody Usuario user) {			
-			@ResponseBody public String editUser(HttpServletRequest request, HttpServletResponse response, @RequestBody String userJson) throws JsonParseException, JsonMappingException, IOException {
+			
+			public @ResponseBody String editUser(HttpServletRequest request, HttpServletResponse response, @RequestBody String userJson) throws JsonParseException, JsonMappingException, IOException {
 			
 			byte[] jsonData = userJson.toString().getBytes();
 
 		        ObjectMapper mapper = new ObjectMapper();
 		        Usuario usuario = mapper.readValue(jsonData, Usuario.class); 
 
-		ModelAndView MV = new ModelAndView();
-		
-		String Message="";
+		        Usuario usuarioAEditar = usuarioService.obtenerById(usuario.getIdUsuario());
+		        
+		        		        
+		        usuarioAEditar.setApellido(usuario.getApellido());
+		        usuarioAEditar.setNombre(usuario.getNombre());
+		        usuarioAEditar.setEmail(usuario.getEmail());
+		        usuarioAEditar.setIsActivo(usuario.getIsActivo());
+		        usuarioAEditar.setContrasenia(usuario.getContrasenia());
+		        
+		        if(usuarioAEditar.getDepartamento().getIdDepartamento() != usuario.getDepartamento().getIdDepartamento()) {
+		        	Departamento dep=	departamentoService.obtenerById(usuario.getDepartamento().getIdDepartamento());
+		        	usuarioAEditar.setDepartamento(dep);
+		        }
+		        	
+		        if(usuarioAEditar.getTipoUsuario().getIdTipoUsuario() != usuario.getTipoUsuario().getIdTipoUsuario() ) {
+		        	TipoUsuario tipo= tipoUsuarioService.obtenerById(usuario.getTipoUsuario().getIdTipoUsuario());
+					usuarioAEditar.setTipoUsuario(tipo);
+		        }
+	        	
+		        
+				
+				String Message="";
 		
 		try{
 			
-			usuarioService.actualizar(usuario);
+			usuarioService.actualizar(usuarioAEditar);
 			Message = "Usuario agregado";
 		}
 		catch(Exception e)
@@ -247,14 +267,12 @@ if(user.getTipoUsuario() !=null) {
 		{
 		
 		}
-	
-		MV.setViewName("Usuarios");
-		MV.addObject("Mensaje", Message);
-		MV.addObject("listaUsuarios",this.usuarioService.obtenerAll());
-		MV.setViewName("Usuarios"); 
-		
-	//	return MV;
-		return "adads";
+
+//		ModelAndView MV = new ModelAndView();
+//		MV.addObject("Mensaje", Message);
+//		MV.setViewName("forward:/IrListarUsuariosMensaje.html");
+//		return MV;
+		return Message;
 		
 	}
 	

@@ -85,14 +85,14 @@ public class UsuarioDaoImpl implements UsuarioDao {
 	@Transactional(propagation=Propagation.REQUIRED)
 	public void actualizar(Usuario usuario) {
 		
-	 Departamento dep=	departamentoService.obtenerById(usuario.getDepartamento().getIdDepartamento());
-		usuario.setDepartamento(dep);
-	
-	TipoUsuario tipo= tipoUsuarioService.obtenerById(usuario.getTipoUsuario().getIdTipoUsuario());
-	
-	usuario.setTipoUsuario(tipo);
-		
-		this.hibernateTemplate.saveOrUpdate(usuario);
+//	 Departamento dep=	departamentoService.obtenerById(usuario.getDepartamento().getIdDepartamento());
+//		usuario.setDepartamento(dep);
+//	
+//	TipoUsuario tipo= tipoUsuarioService.obtenerById(usuario.getTipoUsuario().getIdTipoUsuario());
+//	
+//	usuario.setTipoUsuario(tipo);
+//		
+		this.hibernateTemplate.update(usuario);
 	}
 
 
