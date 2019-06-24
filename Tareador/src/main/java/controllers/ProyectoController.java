@@ -131,18 +131,6 @@ public class ProyectoController {
 		return MV;
 	}
 	
-	@RequestMapping(value={ "edit-proyecto.html" }, method= { RequestMethod.GET,RequestMethod.POST})
-	public ModelAndView redireccionAgregarUsuarioProyecto(Integer idProyecto){
 	
-		Proyecto Proyecto = proyectoServicio.obtenerById(idProyecto);
-		
-		ModelAndView MV = new ModelAndView();
-		MV.addObject("IdProyecto", Proyecto.getIdProyecto());
-		MV.addObject("ProyectoDescripcion", Proyecto.getDescripcion());
-		MV.addObject("ProyectoDepartamentoId", Proyecto.getDepartamento().getIdDepartamento());
-		MV.addObject("headerTitle", "Agregar Usuario");
-		MV.setViewName("AgregarUsuarioProyectos");
-		return MV;
-	}
 	
 }
