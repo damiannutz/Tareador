@@ -31,6 +31,13 @@ public class ProyectoController {
 	@Autowired
 	public DepartamentoServicio departamentoServicio;
 	
+	@Autowired
+	public  UsuarioServicio usuarioService;
+	
+	@Autowired
+	public  TipoUsuarioServicio tipoUsuarioService;
+	
+	
 	@RequestMapping("IrAdministrarProyectos.html")
 	public ModelAndView redireccionAdministrarProyectos(){
 		ModelAndView MV = new ModelAndView();
@@ -131,6 +138,25 @@ public class ProyectoController {
 		return MV;
 	}
 	
+	
+	@RequestMapping(value={ "agregar-usuario-proyecto.html" }, method= { RequestMethod.GET,RequestMethod.POST})
+	public ModelAndView redireccionAgregarUsuarioProyecto(Integer idProyecto){
+	
+		Proyecto Proyecto = proyectoServicio.obtenerById(idProyecto);
+
+		
+		ModelAndView MV = new ModelAndView();
+		List<Usuario> userList = usuarioService.obtenerAll();
+		MV.addObject("departamentos", departamentoServicio.obtenerAll());
+		MV.addObject("tiposUsuario", tipoUsuarioService.obtenerAll());
+		MV.addObject("usuarios", userList);
+		MV.addObject("IdProyecto", idProyecto);
+		MV.addObject("ProyectoDescripcion", Proyecto.getDescripcion());
+		MV.addObject("ProyectoDepartamentoId", Proyecto.getDepartamento().getIdDepartamento());
+		MV.addObject("headerTitle", "Agregar Usuario");
+		MV.setViewName("AgregarUsuarioAProyecto");
+		return MV;
+	}
 	
 	
 }

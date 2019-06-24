@@ -53,6 +53,8 @@ public class UserController {
 	@Autowired
 	public  TipoUsuarioServicio tipoUsuarioService;
 	
+	@Autowired
+	public ProyectoServicio proyectoServicio;
 	
 	
 	
@@ -143,11 +145,11 @@ public class UserController {
 			MV.addObject("nombreDepartamento", user.getDepartamento().getDescripcion());
 		}
 	
-if(user.getTipoUsuario() !=null) {
-	MV.addObject("idTipo", user.getTipoUsuario().getIdTipoUsuario());
-	MV.addObject("descripcionTipo", user.getTipoUsuario().getDescripcion());
+		if(user.getTipoUsuario() !=null) {
+			MV.addObject("idTipo", user.getTipoUsuario().getIdTipoUsuario());
+			MV.addObject("descripcionTipo", user.getTipoUsuario().getDescripcion());
 
-}
+		}
 
 		
 
@@ -359,5 +361,58 @@ if(user.getTipoUsuario() !=null) {
 		return MV;
 	}
 	
+	
+	@RequestMapping(value={ "AgregarProyectoUsuario.html" }, method= { RequestMethod.GET,RequestMethod.POST})
+
+	 public ModelAndView agregarProyectoUsuario(Integer idUsuario, Integer idProyecto){
+
+		List <Proyecto> lstProy = new ArrayList<Proyecto>();
+		ModelAndView MV = new ModelAndView();
+		Proyecto proy = proyectoServicio.obtenerById(idProyecto);
+	    Usuario user =	usuarioService.obtenerById(idUsuario);
+	    lstProy = user.getLsProyectos();
+	    lstProy.add(proy);
+	    //idProyecto = lstProy.size();
+	    
+	    //user.setLsProyectos(lstProy);
+	    user.setApellido("hola");
+	    usuarioService.actualizar(user);
+		try{
+			
+		}
+		catch(Exception e)
+		{
+			//Message = "No se pudo insertar el usuario";
+		}
+	    
+	    
+	    String usuario = idUsuario.toString();
+	    String proyecto = idProyecto.toString();
+	    MV.addObject("idUsuario", idUsuario);
+		MV.addObject("departamentos", departamentoService.obtenerAll());
+		MV.addObject("tiposUsuario", tipoUsuarioService.obtenerAll());
+		MV.addObject("nombre", idUsuario);
+		MV.addObject("apellido", idProyecto);
+		MV.addObject("email", user.getEmail());
+		MV.addObject("contrasenia", user.getContrasenia());
+		MV.addObject("nombreUsuario", user.getNombreUsuario());
+		
+		if(user.getDepartamento() != null) {
+			MV.addObject("idDepartamento", user.getDepartamento().getIdDepartamento());
+			MV.addObject("nombreDepartamento", user.getDepartamento().getDescripcion());
+		}
+	
+		if(user.getTipoUsuario() !=null) {
+			MV.addObject("idTipo", user.getTipoUsuario().getIdTipoUsuario());
+			MV.addObject("descripcionTipo", user.getTipoUsuario().getDescripcion());
+
+		}
+
+		
+
+		
+		MV.setViewName("EditarUsuario"); 
+		return MV;
+	}
 	
 }
