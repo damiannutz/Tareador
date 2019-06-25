@@ -15,25 +15,17 @@
 
     <title>TAREADOR</title>
 
-    <!-- Theme CSS -->
-<link href="<c:url value="/resources/css/creative.min.css" />" rel="stylesheet">
-    <!-- Custom Fonts -->
-<link href="<c:url value="/resources/vendor/font-awesome/css/font-awesome.min.css" />" rel="stylesheet">
-    <!-- Bootstrap Core CSS -->
-<link href="<c:url value="/resources/vendor/bootstrap/css/bootstrap.min.css" />" rel="stylesheet">
-    <!-- Plugin CSS -->
-<link href="<c:url value="/resources/vendor/magnific-popup/magnific-popup.css" />" rel="stylesheet">
-
-<link href="<c:url value="/resources/css/dataTables.bootstrap.min.css" />" rel="stylesheet">
-
-<link href="<c:url value="/resources/vendor/font-awesome/css/font-awesome.min.css" />" rel="stylesheet">
-
-<link href="<c:url value="/resources/vendor/magnific-popup/magnific-popup.css" />" rel="stylesheet">
+<style type="text/css">
+	<%@ include file="Recursos/bootstrap.min.css" %>
+	<%@ include file="Recursos/font-awesome.min.css" %>
+	<%@ include file="Recursos/css1.css" %>
+	<%@ include file="Recursos/css2.css" %>
+	<%@ include file="Recursos/magnific-popup.css" %>
+	<%@ include file="Recursos/creative.min.css" %>
+	<%@ include file="Recursos/dataTables.bootstrap.min.css" %>
 
 
-<link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-<link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
-
+</style>
 
 
 
@@ -254,34 +246,18 @@ function callAgregar(idUsuario, idRol){
 
 </script>
 
-
-<script src="<c:url value="/resources/jquery/jquery.min.js" />" type="text/javascript"></script>
-
-
-    <!-- Bootstrap Core JavaScript -->
-<script src="<c:url value="/resources/bootstrap/js/bootstrap.min.js" />" type="text/javascript"></script>
-
-
-
-    <!-- Plugin JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-    
-    <script src="<c:url value="/resources/scrollreveal/scrollreveal.min.js" />" type="text/javascript"></script>
-    <script src="vendor/scrollreveal/scrollreveal.min.js"></script>
-    
-    <script src="<c:url value="/resources/vendor/bootstrap/js/bootstrap.min.js" />" type="text/javascript"></script>
-    <script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
-
-    <!-- Theme JavaScript -->
-    <script src="<c:url value="/resources/js/creative.min.js" />" type="text/javascript"></script>
-    
-    <script src="<c:url value="/resources/js/jquery-3.2.1.min.js" />" type="text/javascript"></script>
-    
-    <script src="<c:url value="/resources/js/bootstrap.min.js" />" type="text/javascript"></script>
-    
-    <script src="<c:url value="/resources/js/jquery.dataTables.min.js" />" type="text/javascript"></script>
-    
-    <script src="<c:url value="/resources/js/dataTables.bootstrap.min.js" />" type="text/javascript"></script>
+<script type="text/javascript">
+		<%@ include file="Recursos/js/jquery.min.js" %>
+		<%@ include file="Recursos/js/bootstrap.min.js" %>
+		<%@ include file="Recursos/js/jquery.easing.min.js" %>
+		<%@ include file="Recursos/js/scrollreveal.min.js" %>
+		<%@ include file="Recursos/js/jquery.magnific-popup.min.js" %>
+		<%@ include file="Recursos/js/creative.min.js" %>
+		<%@ include file="Recursos/js/jquery-3.2.1.min.js" %>
+		<%@ include file="Recursos/js/jquery.dataTables.min.js" %>
+		<%@ include file="Recursos/js/dataTables.bootstrap.min.js" %>
+	
+	</script>
 
 
 	<script>
