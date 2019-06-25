@@ -3,6 +3,8 @@ package controllers;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.Convert;
 import javax.servlet.ServletConfig;
@@ -49,7 +51,8 @@ public class DepartamentoController {
 	@RequestMapping("IrListarDepartamentos.html")
 	public ModelAndView redireccionListarDepartamentos(){
 		
-		List<Departamento> lstDepartamentos = departamentoServicio.obtenerAllActivos();
+		Set<Departamento> lstDepartamentos = departamentoServicio.obtenerAllActivos().stream().collect(Collectors.toSet());
+		
 		
 		ModelAndView MV = new ModelAndView();
 		MV.setViewName("ListarDepartamentos");

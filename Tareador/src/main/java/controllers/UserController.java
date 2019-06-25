@@ -13,6 +13,7 @@ import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.hibernate.Session;
 import org.hibernate.exception.spi.ConversionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.ModelAndView;
@@ -123,7 +125,7 @@ public class UserController {
 		ModelAndView MV = new ModelAndView();
 	usuarioService.bajaLogica(idUsuario);
 	Set<Usuario> userList = usuarioService.obtenerAllActivos();
-	MV.addObject("departamentos", departamentoService.obtenerAll());
+	MV.addObject("departamentos", departamentoService.obtenerAllActivos());
 	MV.addObject("tiposUsuario", tipoUsuarioService.obtenerAll());
 	MV.addObject("usuarios", userList);	
 	
@@ -497,12 +499,15 @@ public class UserController {
 	
 	@RequestMapping(value={ "CerrarSesion.html" }, method= { RequestMethod.GET,RequestMethod.POST})
 
-	 public ModelAndView cerrarSession(@SessionAttribute("Sessuser") Usuario userSession){
+	 public ModelAndView cerrarSession(@SessionAttribute("Sessuser") Usuario userSession , WebRequest request, SessionStatus status){
 
 
 		ModelAndView MV = new ModelAndView();
 		userSession = null;
-
+		
+		status.setComplete();
+	    request.removeAttribute("Sessuser", WebRequest.SCOPE_SESSION);
+		
 		
 		MV.setViewName("forward:/Index.html"); 
 		return MV;

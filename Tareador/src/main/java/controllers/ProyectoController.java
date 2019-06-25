@@ -53,7 +53,7 @@ public class ProyectoController {
 	}
 	@RequestMapping("IrAltaProyecto.html")
 	public ModelAndView redireccionAltaProyecto(  ){
-		List<Departamento> lstDepartamentos = departamentoServicio.obtenerAllActivos();
+		Set<Departamento> lstDepartamentos = departamentoServicio.obtenerAllActivos().stream().collect(Collectors.toSet());
 		ModelAndView MV = new ModelAndView();
 		MV.setViewName("AltaProyectos");
 		MV.addObject("headerTitle", "Nuevo Proyecto");
@@ -64,8 +64,8 @@ public class ProyectoController {
 	@RequestMapping("IrListarProyectos.html")
 	public ModelAndView redireccionListarProyectos(@SessionAttribute("Sessuser") Usuario userSession){
 
-		List<Proyecto> lstProyectos = proyectoServicio.obtenerAllActivos();
-		List<Departamento> lstDepartamentos = departamentoServicio.obtenerAllActivos();
+		Set<Proyecto> lstProyectos = proyectoServicio.obtenerAllActivos().stream().collect(Collectors.toSet());
+		Set<Departamento> lstDepartamentos = departamentoServicio.obtenerAllActivos().stream().collect(Collectors.toSet());
 		ModelAndView MV = new ModelAndView();
 		MV.setViewName("ListarProyectos");
 		MV.addObject("lstProyectos", lstProyectos);
@@ -94,7 +94,7 @@ public class ProyectoController {
 	public ModelAndView redireccionAltaProyecto(Integer idProyecto){
 	
 		Proyecto Proyecto = proyectoServicio.obtenerById(idProyecto);
-		List<Departamento> lstDepartamentos = departamentoServicio.obtenerAllActivos();
+		Set<Departamento> lstDepartamentos = departamentoServicio.obtenerAllActivos().stream().collect(Collectors.toSet());
 		
 		ModelAndView MV = new ModelAndView();
 		MV.addObject("IdProyecto", Proyecto.getIdProyecto());
@@ -157,8 +157,8 @@ public class ProyectoController {
 
 		
 		ModelAndView MV = new ModelAndView();
-		Set<Usuario> userList = usuarioService.obtenerAllActivos();
-		MV.addObject("departamentos", departamentoServicio.obtenerAllActivos());
+		Set<Usuario> userList = usuarioService.obtenerAllActivos().stream().filter(r->!r.getLsProyectos().stream().anyMatch(s->s.getIdProyecto().equals(idProyecto))).collect(Collectors.toSet());
+		MV.addObject("departamentos", departamentoServicio.obtenerAllActivos().stream().collect(Collectors.toSet()));
 		MV.addObject("tiposUsuario", tipoUsuarioService.obtenerAll());
 		MV.addObject("usuarios", userList);
 		MV.addObject("IdProyecto", idProyecto);

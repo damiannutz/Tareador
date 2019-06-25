@@ -133,24 +133,24 @@ else
 						
 						<tr>
 						<td>Nombre:</td>
-						<td><input maxlength="30" type="text" value="" style=" color: black " size="20" required="required" id="inputNombre" name="nombre"></td>
+						<td><input class="input"  maxlength="30" type="text" value="" style=" color: black " size="20" required="required" id="inputNombre" name="nombre"></td>
 						</tr>
 						<tr>
 						<td>Apellido:</td>
-						<td><input maxlength="30" type="text" value="" style=" color: black " size="20" required="required" id="inputApellido" name="apellido"></td>
+						<td><input class="input"  maxlength="30" type="text" value="" style=" color: black " size="20" required="required" id="inputApellido" name="apellido"></td>
 						</tr>
 						<tr>
 						<td>Correo:</td>
-						<td><input id="inputCorreo" maxlength="40" type="text" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Mail invalido" size="20" value="" style=" color: black " required="required" name="correo"></td>
+						<td><input class="input" id="inputCorreo" maxlength="40" type="text" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Mail invalido" size="20" value="" style=" color: black " required="required" name="correo"></td>
 						</tr>
 						<tr>
 						<td>Usuario:</td>
-						<td><input id="inputUsuario"  pattern="^[A-Za-z][A-Za-z0-9._%+-]*$" title="No se permiten espacios"   maxlength="30" type="text" size="20" value="" style=" color: black " required="required" name="usuario"></td>
+						<td><input  class="input"  id="inputUsuario"  pattern="^[A-Za-z][A-Za-z0-9._%+-]*$" title="No se permiten espacios"   maxlength="30" type="text" size="20" value="" style=" color: black " required="required" name="usuario"></td>
 <!-- 						  pattern="^[A-Za-z][A-Za-z0-9]*$" -->
 						</tr>
 						<tr>
 						<td>Contraseña:</td>
-						<td><input maxlength="25" id="inputPassword" pattern=".{6,}" title="Seis o mas caracteres" type="password" value="" style=" color: black " required="required" size="20" name="contrasenia" /></td>
+						<td><input class="input"  maxlength="25" id="inputPassword" pattern=".{6,}" title="Seis o mas caracteres" type="password" value="" style=" color: black " required="required" size="20" name="contrasenia" /></td>
 						</tr>
 						
 						<tr>
@@ -255,6 +255,23 @@ else
 
 var guardarUsuario= function(element){
 	
+	var contador=0;
+	$(".input").each(function(index,elem){
+		if($(elem).val() == ""){
+        contador = 1;
+		}
+		
+		
+		
+		
+
+		});
+	
+	if(contador > 0){
+		
+		alert("complete todos los campos");
+		return;
+	}
 var CONTEXT_PATH =	$(element).attr('myContextPath');
 
 	var user  = new Object();

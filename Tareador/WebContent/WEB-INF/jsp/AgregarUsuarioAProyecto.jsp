@@ -88,7 +88,7 @@ else
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                 	<li>
-                        <a class="page-scroll" href="<c:url value='IrListarUsuarios.html' />"  >VOLVER</a>
+                        <a class="page-scroll" href="<c:url value='IrListarProyectos.html' />"  >VOLVER</a>
                     </li>
                     <li>
 <%--                         <a class="page-scroll" href="#about"><%= nombreU %></a> --%>
@@ -136,9 +136,10 @@ else
 						
 						<td >Departamento:</td>
 							<td style="padding-left: 5px;   padding-right: 5px;">
-							<select  id="cmbDepartamento" name="cmTipoUsuario" required="required" class="btn btn-info dropdown-toggle">
+							<select  id="cmbDepartamento" name="cmbDepartamento" required="required" class="btn btn-info dropdown-toggle">
 								
-
+							<option value="TODOS" selected="selected">TODOS</option>
+								
 										
 							<c:forEach items="${departamentos}" var="item">
 								
@@ -159,14 +160,15 @@ else
 						<td>Tipo de usuario:</td>
 						<td style="padding-left: 5px;   padding-right: 5px; padding-bottom:5px;">
 
-													<select  id="cmbTipoUsuario" name="cmTipoUsuario" required="required" class="btn btn-info dropdown-toggle">
+													<select  id="cmbTipoUsuario" name="cmbTipoUsuario" required="required" class="btn btn-info dropdown-toggle">
 								
 
+										<option value="TODOS" selected="selected" >TODOS</option>
 										
 							<c:forEach items="${tiposUsuario}" var="item">
 								
 								
-								<option value="${item.idTipoUsuario}" selected="selected" >${item.descripcion}</option>
+								<option value="${item.idTipoUsuario}"  >${item.descripcion}</option>
 								
 								
 							
@@ -290,8 +292,8 @@ function callAgregar(idUsuario, idProyecto){
 	<script>
 		$(document).ready( function () {
 		    $('.AllDataTables').DataTable({
-		    	pageLength: 10,
-	            lengthMenu: [[10],["de 10"]],
+		    	pageLength: 8,
+	            lengthMenu: [[8],["de 8"]],
 		    	language: {
 		    		"sProcessing":     "Procesando...",
 				    "sLengthMenu":     "Mostrar _MENU_ registros",

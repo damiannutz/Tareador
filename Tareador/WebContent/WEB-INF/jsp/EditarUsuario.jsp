@@ -137,34 +137,34 @@ else
 						
 						<tr>
 						<td>Nombre:</td>
-						<td><input maxlength="30" type="text" value="<c:out value="${ nombre.toString() }" />" style=" color: black " size="20" required="required" id="inputNombre" name="nombre"></td>
+						<td><input class="input"  maxlength="30" type="text" value="<c:out value="${ nombre.toString() }" />" style=" color: black " size="20" required="required" id="inputNombre" name="nombre"></td>
 						</tr>
 						<tr>
 						<td>Apellido:</td>
-						<td><input maxlength="30" type="text" value="<c:out value="${ apellido.toString() }" />" style=" color: black " size="20" required="required" id="inputApellido" name="apellido"></td>
+						<td><input class="input"  maxlength="30" type="text" value="<c:out value="${ apellido.toString() }" />" style=" color: black " size="20" required="required" id="inputApellido" name="apellido"></td>
 						</tr>
 						<tr>
 						<td>Correo:</td>
-						<td><input id="inputCorreo" maxlength="40" type="text" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Mail invalido" size="20"  value="<c:out value="${ email.toString() }"/>" style=" color: black " required="required" name="correo"></td>
+						<td><input class="input"  id="inputCorreo" maxlength="40" type="text" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Mail invalido" size="20"  value="<c:out value="${ email.toString() }"/>" style=" color: black " required="required" name="correo"></td>
 						</tr>
 						
 						<c:choose>
 					    <c:when  test="${ ADM_USERS == 1 }">
 							<tr>
 							<td>Usuario:</td>
-							<td><input id="inputUsuario"  pattern="^[A-Za-z][A-Za-z0-9._%+-]*$" title="No se permiten espacios"   maxlength="30" type="text" size="20"  value="<c:out value="${ nombreUsuario.toString() }" />"  style=" color: black " required="required" name="usuario"></td>
+							<td><input class="input"  id="inputUsuario"  pattern="^[A-Za-z][A-Za-z0-9._%+-]*$" title="No se permiten espacios"   maxlength="30" type="text" size="20"  value="<c:out value="${ nombreUsuario.toString() }" />"  style=" color: black " required="required" name="usuario"></td>
 							</tr>
 						 </c:when>    
 						    <c:otherwise>
 						        <tr>
 							<td>Usuario:</td>
-							<td><input id="inputUsuario" readonly="readonly" pattern="^[A-Za-z][A-Za-z0-9._%+-]*$" title="No se permiten espacios"   maxlength="30" type=text size="20"  value="<c:out value="${ nombreUsuario.toString() }" />"  style=" color: black " required="required" name="usuario"></td>
+							<td><input class="input"  id="inputUsuario" readonly="readonly" pattern="^[A-Za-z][A-Za-z0-9._%+-]*$" title="No se permiten espacios"   maxlength="30" type=text size="20"  value="<c:out value="${ nombreUsuario.toString() }" />"  style=" color: black " required="required" name="usuario"></td>
 							</tr>
 						    </c:otherwise>
 						</c:choose>
 						<tr>
 						<td>Contraseña:</td>
-						<td><input maxlength="25"  value="<c:out value="${ contrasenia.toString() }" />" id="inputPassword" pattern=".{6,}" title="Seis o mas caracteres" type="password"  style=" color: black " required="required" size="20" name="contrasenia" /></td>
+						<td><input class="input"  maxlength="25"  value="<c:out value="${ contrasenia.toString() }" />" id="inputPassword" pattern=".{6,}" title="Seis o mas caracteres" type="password"  style=" color: black " required="required" size="20" name="contrasenia" /></td>
 						</tr>
 												
 <c:choose>
@@ -379,6 +379,28 @@ var eliminarUsuario= function(){
 
 
 var guardarUsuario= function(element){
+	var contador=0;
+	$(".input").each(function(index,elem){
+		if($(elem).val() == ""){
+        contador = 1;
+		}
+		
+		
+		
+		
+
+		});
+	
+	if(contador > 0){
+		
+		alert("complete todos los campos");
+		return;
+	}
+	
+	
+	
+	
+	
 	
 var CONTEXT_PATH =	$(element).attr('myContextPath');
 	debugger;
@@ -392,6 +414,7 @@ var CONTEXT_PATH =	$(element).attr('myContextPath');
 //	var user = { "user": { "Nombre": "$('#inputNombre').val()'", "Apellido": ""$('#inputApellido').val()"", "Contrasenia": ""$('#inputPassword').val()"", "Email": ""$('#inputCorreo').val()"", "Departamento": {  "descripcion": "", "codigo": "",  "idDepartamento": "" }, "TipoUsuario": {"idTipoUsuario": "", "descripcion": ""  }  }}      
 
 	//var user = { "user": { "Nombre": "", "Apellido": "", "Contrasenia": "", "Email": "", "Departamento": {  "descripcion": "", "codigo": "",  "idDepartamento": "" }, "TipoUsuario": {"idTipoUsuario": "", "descripcion": ""  }  }}      
+
 
 	var user  = new Object();
 	user.idUsuario= $("#idUsuario").val();

@@ -238,8 +238,8 @@ function callUsuarios(idRol){
 	<script>
 		$(document).ready( function () {
 		    $('.AllDataTables').DataTable({
-		    	pageLength: 10,
-	            lengthMenu: [[10],["de 10"]],
+		    	pageLength: 8,
+	            lengthMenu: [[8],["de 8"]],
 		    	language: {
 		    		"sProcessing":     "Procesando...",
 				    "sLengthMenu":     "Mostrar _MENU_ registros",

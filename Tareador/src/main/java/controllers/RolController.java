@@ -2,6 +2,7 @@ package controllers;
 
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import javax.persistence.Convert;
 import javax.servlet.ServletConfig;
@@ -56,7 +57,7 @@ public class RolController {
 	@RequestMapping("IrListarRoles.html")
 	public ModelAndView redireccionListarRoles(){
 
-		List<Rol> lstRoles = rolServicio.obtenerAllActivos();
+		Set<Rol> lstRoles = rolServicio.obtenerAllActivos().stream().collect(Collectors.toSet());
 		
 		ModelAndView MV = new ModelAndView();
 		MV.setViewName("ListarRoles");
@@ -118,8 +119,8 @@ public class RolController {
 
 		
 		ModelAndView MV = new ModelAndView();
-		Set<Usuario> userList = usuarioService.obtenerAll();
-		MV.addObject("departamentos", departamentoServicio.obtenerAllActivos());
+		Set<Usuario> userList = usuarioService.obtenerAllActivos().stream().filter(r->!r.getLsRoles().stream().anyMatch(s->s.getIdRol().equals(idRol))).collect(Collectors.toSet());;
+		MV.addObject("departamentos", departamentoServicio.obtenerAllActivos().stream().collect(Collectors.toSet()));
 		MV.addObject("tiposUsuario", tipoUsuarioService.obtenerAll());
 		MV.addObject("usuarios", userList);
 		MV.addObject("idRol", idRol);
