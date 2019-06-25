@@ -3,6 +3,7 @@ package controllers;
 import java.awt.PageAttributes.MediaType;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +20,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -53,9 +55,13 @@ public class UserController {
 	@Autowired
 	public  TipoUsuarioServicio tipoUsuarioService;
 	
-	
 
+	@Autowired
+	public ProyectoServicio proyectoServicio;
 	
+	@Autowired
+	public RolServicio rolServicio;
+
 //	public void init(ServletConfig config) {
 //		ApplicationContext ctx = WebApplicationContextUtils
 //				.getRequiredWebApplicationContext(config.getServletContext());
@@ -104,9 +110,16 @@ public class UserController {
 	}
 	
 	@RequestMapping(value={ "/EliminarUsuario-{idUsuario}" }, method= { RequestMethod.GET})
-	 public void eliminarUsuario(@PathVariable Integer idUsuario) throws JsonParseException, JsonMappingException, IOException {
-
+	 public ModelAndView eliminarUsuario(@PathVariable Integer idUsuario) throws JsonParseException, JsonMappingException, IOException {
+		ModelAndView MV = new ModelAndView();
 	usuarioService.bajaLogica(idUsuario);
+	List<Usuario> userList = usuarioService.obtenerAll();
+	MV.addObject("departamentos", departamentoService.obtenerAll());
+	MV.addObject("tiposUsuario", tipoUsuarioService.obtenerAll());
+	MV.addObject("usuarios", userList);	
+	
+	MV.setViewName("ListarUsuario");
+	return MV;
 	}
 	
 	@RequestMapping(value={ "/EditarUsuario-{idUsuario}" }, method= { RequestMethod.GET})
@@ -188,14 +201,7 @@ public class UserController {
 	}
 	
 	
-	
-	
-	//@RequestMapping(value ="/AgregarUsuario" , method= { RequestMethod.POST})
-//	@ResponseBody
-	//public   String AgregarUsuario(@RequestBody final Usuario user) {
-//	public ModelAndView AgregarUsuario(String nombreU, String apellido, String contraseña, String correo,Integer idDepartamento, String departamento,String tipoUsuario, String idTipoUsuario ){
-	
-		
+
 		@RequestMapping(value={"/AgregarUsuario"},method = RequestMethod.POST,  consumes  = "application/json")
 	//	public ModelAndView AgregarUsuario(@RequestBody Usuario user) {			
 			 
@@ -328,7 +334,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(value ="IngresoUsuario.html" , method= { RequestMethod.GET, RequestMethod.POST})
-	public ModelAndView validarUsuario(String nombreU, String passU){
+	public ModelAndView validarUsuario(String nombreU, String passU, @SessionAttribute("Sessuser") Usuario userSession){
 		ModelAndView MV = new ModelAndView();
 
 		boolean flagname = false;
@@ -365,10 +371,10 @@ public class UserController {
 				x = usuarioService.obtenerById(x.getIdUsuario());
 				//Message = "bien";
 				MV.setViewName("userin");
-				MV.addObject("Mensaje", Message);
+				MV.addObject("nombre", x.getNombreUsuario());
 				MV.addObject("Usuario",x);
 				MV.setViewName("userin"); 
-				//MV.addObject("Sessuser",x.getNombreUsuario());
+
 				MV.addObject("Sessuser",x);
 			}
 			catch(Exception e)
@@ -389,6 +395,75 @@ public class UserController {
 			
 		}
 		
+		return MV;
+	}
+	@RequestMapping(value={ "AgregarProyectoUsuario.html" }, method= { RequestMethod.GET,RequestMethod.POST})
+
+	 public ModelAndView agregarProyectoUsuario(Integer idUsuario, Integer idProyecto){
+
+		Set <Proyecto> lstProy = new HashSet<Proyecto>();
+		ModelAndView MV = new ModelAndView();
+		Proyecto proy = proyectoServicio.obtenerById(idProyecto);
+	    Usuario user =	usuarioService.obtenerById(idUsuario);
+	    lstProy = user.getLsProyectos();
+	    lstProy.add(proy);
+	    //idProyecto = lstProy.size();
+	    
+	    //user.setLsProyectos(lstProy);
+	    
+		try{
+			usuarioService.actualizar(user);
+		}
+		catch(Exception e)
+		{
+			//Message = "No se pudo insertar el usuario";
+		}
+	    
+	    
+	    String usuario = idUsuario.toString();
+	    String proyecto = idProyecto.toString();
+		
+		MV.setViewName("forward:/IrListarProyectos.html"); 
+		return MV;
+	}
+	
+	@RequestMapping(value={ "AgregarProyectoRol.html" }, method= { RequestMethod.GET,RequestMethod.POST})
+
+	 public ModelAndView agregarProyectoRol(Integer idUsuario, Integer idRol){
+
+		Set <Rol> lstProy = new HashSet<Rol>();
+		ModelAndView MV = new ModelAndView();
+		Rol proy = rolServicio.obtenerById(idRol);
+	    Usuario user =	usuarioService.obtenerById(idUsuario);
+	    lstProy = user.getLsRoles();
+	    lstProy.add(proy);
+	    //idProyecto = lstProy.size();
+	    
+	    //user.setLsProyectos(lstProy);
+	    
+		try{
+			usuarioService.actualizar(user);
+		}
+		catch(Exception e)
+		{
+			//Message = "No se pudo insertar el usuario";
+		}
+	    
+		
+		MV.setViewName("forward:/IrListarRoles.html"); 
+		return MV;
+	}
+	
+	@RequestMapping(value={ "CerrarSesion.html" }, method= { RequestMethod.GET,RequestMethod.POST})
+
+	 public ModelAndView cerrarSession(@SessionAttribute("Sessuser") Usuario userSession){
+
+
+		ModelAndView MV = new ModelAndView();
+		userSession = null;
+
+		
+		MV.setViewName("forward:/Index.html"); 
 		return MV;
 	}
 	

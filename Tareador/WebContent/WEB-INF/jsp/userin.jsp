@@ -16,15 +16,17 @@
 
     <title>TAREADOR</title>
 
-    <!-- Theme CSS -->
-<link href="<c:url value="/resources/css/creative.min.css" />" rel="stylesheet">
-    <!-- Custom Fonts -->
-<link href="<c:url value="/resources/vendor/font-awesome/css/font-awesome.min.css" />" rel="stylesheet">
-    <!-- Bootstrap Core CSS -->
-<link href="<c:url value="/resources/vendor/bootstrap/css/bootstrap.min.css" />" rel="stylesheet">
-    <!-- Plugin CSS -->
-<link href="<c:url value="/resources/vendor/magnific-popup/magnific-popup.css" />" rel="stylesheet">
 
+
+<style type="text/css">
+	<%@ include file="Recursos/bootstrap.min.css" %>
+	<%@ include file="Recursos/font-awesome.min.css" %>
+	<%@ include file="Recursos/css1.css" %>
+	<%@ include file="Recursos/css2.css" %>
+	<%@ include file="Recursos/magnific-popup.css" %>
+	<%@ include file="Recursos/creative.min.css" %>
+
+</style>
 
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -49,7 +51,19 @@
 </head>
 
 <body id="page-top">
+<%
+    String nombreU; 
+    if((Usuario)session.getAttribute("Sessuser") != null){
+    	nombreU = ((Usuario)session.getAttribute("Sessuser")).getNombreUsuario();
+    }
+    else
+    {
+    	nombreU = "LOG IN";
+    	UserController us = new UserController();
+    	us.redireccion();
+    }
 
+%>
 
 
     <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
@@ -66,10 +80,10 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a class="page-scroll" href="#about"><%= ((Usuario)session.getAttribute("Sessuser")) != null? ((Usuario)session.getAttribute("Sessuser")).getNombreUsuario() : "Usuario" %></a>
+                        <a class="page-scroll" href="#about"><%= nombreU %></a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="Login?CerrarSesion=1">Cerrar Sesion</a>
+                        <a class="page-scroll" href="<c:url value='CerrarSesion.html' />"  >Cerrar Sesion</a>
                     </li>
                 </ul>
             </div>
@@ -102,19 +116,15 @@
 
 
 
-    <!-- jQuery -->
-    <script src="vendor/jquery/jquery.min.js"></script>
+<script type="text/javascript">
+	<%@ include file="Recursos/js/jquery.min.js" %>
+	<%@ include file="Recursos/js/bootstrap.min.js" %>
+	<%@ include file="Recursos/js/jquery.easing.min.js" %>
+	<%@ include file="Recursos/js/scrollreveal.min.js" %>
+	<%@ include file="Recursos/js/jquery.magnific-popup.min.js" %>
+	<%@ include file="Recursos/js/creative.min.js" %>
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-
-    <!-- Plugin JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-    <script src="vendor/scrollreveal/scrollreveal.min.js"></script>
-    <script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
-
-    <!-- Theme JavaScript -->
-    <script src="js/creative.min.js"></script>
+</script>
 
 </body>
 

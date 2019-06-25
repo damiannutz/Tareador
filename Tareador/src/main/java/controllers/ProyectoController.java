@@ -13,6 +13,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
@@ -22,6 +23,7 @@ import servicio.*;
 
 import org.springframework.web.bind.annotation.PathVariable;
 
+@SessionAttributes("Sessuser")
 @Controller
 public class ProyectoController {
 
@@ -30,6 +32,13 @@ public class ProyectoController {
 	
 	@Autowired
 	public DepartamentoServicio departamentoServicio;
+	
+	@Autowired
+	public  UsuarioServicio usuarioService;
+	
+	@Autowired
+	public  TipoUsuarioServicio tipoUsuarioService;
+	
 	
 	@RequestMapping("IrAdministrarProyectos.html")
 	public ModelAndView redireccionAdministrarProyectos(){
@@ -131,6 +140,25 @@ public class ProyectoController {
 		return MV;
 	}
 	
+	
+	@RequestMapping(value={ "agregar-usuario-proyecto.html" }, method= { RequestMethod.GET,RequestMethod.POST})
+	public ModelAndView redireccionAgregarUsuarioProyecto(Integer idProyecto){
+	
+		Proyecto Proyecto = proyectoServicio.obtenerById(idProyecto);
+
+		
+		ModelAndView MV = new ModelAndView();
+		List<Usuario> userList = usuarioService.obtenerAll();
+		MV.addObject("departamentos", departamentoServicio.obtenerAll());
+		MV.addObject("tiposUsuario", tipoUsuarioService.obtenerAll());
+		MV.addObject("usuarios", userList);
+		MV.addObject("IdProyecto", idProyecto);
+		MV.addObject("ProyectoDescripcion", Proyecto.getDescripcion());
+		MV.addObject("ProyectoDepartamentoId", Proyecto.getDepartamento().getIdDepartamento());
+		MV.addObject("headerTitle", "Agregar Usuario");
+		MV.setViewName("AgregarUsuarioAProyecto");
+		return MV;
+	}
 	
 	
 }

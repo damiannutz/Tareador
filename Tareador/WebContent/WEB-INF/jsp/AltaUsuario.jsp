@@ -15,16 +15,16 @@
 
     <title>TAREADOR</title>
 
-    <!-- Theme CSS -->
-<link href="<c:url value="/resources/css/creative.min.css" />" rel="stylesheet">
-    <!-- Custom Fonts -->
-<link href="<c:url value="/resources/vendor/font-awesome/css/font-awesome.min.css" />" rel="stylesheet">
-    <!-- Bootstrap Core CSS -->
-<link href="<c:url value="/resources/vendor/bootstrap/css/bootstrap.min.css" />" rel="stylesheet">
-    <!-- Plugin CSS -->
-<link href="<c:url value="/resources/vendor/magnific-popup/magnific-popup.css" />" rel="stylesheet">
+<style type="text/css">
+	<%@ include file="Recursos/bootstrap.min.css" %>
+	<%@ include file="Recursos/font-awesome.min.css" %>
+	<%@ include file="Recursos/css1.css" %>
+	<%@ include file="Recursos/css2.css" %>
+	<%@ include file="Recursos/magnific-popup.css" %>
+	<%@ include file="Recursos/creative.min.css" %>
 
 
+</style>
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Customer Registration</title>
@@ -63,7 +63,7 @@ input:invalid, textarea:invalid {
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand page-scroll" href="Inicio.html">Tareador</a>
+                <a class="navbar-brand page-scroll" href="Index.jsp">Tareador</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -197,28 +197,15 @@ input:invalid, textarea:invalid {
     
     
     
-        <!-- jQuery -->
-<script src="<c:url value="/resources/jquery/jquery.min.js" />" type="text/javascript"></script>
+<script type="text/javascript">
+	<%@ include file="Recursos/js/jquery.min.js" %>
+	<%@ include file="Recursos/js/bootstrap.min.js" %>
+	<%@ include file="Recursos/js/jquery.easing.min.js" %>
+	<%@ include file="Recursos/js/scrollreveal.min.js" %>
+	<%@ include file="Recursos/js/jquery.magnific-popup.min.js" %>
+	<%@ include file="Recursos/js/creative.min.js" %>
 
-
-    <!-- Bootstrap Core JavaScript -->
-<script src="<c:url value="/resources/bootstrap/js/bootstrap.min.js" />" type="text/javascript"></script>
-
-
-
-    <!-- Plugin JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-    
-    <script src="<c:url value="/resources/vendor/scrollreveal/scrollreveal.min.js" />" type="text/javascript"></script>
-
-    
-    <script src="<c:url value="/resources/bootstrap/js/bootstrap.min.js" />" type="text/javascript"></script>
-
-    <script src="<c:url value="/resources/magnific-popup/jquery.magnific-popup.min.js" />" type="text/javascript"></script>
-
-
-    <!-- Theme JavaScript -->
-        <script src="<c:url value="/resources/js/creative.min.js" />" type="text/javascript"></script>
+</script>
     
     
     
@@ -300,9 +287,11 @@ var CONTEXT_PATH =	$(element).attr('myContextPath');
 			if (result.success) 
 			{ alert(result.message); } 
 			else { alert(result.message) } }, 
-			error:function(error) { alert(error.message); } });
+			error:function(error) {alert('Agregado correctamente'); window.location.replace("http://localhost:8080/Tareador/IrListarUsuarios.html");
 	
-	
+			; } });
+			
+			
 }
 			
 </script>
