@@ -29,7 +29,8 @@ public class TareaController {
 
 	@Autowired
 	public TareaServicio tareaServicio;
-	
+	@Autowired
+	public ComentarioTareaServicio comentarioTareaServicio;
 	@Autowired
 	public ProyectoServicio proyectoServicio;
 	@Autowired
@@ -266,6 +267,63 @@ public class TareaController {
 				MV.addObject(rol.getCodigo(),0);
 		}
 			
+	}
+	
+	@RequestMapping("IrListarComentarios.html")
+	public ModelAndView redireccionListarComentarios(Integer idTarea,@SessionAttribute("Sessuser") Usuario userSession){
+		
+
+		Tarea objtarea = tareaServicio.obtenerById(idTarea);
+		
+
+
+
+		Set<ComentarioTarea> lstComentarioTareas = objtarea.getComentariostarea();
+		ModelAndView MV = new ModelAndView();
+		MV.setViewName("ListarComentarios");
+		MV.addObject("idUsuario", userSession.getIdUsuario());
+		MV.addObject("tituloTarea", objtarea.getTitulo());
+		MV.addObject("idTarea", idTarea);
+		MV.addObject("lstComentarioTareas", lstComentarioTareas);
+
+		
+		asignarRolesParaUsuario(MV, userSession);
+		
+		return MV;
+	}
+	
+	@RequestMapping(value={"AgregarComentarioATarea.html"}, method= { RequestMethod.GET,RequestMethod.POST})
+	public ModelAndView agregarComentarioATarea(Integer txtidTarea, Integer txtidUsuario, String txtComentario,@SessionAttribute("Sessuser") Usuario userSession){
+		
+		String mensajeguardar = userSession.getNombreUsuario();
+		mensajeguardar = mensajeguardar + ": " + txtComentario;
+		
+		java.util.Date fecha = new Date();
+		Tarea objtarea = tareaServicio.obtenerById(txtidTarea);
+		ComentarioTarea objcoment = new ComentarioTarea();
+		objcoment.setTarea(objtarea);
+		objcoment.setComentario(mensajeguardar);
+		objcoment.setFechaRegistro(fecha);
+		
+		try {
+			comentarioTareaServicio.insertar(objcoment);
+		}
+		catch (Exception e){
+			
+		}
+		objtarea = tareaServicio.obtenerById(txtidTarea);
+		Set<ComentarioTarea> lstComentarioTareas = objtarea.getComentariostarea();
+		ModelAndView MV = new ModelAndView();
+		MV.setViewName("ListarComentarios");
+		MV.addObject("idUsuario", userSession.getIdUsuario());
+		MV.addObject("tituloTarea", objtarea.getTitulo());
+		MV.addObject("idTarea", objtarea.getIdTarea());
+		MV.addObject("lstComentarioTareas", lstComentarioTareas);
+
+		
+		asignarRolesParaUsuario(MV, userSession);
+		
+		return MV;
 	}
 	
 }

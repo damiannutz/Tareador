@@ -1,6 +1,8 @@
 package dominio;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -52,9 +54,10 @@ public class Tarea {
 	@JoinColumn(name="Id_Usuario_Asignado" , referencedColumnName = "Id_Usuario" )
 	private Usuario usuarioAsignado;
 
-	@OneToMany(cascade= {CascadeType.ALL})
+	@OneToMany(cascade= {CascadeType.ALL}, fetch = FetchType.EAGER)
 	@JoinColumn(name="Id_Tarea")
-	private List<ComentarioTarea> comentariostarea;
+	private Set<ComentarioTarea> comentariostarea = new HashSet<ComentarioTarea>();
+
 	
 	
 	public Integer getIdTarea() {
@@ -141,11 +144,11 @@ public class Tarea {
 	
 	
 
-	public List<ComentarioTarea> getComentariostarea() {
+	public Set<ComentarioTarea> getComentariostarea() {
 		return comentariostarea;
 	}
 
-	public void setComentariostarea(List<ComentarioTarea> comentariostarea) {
+	public void setComentariostarea(Set<ComentarioTarea> comentariostarea) {
 		this.comentariostarea = comentariostarea;
 	}
 
