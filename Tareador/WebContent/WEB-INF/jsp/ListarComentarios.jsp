@@ -55,18 +55,16 @@
 
 
 <%
-String nombreU; 
-Integer idU = null;
-if((Usuario)session.getAttribute("Sessuser") != null){
-	nombreU = ((Usuario)session.getAttribute("Sessuser")).getNombreUsuario();
-	idU = ((Usuario)session.getAttribute("Sessuser")).getIdUsuario();
-}
-else
-{
-	nombreU = "LOG IN";
-	UserController us = new UserController();
-	us.redireccion();
-}
+    String nombreU; 
+    if((Usuario)session.getAttribute("Sessuser") != null){
+    	nombreU = ((Usuario)session.getAttribute("Sessuser")).getNombreUsuario();
+    }
+    else
+    {
+    	nombreU = "LOG IN";
+    	UserController us = new UserController();
+    	us.redireccion();
+    }
 
 %>
 
@@ -78,28 +76,20 @@ else
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand page-scroll" href="<c:url value='Inicio.html' />"  >Tareador</a>
+                <a class="navbar-brand page-scroll" href="<c:url value='Index.html' />"  >Tareador</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                 	<li>
+
                         <a class="page-scroll" href="<c:url value='Inicio.html' />"  >VOLVER</a>
+
 
                     </li>
                     <li>
-<%--                         <a class="page-scroll" href="#about"><%= nombreU %></a> --%>
-                         <a class="page-scroll"  
-                    	<%
-		            		if(((Usuario)session.getAttribute("Sessuser")).getNombreUsuario() == null){
-		            			
-								// 
-		            			out.print("style='display: none;'");
-		            	    }
-                    		///EditarUsuario-${Usuario.idUsuario}
-						%>  href='EditarUsuario-<%= idU %>'><%= nombreU %></a>
-						
+                        <a class="page-scroll" href="#about"><%= nombreU %></a>
                     </li>
                     <li>
                         <a class="page-scroll" href="<c:url value='CerrarSesion.html' />"  >Cerrar Sesion</a>
@@ -115,82 +105,30 @@ else
         <div class="header-content">
             <div class="header-content-inner">
             <br><br>
-                <h2 id="homeHeading">Listado de Tareas</h2>
+                <h2 id="homeHeading">Listado de Comentarios</h2>
     
 <table >
 <tr>
- <th style="padding-bottom: 5px;">
- 	<form action="IrListarTareas.html" method="post" >
- 		<input type="submit" name="ListarTareas" value="Actualizar Lista" class="btn btn-primary">
-	</form>
-</th>
+
 	<c:if test="${NEW_TAREA == 1}">
 		 <th style="padding-left: 5px;   padding-right: 5px; padding-bottom: 5px;">
-			<form action="IrAltaTarea.html" method="post" >
-			 	<input type="submit" name="NuevoTarea" value="Nuevo Tarea" class="btn btn-primary">
+			<form action="AgregarComentarioATarea.html" method="post" >
+				<input type="text" style='display: none;' name="txtidTarea" value="${idTarea}">
+				<input type="text" style='display: none;' name="txtidUsuario" value="${idUsuario}">
+			 	
+			 	<textarea type="text" name="txtComentario" maxlength="300" cols="60" rows="2" class="form-control z-depth-1"/></textarea>
+			 	<input type="submit" name="NuevoTarea" value="Agregar Comentario" class="btn btn-primary">
+			 
+			 	
 			</form>
 		</th>
 	</c:if>
 
-						<td >Proyecto:</td>
-							<td style="padding-left: 5px;   padding-right: 5px;">
+						
 							
 							
-							<select  id="cmbProyecto"  name="cmbProyecto" class="btn btn-primary dropdown-toggle">
-								<option value="TODOS" selected="selected" >Todos </option>
-								<c:forEach items="${lstProyectos}" var="item">
-										       	<option value="${item.getIdProyecto()}">${item.getDescripcion()} </option>
-			   					</c:forEach>
-								
-							</select>
-							
-
-							</td>
-							
-							<td >Prioridad:</td>
-							<td style="padding-left: 5px;   padding-right: 5px;">
 							
 							
-							<select  id="cmbPrioridad"  name="cmbPrioridad" class="btn btn-primary dropdown-toggle">
-								<option value="TODOS" selected="selected" >Todos </option>
-								<c:forEach items="${lstPrioridades}" var="item">
-										       	<option value="${item.getIdPrioridad()}">${item.getDescripcion()} </option>
-			   					</c:forEach>
-								
-							</select>
-							
-
-							</td>
-							
-							<td >Estado Tarea:</td>
-							<td style="padding-left: 5px;   padding-right: 5px;">
-							
-							
-							<select  id="cmbEstadoTarea"  name="cmbEstadoTarea" class="btn btn-primary dropdown-toggle">
-								<option value="TODOS" selected="selected" >Todos </option>
-								<c:forEach items="${lstEstadoTareas}" var="item">
-										       	<option value="${item.getIdEstadoTarea()}">${item.getDescripcion()} </option>
-			   					</c:forEach>
-								
-							</select>
-							
-
-							</td>
-							
-							<td >Tipo Tarea:</td>
-							<td style="padding-left: 5px;   padding-right: 5px;">
-							
-							
-							<select  id="cmbTipoTarea"  name="cmbTipoTarea" class="btn btn-primary dropdown-toggle">
-								<option value="TODOS" selected="selected" >Todos </option>
-								<c:forEach items="${lstTipoTareas}" var="item">
-										       	<option value="${item.getIdTipoTareas()}">${item.getDescripcion()} </option>
-			   					</c:forEach>
-								
-							</select>
-							
-
-							</td>
 					
 </tr>
 
@@ -203,40 +141,21 @@ else
 <table class="table display AllDataTables">
 	<thead>
 		<tr>
-			<th>ID</th>
-			<th>Prioridad</th>
-		   <th>Titulo</th>
-		    <th>Proyecto</th>
-		    <th>Tipo</th>
-		    <th>Estado</th>
-		   <th>Opciones</th>
+			<th>Fecha</th>
+			<th>Comentario</th>
+
 	 	</tr>
 	</thead>
 	<tbody>
 
 	
 	
-		<c:forEach items="${lstTareas}" var="item">
+		<c:forEach items="${lstComentarioTareas}" var="item">
 				<tr style="text-align: left" 
-				data-proyecto="${item.getProyecto().getIdProyecto()}" 
-				data-tipoTarea="${item.getTipoTarea().getIdTipoTareas()}"  
-				data-estadoTarea="${item.getEstadoTarea().getIdEstadoTarea()}" 
-				data-prioridad="${item.getPrioridad().getIdPrioridad()}"
 				>
-				<td>${item.getIdTarea()}</td>
-				<td>${item.getPrioridad().getDescripcion()}</td>
-				<td>${item.getTitulo()}</td>
-				<td>${item.getProyecto().getDescripcion()}</td>
-				<td>${item.getTipoTarea().getDescripcion()}</td>
-				<td>${item.getEstadoTarea().getDescripcion()}</td>
-				<td >
-			<!--	<a href="<c:url value='/edit-tarea-${item.getIdTarea()}' />">Editar</a> -->
-					
-						<c:if test="${EDIT_TAREA == 1}">
-							<button type="button" class="btn btn-primary"  onclick="callEditar(${item.getIdTarea()})"> Editar</button>
-						</c:if>
-						<button type="button" class="btn btn-primary"  onclick="callComentario(${item.getIdTarea()})"> Comentarios</button>
-				</td>
+				<td>${item.getFechaRegistro()}</td>
+				<td>${item.getComentario()}</td>
+				
 				</tr>
 				
 			</c:forEach>
@@ -285,7 +204,7 @@ function callComentario(idTarea){
 	
 	 form = document.createElement('form');
     form.setAttribute('method', 'POST');
-    form.setAttribute('action', 'IrListarComentarios.html');
+    form.setAttribute('action', 'AgregarComentarioATarea.html');
     myvar = document.createElement('input');
     myvar.setAttribute('name', 'idTarea');
     myvar.setAttribute('type', 'hidden');
