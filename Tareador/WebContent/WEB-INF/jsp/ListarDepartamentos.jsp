@@ -1,3 +1,5 @@
+<%@page import="controllers.UserController"%>
+<%@page import="dominio.Usuario"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -49,6 +51,19 @@
 
 <body id="page-top">
 
+<%
+    String nombreU; 
+    if((Usuario)session.getAttribute("Sessuser") != null){
+    	nombreU = ((Usuario)session.getAttribute("Sessuser")).getNombreUsuario();
+    }
+    else
+    {
+    	nombreU = "LOG IN";
+    	UserController us = new UserController();
+    	us.redireccion();
+    }
+
+%>
 
 
 <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
@@ -58,20 +73,20 @@
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand page-scroll" href="Inicio.html">Tareador</a>
+                <a class="navbar-brand page-scroll" href="<c:url value='Index.html' />"  >Tareador</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                 	<li>
-                        <a class="page-scroll" href="IrAdministrarDepartamentos.html">VOLVER</a>
+                        <a class="page-scroll" href="<c:url value='IrAdministrarDepartamentos.html' />"  >VOLVER</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#about">userName</a>
+                        <a class="page-scroll" href="#about"><%= nombreU %></a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="Login?CerrarSesion=1">Cerrar Sesion</a>
+                        <a class="page-scroll" href="<c:url value='CerrarSesion.html' />"  >Cerrar Sesion</a>
                     </li>
                 </ul>
             </div>
