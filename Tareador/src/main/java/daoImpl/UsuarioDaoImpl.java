@@ -1,6 +1,7 @@
 package daoImpl;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
@@ -52,15 +53,15 @@ public class UsuarioDaoImpl implements UsuarioDao {
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
-	public ArrayList<Usuario> obtenerAll() {
-		return (ArrayList<Usuario>) this.hibernateTemplate.loadAll(Usuario.class);
+	public Set<Usuario> obtenerAll() {
+		return (Set<Usuario>) this.hibernateTemplate.loadAll(Usuario.class).stream().collect(Collectors.toSet());
 	}
 
 	
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
-	public List<Usuario> obtenerAllActivos() {
-		return (List<Usuario>)  this.hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Usuario.class).add(Restrictions.eq("IsActivo", true)));
+	public Set<Usuario> obtenerAllActivos() {
+		return (Set<Usuario>)  this.hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Usuario.class).add(Restrictions.eq("IsActivo", true))).stream().collect(Collectors.toSet());
 	}
 	
 	

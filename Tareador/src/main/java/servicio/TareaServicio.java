@@ -1,14 +1,14 @@
 package servicio;
 
-import java.util.ArrayList;
+import java.util.*;
 
 import dominio.Tarea;
 
 public interface TareaServicio {
 
-	ArrayList<Tarea> obtenerAll();
+	Set<Tarea> obtenerAll();
 
-	ArrayList<Tarea> obtenerAllActivos();
+	Set<Tarea> obtenerAllActivos();
 	
 	Tarea obtenerById(Integer idTarea);
 

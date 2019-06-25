@@ -17,9 +17,9 @@ public interface UsuarioDao {
 	public Usuario obtenerByUName(String UName);
 
 	//Obtiene todos los usuarios
-	public ArrayList<Usuario> obtenerAll();
+	public Set<Usuario> obtenerAll();
 
-	public List<Usuario> obtenerAllActivos();
+	public Set<Usuario> obtenerAllActivos();
 
 	//Elimina un usuario a aprtir del id
 	public void eliminar(Integer idUsuario);

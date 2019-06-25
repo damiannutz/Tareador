@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.*;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.persistence.Convert;
 import javax.servlet.ServletConfig;
@@ -95,7 +96,7 @@ public class UserController {
 	public ModelAndView redireccionAltaUsuario(){
 		ModelAndView MV = new ModelAndView();
 		
-		MV.addObject("departamentos", departamentoService.obtenerAll());
+		MV.addObject("departamentos", departamentoService.obtenerAllActivos());
 		MV.addObject("tiposUsuario", tipoUsuarioService.obtenerAll());
 
 		
@@ -113,7 +114,7 @@ public class UserController {
 	 public ModelAndView eliminarUsuario(@PathVariable Integer idUsuario) throws JsonParseException, JsonMappingException, IOException {
 		ModelAndView MV = new ModelAndView();
 	usuarioService.bajaLogica(idUsuario);
-	List<Usuario> userList = usuarioService.obtenerAll();
+	Set<Usuario> userList = usuarioService.obtenerAll();
 	MV.addObject("departamentos", departamentoService.obtenerAll());
 	MV.addObject("tiposUsuario", tipoUsuarioService.obtenerAll());
 	MV.addObject("usuarios", userList);	
@@ -131,7 +132,7 @@ public class UserController {
 
 	    Usuario user =	usuarioService.obtenerById(idUsuario);
 	    MV.addObject("idUsuario", idUsuario);
-		MV.addObject("departamentos", departamentoService.obtenerAll());
+		MV.addObject("departamentos", departamentoService.obtenerAllActivos());
 		MV.addObject("tiposUsuario", tipoUsuarioService.obtenerAll());
 		MV.addObject("nombre", user.getNombre());
 		MV.addObject("apellido", user.getApellido());
@@ -170,8 +171,8 @@ public class UserController {
 	public ModelAndView redireccionListarUsuarios(){
 		ModelAndView MV = new ModelAndView();
 
-		List<Usuario> userList = usuarioService.obtenerAll();
-		MV.addObject("departamentos", departamentoService.obtenerAll());
+		Set<Usuario> userList = usuarioService.obtenerAll();
+		MV.addObject("departamentos", departamentoService.obtenerAllActivos());
 		MV.addObject("tiposUsuario", tipoUsuarioService.obtenerAll());
 		MV.addObject("usuarios", userList);
 		
@@ -182,8 +183,8 @@ public class UserController {
 	public ModelAndView redireccionListarUsuarios(String Mensaje){
 		ModelAndView MV = new ModelAndView();
 
-		List<Usuario> userList = usuarioService.obtenerAll();
-		MV.addObject("departamentos", departamentoService.obtenerAll());
+		Set<Usuario> userList = usuarioService.obtenerAll();
+		MV.addObject("departamentos", departamentoService.obtenerAllActivos());
 		MV.addObject("tiposUsuario", tipoUsuarioService.obtenerAll());
 		MV.addObject("usuarios", userList);
 		MV.addObject("Mensaje", Mensaje);
@@ -303,7 +304,7 @@ public class UserController {
 	public ModelAndView eliminarUsuario(Integer id, String nombreU, String passU){
 		ModelAndView MV = new ModelAndView();
 		usuarioService.eliminar(id);
-		MV.addObject("listaUsuarios",this.usuarioService.obtenerAll());
+		MV.addObject("listaUsuarios",this.usuarioService.obtenerAllActivos());
 		MV.setViewName("Usuarios"); 
 		MV.addObject("Mensaje", "Usuario eliminado");
 		return MV;
@@ -316,7 +317,7 @@ public class UserController {
 		MV.setViewName("Usuarios");
 		
 		//Actualiza los usuarios
-		MV.addObject("listaUsuarios",this.usuarioService.obtenerAll());
+		MV.addObject("listaUsuarios",this.usuarioService.obtenerAllActivos());
 		MV.setViewName("Usuarios"); 
 		return MV;
     }
@@ -327,7 +328,7 @@ public class UserController {
 	@RequestMapping(value ="/recargaGrillaUsuarios.html" , method= { RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView recargarUsuario(){
 		ModelAndView MV = new ModelAndView();
-		MV.addObject("listaUsuarios",this.usuarioService.obtenerAll());
+		MV.addObject("listaUsuarios",this.usuarioService.obtenerAllActivos());
 		MV.setViewName("Usuarios"); 
 		return MV;
 		
@@ -343,27 +344,35 @@ public class UserController {
 		x.setNombre(nombreU);
 		x.setContrasenia(passU);
 		String Message="";
-		ArrayList<Usuario> listausuarios = usuarioService.obtenerAll();
+		HashSet<Usuario> listausuarios =  (HashSet<Usuario>)usuarioService.obtenerAllActivos();
 
+//		int cantidad = listausuarios.size();
+//		Integer cant = cantidad;
+		//Message = listausuarios.get(4).getNombreUsuario();
 		
-		
-
-		
-		int cantidad = listausuarios.size();
-		Integer cant = cantidad;
-		Message = listausuarios.get(4).getNombreUsuario();
-		
-	    for(int n=0;n<listausuarios.size();n++) {
-	    	if (listausuarios.get(n).getNombreUsuario().compareTo(nombreU) == 0) {
-	    		if(listausuarios.get(n).getContrasenia().compareTo(passU) == 0) {
+		for(Usuario user : listausuarios) {
+			if (user.getNombreUsuario().compareTo(nombreU) == 0) {
+	    		if(user.getContrasenia().compareTo(passU) == 0) {
 	    			flagpass = true;
 	    		}
 	    		flagname = true;
-	    		x.setIdUsuario(listausuarios.get(n).getIdUsuario());
+	    		x.setIdUsuario(user.getIdUsuario());
 	    	}
 
 
-	      }
+		}
+		
+//	    for(int n=0;n<listausuarios.size();n++) {
+//	    	if (listausuarios.get(n).getNombreUsuario().compareTo(nombreU) == 0) {
+//	    		if(listausuarios.get(n).getContrasenia().compareTo(passU) == 0) {
+//	    			flagpass = true;
+//	    		}
+//	    		flagname = true;
+//	    		x.setIdUsuario(listausuarios.get(n).getIdUsuario());
+//	    	}
+//
+//
+//	      }
 		if (flagpass) {
 			
 		

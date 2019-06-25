@@ -118,8 +118,8 @@ public class RolController {
 
 		
 		ModelAndView MV = new ModelAndView();
-		List<Usuario> userList = usuarioService.obtenerAll();
-		MV.addObject("departamentos", departamentoServicio.obtenerAll());
+		Set<Usuario> userList = usuarioService.obtenerAll();
+		MV.addObject("departamentos", departamentoServicio.obtenerAllActivos());
 		MV.addObject("tiposUsuario", tipoUsuarioService.obtenerAll());
 		MV.addObject("usuarios", userList);
 		MV.addObject("idRol", idRol);

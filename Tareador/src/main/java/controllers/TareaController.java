@@ -81,14 +81,14 @@ public class TareaController {
 	@RequestMapping("IrListarTareas.html")
 	public ModelAndView redireccionListarTareas(){
 
-		List<Tarea> lstTareas = tareaServicio.obtenerAllActivos();
-		List<Proyecto> lstProyectos = proyectoServicio.obtenerAll();
+		Set<Tarea> lstTareas = tareaServicio.obtenerAllActivos();
+		List<Proyecto> lstProyectos = proyectoServicio.obtenerAllActivos();
 		List<Prioridad> lstPrioridades = prioridadServicio.obtenerAllActivos();
 		List<EstadoTarea> lstEstadoTareas = estadoTareaServicio.obtenerAllActivos();
 		List<TipoTarea> lstTipoTareas = tipoTareaServicio.obtenerAllActivos();
 		ModelAndView MV = new ModelAndView();
 		MV.setViewName("ListarTareas");
-		MV.addObject("lstTareas", lstTareas.stream().distinct().collect(Collectors.toList()));
+		MV.addObject("lstTareas", lstTareas);
 		MV.addObject("lstProyectos", lstProyectos);
 		MV.addObject("lstPrioridades", lstPrioridades);
 		MV.addObject("lstEstadoTareas", lstEstadoTareas);
@@ -111,8 +111,7 @@ public class TareaController {
 		
 		Set<Usuario> lstUsuarios = null ;
 		try {
-			List<Usuario>lstUsuariosActivos= usuarioServicio.obtenerAllActivos();
-			lstUsuarios = lstUsuariosActivos.stream().					
+			lstUsuarios= usuarioServicio.obtenerAllActivos().stream().					
 				filter(r->r.getLsProyectos() != null && r.getLsProyectos().stream().
 				anyMatch(s-> s.getIdProyecto().equals(Tarea.getProyecto().getIdProyecto()) ) ).distinct().collect(Collectors.toSet()); 
 			

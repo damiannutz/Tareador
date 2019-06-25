@@ -1,6 +1,6 @@
 package servicioImpl;
 
-import java.util.ArrayList;
+import java.util.*;
 
 import dao.UsuarioDao;
 import dominio.TipoTarea;
@@ -16,14 +16,14 @@ public class UsuarioServicioImpl implements UsuarioServicio{
 	}
 	
 	@Override
-	public ArrayList<Usuario> obtenerAll() {
+	public Set<Usuario> obtenerAll() {
 		return dataAccess.obtenerAll();
 	}
 
 	
 	@Override
-	public ArrayList<Usuario> obtenerAllActivos() {
-		return (ArrayList)dataAccess.obtenerAllActivos();
+	public Set<Usuario> obtenerAllActivos() {
+		return dataAccess.obtenerAllActivos();
 	}
 	
 	@Override

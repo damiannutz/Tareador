@@ -1,7 +1,7 @@
 package daoImpl;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
@@ -38,14 +38,14 @@ public class TareaDaoImpl implements TareaDao {
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
-	public ArrayList<Tarea> obtenerAll() {
-		return (ArrayList<Tarea>) this.hibernateTemplate.loadAll(Tarea.class);
+	public Set<Tarea> obtenerAll() {
+		return (Set<Tarea>) this.hibernateTemplate.loadAll(Tarea.class).stream().collect(Collectors.toSet());
 	}
 	
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
-	public List<Tarea> obtenerAllActivos() {
-		return (List<Tarea>)  this.hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Tarea.class).add(Restrictions.eq("IsActivo", true)));
+	public Set<Tarea> obtenerAllActivos() {
+		return (Set<Tarea>)  this.hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Tarea.class).add(Restrictions.eq("IsActivo", true))).stream().collect(Collectors.toSet());
 	}
 	
 	@Override

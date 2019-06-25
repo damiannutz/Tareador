@@ -216,7 +216,7 @@
 								
 								<c:forEach items="${lstUsuarios}" var="item">
 										<c:choose>
-										    <c:when test="${ usuarioAsignadoId != null && usuarioAsignadoId == item.getIdProyecto() }">
+										    <c:when test="${ usuarioAsignadoId != null && usuarioAsignadoId == item.getIdUsuario() }">
 										       	<option value="<c:out value="${item.getIdUsuario()}" />" selected="selected" >${item.getNombreUsuario()}</option>
 										    </c:when>    
 										    <c:otherwise>

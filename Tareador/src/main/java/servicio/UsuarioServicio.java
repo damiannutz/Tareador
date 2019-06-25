@@ -1,14 +1,14 @@
 package servicio;
 
-import java.util.ArrayList;
+import java.util.*;
 
 import dominio.Usuario;
 
 public interface UsuarioServicio {
 
-	ArrayList<Usuario> obtenerAll();
+	Set<Usuario> obtenerAll();
 	
-	ArrayList<Usuario> obtenerAllActivos();
+	Set<Usuario> obtenerAllActivos();
 
 	Usuario obtenerById(Integer idUsuario);
 	

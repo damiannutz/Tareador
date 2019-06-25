@@ -2,6 +2,7 @@ package dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import dominio.Tarea;
 
@@ -14,9 +15,9 @@ public interface TareaDao {
 			public Tarea obtenerById(Integer idTarea);
 
 			//Obtiene todos los Tareas
-			public ArrayList<Tarea> obtenerAll();
+			public Set<Tarea> obtenerAll();
 			
-			public List<Tarea> obtenerAllActivos() ;
+			public Set<Tarea> obtenerAllActivos() ;
 
 			//Elimina un Tarea a aprtir del id
 			public void eliminar(Integer idTarea);
