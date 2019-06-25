@@ -45,7 +45,7 @@ public class PrioridadDaoImpl implements PrioridadDao {
 	
 	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
 	public List<Prioridad> obtenerAllActivos() {
-		return (List<Prioridad>)  this.hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Prioridad.class).add(Restrictions.eq("isActivo", true)));
+		return (List<Prioridad>)  this.hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Prioridad.class).add(Restrictions.eq("IsActivo", true)));
 	}
 
 	

@@ -171,7 +171,7 @@ public class GeneralController {
 		lstEstadosTareas.add(new EstadoTarea(null,    "En Ejecucion",  true,  false,  false,  null));//para todos los departamentos
 		lstEstadosTareas.add(new EstadoTarea(null,    "En Revision",  true,  false,  false,  null));//para todos los departamentos
 		lstEstadosTareas.add(new EstadoTarea(null,    "Finalizada",  true,  false,  true,  null)); //ultima por defecto, para todos los departamentos
-		lstEstadosTareas.add(new EstadoTarea(null,    "Para publicar",  true,  false,  false,  lstDepartamentos.stream().filter(r-> r.getCodigo().equals("DEV")).findFirst().get()));//solo para desarrollo
+		//lstEstadosTareas.add(new EstadoTarea(null,    "Para publicar",  true,  false,  false,  lstDepartamentos.stream().filter(r-> r.getCodigo().equals("DEV")).findFirst().get()));//solo para desarrollo
 		
 		for(EstadoTarea item : lstEstadosTareas){
 				estadoTareaServicio.insertar(item);
@@ -187,7 +187,7 @@ public class GeneralController {
 		lstTiposTareas.add(new TipoTarea(null,"Nueva",true,null));//aplica a todos los departamentos
 		lstTiposTareas.add(new TipoTarea(null,"Modificacion",true,null));//aplica a todos los departamentos
 		lstTiposTareas.add(new TipoTarea(null,"Error",true,null));//aplica a todos los departamentos
-		lstTiposTareas.add(new TipoTarea(null,"Soporte",true,lstDepartamentos.stream().filter(r-> r.getCodigo().equals("IT")).findFirst().get()));//aplica a departamento IT
+		//lstTiposTareas.add(new TipoTarea(null,"Soporte",true,lstDepartamentos.stream().filter(r-> r.getCodigo().equals("IT")).findFirst().get()));//aplica a departamento IT
 		
 		for(TipoTarea item : lstTiposTareas){
 				tipoTareaServicio.insertar(item);
@@ -301,7 +301,7 @@ public class GeneralController {
 				,"12341234"					//contraseña	
 				,true					//isActivo
 				,lstDepartamentos.stream().filter(r-> r.getCodigo().equals("IT")).findFirst().get()				//Departamento
-				,lstTiposUsuario.stream().filter(r-> r.getIdTipoUsuario().equals(TipoUsuario.tipo_super)).findFirst().get() //tipoUsuario
+				,lstTiposUsuario.stream().filter(r-> r.getIdTipoUsuario().equals(TipoUsuario.tipo_user)).findFirst().get() //tipoUsuario
 				,lstProyectos.stream().filter(r-> r.getDescripcion().contains("Proyecto IT")).collect(Collectors.toSet())
 				,lstRoles.stream().filter(r-> !r.getCodigo().contains("ADM")).collect(Collectors.toSet()) //roles usuarios basicos
 				));
@@ -314,7 +314,7 @@ public class GeneralController {
 				,"12341234"					//contraseña	
 				,true					//isActivo
 				,lstDepartamentos.stream().filter(r-> r.getCodigo().equals("IT")).findFirst().get()					//Departamento
-				,lstTiposUsuario.stream().filter(r-> r.getIdTipoUsuario().equals(TipoUsuario.tipo_super)).findFirst().get() //tipoUsuario	
+				,lstTiposUsuario.stream().filter(r-> r.getIdTipoUsuario().equals(TipoUsuario.tipo_user)).findFirst().get() //tipoUsuario	
 				,lstProyectos.stream().filter(r-> r.getDescripcion().equalsIgnoreCase("Proyecto IT 2")).collect(Collectors.toSet())
 				,lstRoles.stream().filter(r-> !r.getCodigo().contains("ADM")).collect(Collectors.toSet())
 				));
@@ -326,7 +326,7 @@ public class GeneralController {
 				,"12341234"					//contraseña	
 				,true					//isActivo
 				,lstDepartamentos.stream().filter(r-> r.getCodigo().equals("DEV")).findFirst().get()					//Departamento
-				,lstTiposUsuario.stream().filter(r-> r.getIdTipoUsuario().equals(TipoUsuario.tipo_super)).findFirst().get() //tipoUsuario	
+				,lstTiposUsuario.stream().filter(r-> r.getIdTipoUsuario().equals(TipoUsuario.tipo_user)).findFirst().get() //tipoUsuario	
 				,lstProyectos.stream().filter(r-> r.getDescripcion().contains("Proyecto DEV")).collect(Collectors.toSet())
 				,lstRoles.stream().filter(r-> !r.getCodigo().contains("ADM")).collect(Collectors.toSet())
 				));
@@ -338,7 +338,7 @@ public class GeneralController {
 				,"12341234"					//contraseña	
 				,true					//isActivo
 				,lstDepartamentos.stream().filter(r-> r.getCodigo().equals("DEV")).findFirst().get()					//Departamento
-				,lstTiposUsuario.stream().filter(r-> r.getIdTipoUsuario().equals(TipoUsuario.tipo_super)).findFirst().get() //tipoUsuario
+				,lstTiposUsuario.stream().filter(r-> r.getIdTipoUsuario().equals(TipoUsuario.tipo_user)).findFirst().get() //tipoUsuario
 				,lstProyectos.stream().filter(r-> r.getDescripcion().equalsIgnoreCase("Proyecto DEV 1")).collect(Collectors.toSet())
 				,lstRoles.stream().filter(r-> !r.getCodigo().contains("ADM")).collect(Collectors.toSet())
 				));
@@ -350,7 +350,7 @@ public class GeneralController {
 				,"12341234"					//contraseña	
 				,true					//isActivo
 				,lstDepartamentos.stream().filter(r-> r.getCodigo().equals("RRHH")).findFirst().get()					//Departamento
-				,lstTiposUsuario.stream().filter(r-> r.getIdTipoUsuario().equals(TipoUsuario.tipo_super)).findFirst().get() //tipoUsuario	
+				,lstTiposUsuario.stream().filter(r-> r.getIdTipoUsuario().equals(TipoUsuario.tipo_user)).findFirst().get() //tipoUsuario	
 				,lstProyectos.stream().filter(r-> r.getDescripcion().contains("Proyecto RRHH")).collect(Collectors.toSet())
 				,lstRoles.stream().filter(r-> !r.getCodigo().contains("ADM")).collect(Collectors.toSet())
 				));
@@ -362,7 +362,7 @@ public class GeneralController {
 				,"12341234"					//contraseña	
 				,true					//isActivo
 				,lstDepartamentos.stream().filter(r-> r.getCodigo().equals("RRHH")).findFirst().get()					//Departamento
-				,lstTiposUsuario.stream().filter(r-> r.getIdTipoUsuario().equals(TipoUsuario.tipo_super)).findFirst().get() //tipoUsuario	
+				,lstTiposUsuario.stream().filter(r-> r.getIdTipoUsuario().equals(TipoUsuario.tipo_user)).findFirst().get() //tipoUsuario	
 				,lstProyectos.stream().filter(r-> r.getDescripcion().equalsIgnoreCase("Proyecto RRHH")).collect(Collectors.toSet())
 				,lstRoles.stream().filter(r-> !r.getCodigo().contains("ADM")).collect(Collectors.toSet())
 				));

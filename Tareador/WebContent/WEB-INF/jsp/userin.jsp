@@ -1,3 +1,4 @@
+<%@page import="dominio.Usuario"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -65,7 +66,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a class="page-scroll" href="#about"><%=session.getAttribute("Sessuser")%></a>
+                        <a class="page-scroll" href="#about"><%= ((Usuario)session.getAttribute("Sessuser")) != null? ((Usuario)session.getAttribute("Sessuser")).getNombreUsuario() : "Usuario" %></a>
                     </li>
                     <li>
                         <a class="page-scroll" href="Login?CerrarSesion=1">Cerrar Sesion</a>
@@ -83,10 +84,11 @@
                 <h1 id="homeHeading">Bienvenido Administrador</h1>
                 <hr>
                 <p>Desde aqui podra administrar todo lo que necesite para realizar grupos de trabajo y proyecyos en su empresa.</p>
-                <a class="btn btn-primary btn-xl page-scroll" href="<c:url value='/IrAdministrarDepartamentos.html' />"  >ADMINISTRAR DEPARTAMENTOS</a><br><br><br>
-                <a class="btn btn-primary btn-xl page-scroll" href="<c:url value='/IrAdministrarProyectos.html' />"  >ADMINISTRAR PROYECTOS</a><br><br><br>
-                <a class="btn btn-primary btn-xl page-scroll" href="<c:url value='/IrAdministrarRoles.html' />"  >ADMINISTRAR ROLES</a><br><br><br>
-                <a class="btn btn-primary btn-xl page-scroll" href="<c:url value='/IrAdministrarUsuarios.html' />"  >ADMINISTRAR USUARIOS</a>
+                <a class="btn btn-primary btn-xl page-scroll" href="<c:url value='/IrAdministrarDepartamentos.html' />"  >ADMINISTRAR DEPARTAMENTOS</a>
+                <br><br><br><a class="btn btn-primary btn-xl page-scroll" href="<c:url value='/IrAdministrarProyectos.html' />"  >ADMINISTRAR PROYECTOS</a>
+                <br><br><br><a class="btn btn-primary btn-xl page-scroll" href="<c:url value='/IrAdministrarRoles.html' />"  >ADMINISTRAR ROLES</a>
+                <br><br><br><a class="btn btn-primary btn-xl page-scroll" href="<c:url value='/IrAdministrarUsuarios.html' />"  >ADMINISTRAR USUARIOS</a>
+                <br><br><br><a class="btn btn-primary btn-xl page-scroll" href="<c:url value='/IrListarTareas.html' />"  >TAREAS</a>
             </div>
         </div>
     </header>

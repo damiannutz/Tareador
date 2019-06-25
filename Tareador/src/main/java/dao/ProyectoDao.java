@@ -23,6 +23,8 @@ public interface ProyectoDao {
 
 	public void bajaLogica(Integer idProyecto); 
 	
+	public List<Proyecto> obtenerByUsuario(Integer idUsuario);
+	
 	//Actualiza los datos de un Proyecto
 	public void actualizar(Proyecto Proyecto);
 	

@@ -53,7 +53,9 @@ public class UserController {
 	@Autowired
 	public  TipoUsuarioServicio tipoUsuarioService;
 	
-		
+	
+
+	
 //	public void init(ServletConfig config) {
 //		ApplicationContext ctx = WebApplicationContextUtils
 //				.getRequiredWebApplicationContext(config.getServletContext());
@@ -366,7 +368,8 @@ public class UserController {
 				MV.addObject("Mensaje", Message);
 				MV.addObject("Usuario",x);
 				MV.setViewName("userin"); 
-				MV.addObject("Sessuser",x.getNombreUsuario());
+				//MV.addObject("Sessuser",x.getNombreUsuario());
+				MV.addObject("Sessuser",x);
 			}
 			catch(Exception e)
 			{
@@ -389,5 +392,9 @@ public class UserController {
 		return MV;
 	}
 	
+	@ModelAttribute("Sessuser")
+	 public Usuario usuarioSession() {
+		return new Usuario();
+	 }
 	
 }

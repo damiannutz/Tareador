@@ -32,8 +32,8 @@ public class TareaDaoImpl implements TareaDao {
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
-	public Tarea obtenerById(Integer idTarea) {
-		return this.hibernateTemplate.get(Tarea.class, idTarea);
+	public Tarea obtenerById(Integer IdTarea) {
+		return this.hibernateTemplate.get(Tarea.class, IdTarea);
 	}
 
 	@Override

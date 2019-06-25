@@ -41,11 +41,36 @@ public class ProyectoDaoImpl implements ProyectoDao {
 		return (ArrayList<Proyecto>) this.hibernateTemplate.loadAll(Proyecto.class);
 	}
 
+	@Override
 	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
 	public List<Proyecto> obtenerAllActivos() {
 		return (List<Proyecto>)  this.hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Proyecto.class).add(Restrictions.eq("isActivo", true)));
 	}
 
+	@Override
+	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
+	public List<Proyecto> obtenerByUsuario(Integer idUsuario) {
+		
+		List<Proyecto> lstProyecto;
+		try {
+			
+			lstProyecto = null;//(List<Proyecto>) this.hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Proyecto.class).add(Restrictions.eq("isActivo", true)).createAlias("usuarios_x_proyectos", "u").add(Restrictions.eq("u.usuarioId", idUsuario)));
+		
+			
+//			lstProyecto = (List<Proyecto>)
+//					this.hibernateTemplate.find("select p from Proyecto as p "
+//												+ "join p.usuarios_x_proyectos as u "
+//												// + "where u.idUsuario = ? and p.isActivo = true"				
+//												,idUsuario);
+	
+		}
+		catch(Exception ex) {
+			throw ex;
+		}
+		
+		return lstProyecto;
+				
+	}
 	
 	@Override
 	@Transactional(propagation=Propagation.REQUIRES_NEW)
