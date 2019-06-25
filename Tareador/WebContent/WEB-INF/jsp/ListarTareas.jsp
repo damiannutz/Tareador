@@ -83,7 +83,11 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                 	<li>
+
                         <a class="page-scroll" href="<c:url value='Inicio.html' />"  >VOLVER</a>
+
+                        <a class="page-scroll" href="Inicio.html">VOLVER</a>
+
                     </li>
                     <li>
                         <a class="page-scroll" href="#about"><%= nombreU %></a>
@@ -111,11 +115,13 @@
  		<input type="submit" name="ListarTareas" value="Actualizar Lista" class="btn btn-primary">
 	</form>
 </th>
- <th style="padding-left: 5px;   padding-right: 5px; padding-bottom: 5px;">
-	<form action="IrAltaTarea.html" method="post" >
-	 	<input type="submit" name="NuevoTarea" value="Nuevo Tarea" class="btn btn-primary">
-	</form>
-</th>
+	<c:if test="${NEW_TAREA == 1}">
+		 <th style="padding-left: 5px;   padding-right: 5px; padding-bottom: 5px;">
+			<form action="IrAltaTarea.html" method="post" >
+			 	<input type="submit" name="NuevoTarea" value="Nuevo Tarea" class="btn btn-primary">
+			</form>
+		</th>
+	</c:if>
 
 						<td >Proyecto:</td>
 							<td style="padding-left: 5px;   padding-right: 5px;">
@@ -217,7 +223,9 @@
 				<td >
 			<!--	<a href="<c:url value='/edit-tarea-${item.getIdTarea()}' />">Editar</a> -->
 					
-					<button type="button" class="btn btn-primary"  onclick="callEditar(${item.getIdTarea()})"> Editar</button>
+						<c:if test="${EDIT_TAREA == 1}">
+							<button type="button" class="btn btn-primary"  onclick="callEditar(${item.getIdTarea()})"> Editar</button>
+						</c:if>
 				</td>
 				</tr>
 				

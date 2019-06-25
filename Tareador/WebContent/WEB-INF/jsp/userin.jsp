@@ -1,3 +1,4 @@
+<%@page import="dominio.TipoUsuario"%>
 <%@page import="controllers.UserController"%>
 <%@page import="dominio.Usuario"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -96,14 +97,20 @@
     <header>
         <div class="header-content">
             <div class="header-content-inner">
-                <h1 id="homeHeading">Bienvenido Administrador</h1>
+                <h1 id="homeHeading">Bienvenido <%= nombreU %></h1>
                 <hr>
+                <%if( !((Usuario)session.getAttribute("Sessuser")).getTipoUsuario().getIdTipoUsuario().equals(TipoUsuario.tipo_user) ) {%> 
                 <p>Desde aqui podra administrar todo lo que necesite para realizar grupos de trabajo y proyecyos en su empresa.</p>
-                <a class="btn btn-primary btn-xl page-scroll" href="<c:url value='/IrAdministrarDepartamentos.html' />"  >ADMINISTRAR DEPARTAMENTOS</a>
-                <br><br><br><a class="btn btn-primary btn-xl page-scroll" href="<c:url value='/IrAdministrarProyectos.html' />"  >ADMINISTRAR PROYECTOS</a>
-                <br><br><br><a class="btn btn-primary btn-xl page-scroll" href="<c:url value='/IrAdministrarRoles.html' />"  >ADMINISTRAR ROLES</a>
-                <br><br><br><a class="btn btn-primary btn-xl page-scroll" href="<c:url value='/IrAdministrarUsuarios.html' />"  >ADMINISTRAR USUARIOS</a>
-                <br><br><br><a class="btn btn-primary btn-xl page-scroll" href="<c:url value='/IrListarTareas.html' />"  >TAREAS</a>
+                   <%} %>
+                <c:if test="${ ADM_DEPAR == 1 }"><a class="btn btn-primary btn-xl page-scroll" href="<c:url value='/IrAdministrarDepartamentos.html' />"  >ADMINISTRAR DEPARTAMENTOS</a></c:if>
+                <c:if test="${ ADM_PROY == 1 }"><br><br><br><a class="btn btn-primary btn-xl page-scroll" href="<c:url value='/IrAdministrarProyectos.html' />"  >ADMINISTRAR PROYECTOS</a>   </c:if>
+                <%if( ((Usuario)session.getAttribute("Sessuser")).getTipoUsuario().getIdTipoUsuario().equals(TipoUsuario.tipo_super) ) {%> 
+                	<c:if test="${ ADM_ROL == 1 }"><br><br><br><a class="btn btn-primary btn-xl page-scroll" href="<c:url value='/IrAdministrarRoles.html' />"  >ADMINISTRAR ROLES</a>   </c:if>
+                <%} %>
+                <c:if test="${ ADM_USERS == 1 }"><br><br><br><a class="btn btn-primary btn-xl page-scroll" href="<c:url value='/IrAdministrarUsuarios.html' />"  >ADMINISTRAR USUARIOS</a>   </c:if>
+                <c:if test="${ NEW_TAREA == 1 ||  EDIT_TAREA == 1 || DEL_TAREA == 1 || MSG_TAREA == 1 }">
+                	<br><br><br><a class="btn btn-primary btn-xl page-scroll" href="<c:url value='/IrListarTareas.html' />"  >TAREAS</a> 
+                 </c:if>
             </div>
         </div>
     </header>

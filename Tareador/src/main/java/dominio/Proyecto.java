@@ -1,5 +1,7 @@
 package dominio;
 
+import java.util.Set;
+
 import javax.persistence.*;
 
 import dominio.Departamento;
@@ -23,6 +25,9 @@ public class Proyecto {
 	@ManyToOne(cascade= {CascadeType.PERSIST})
 	@JoinColumn(name="Id_Departamento", nullable = true  )
 	private Departamento departamento;
+	
+	@ManyToMany(mappedBy="lsProyectos" ,fetch=FetchType.EAGER)
+	private Set<Usuario> usuariosByProyecto;
 	
 	public Proyecto() {
 		super();
@@ -73,6 +78,14 @@ public class Proyecto {
 
 	public void setDepartamento(Departamento departamento) {
 		this.departamento = departamento;
+	}
+
+	public Set<Usuario> getUsuariosByProyecto() {
+		return usuariosByProyecto;
+	}
+
+	public void setUsuariosByProyecto(Set<Usuario> usuarios) {
+		this.usuariosByProyecto = usuarios;
 	}
 
 	

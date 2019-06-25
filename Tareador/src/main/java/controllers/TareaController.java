@@ -41,6 +41,10 @@ public class TareaController {
 	@Autowired
 	public UsuarioServicio usuarioServicio;
 	
+	@Autowired
+	public RolServicio rolServicio;
+	
+	
 	
 //	@RequestMapping("IrAdministrarTareas.html")
 //	public ModelAndView redireccionAdministrarTareas(){
@@ -53,18 +57,42 @@ public class TareaController {
 		
 		Integer usuarioReportaId=null;
 		String usuarioReportaNombreUsuario=null;
-		List<Proyecto> lstProyectos ;
-		if(userSession != null && userSession.getTipoUsuario().getIdTipoUsuario().equals(TipoUsuario.tipo_user)) {
-			
-			lstProyectos = userSession.getLsProyectos().stream().collect(Collectors.toList());
+		Set<Proyecto> lstProyectos =null;
+		if(userSession != null ) {
+			if(userSession.getTipoUsuario().getIdTipoUsuario().equals(TipoUsuario.tipo_user))
+				lstProyectos = userSession.getLsProyectos();
+			else
+				lstProyectos = proyectoServicio.obtenerAllActivos().stream().collect(Collectors.toSet());
+				
 			usuarioReportaId = userSession.getIdUsuario();
 			usuarioReportaNombreUsuario= userSession.getNombreUsuario();
 		}
-		else
-			lstProyectos = proyectoServicio.obtenerAllActivos();
+		
 		List<Prioridad> lstPrioridades = prioridadServicio.obtenerAllActivos();
 		List<EstadoTarea> lstEstadoTareas = estadoTareaServicio.obtenerAllActivos();
 		List<TipoTarea> lstTipoTareas = tipoTareaServicio.obtenerAllActivos();
+		
+		
+
+		Set<Usuario> lstUsuariosPosibles = new HashSet<Usuario>() ;
+		try {
+			if(lstProyectos!= null)
+				for(Proyecto item : lstProyectos ) {
+				
+					if(item.getUsuariosByProyecto() != null && item.getUsuariosByProyecto().size()>0)
+						lstUsuariosPosibles.addAll(item.getUsuariosByProyecto());
+				}
+			
+			//			lstUsuariosPosibles= usuarioServicio.obtenerAllActivos().stream().					
+//				filter(r->r.getLsProyectos() != null && r.getLsProyectos().stream().
+//				anyMatch(s-> s.getIdProyecto().equals(Tarea.getProyecto().getIdProyecto()) ) ).distinct().collect(Collectors.toSet()); 
+			
+		}
+		catch(Exception e) {
+			System.out.println("No hay Usuarios asignables para ese proyecto");
+		}
+		
+		
 		ModelAndView MV = new ModelAndView();
 		MV.setViewName("AltaTareas");
 		MV.addObject("headerTitle", "Nuevo Tarea");
@@ -74,15 +102,18 @@ public class TareaController {
 		MV.addObject("lstTipoTareas", lstTipoTareas);
 		MV.addObject("usuarioReportaId", usuarioReportaId);
 		MV.addObject("usuarioReportaNombreUsuario", usuarioReportaNombreUsuario);
+		MV.addObject("lstUsuarios", lstUsuariosPosibles);
+		
+		asignarRolesParaUsuario(MV, userSession);
 		
 		
 		return MV;
 	}
 	@RequestMapping("IrListarTareas.html")
-	public ModelAndView redireccionListarTareas(){
+	public ModelAndView redireccionListarTareas(@SessionAttribute("Sessuser") Usuario userSession){
 
 		Set<Tarea> lstTareas = tareaServicio.obtenerAllActivos();
-		List<Proyecto> lstProyectos = proyectoServicio.obtenerAllActivos();
+		Set<Proyecto> lstProyectos = proyectoServicio.obtenerAllActivos().stream().collect(Collectors.toSet());
 		List<Prioridad> lstPrioridades = prioridadServicio.obtenerAllActivos();
 		List<EstadoTarea> lstEstadoTareas = estadoTareaServicio.obtenerAllActivos();
 		List<TipoTarea> lstTipoTareas = tipoTareaServicio.obtenerAllActivos();
@@ -94,6 +125,7 @@ public class TareaController {
 		MV.addObject("lstEstadoTareas", lstEstadoTareas);
 		MV.addObject("lstTipoTareas", lstTipoTareas);
 		
+		asignarRolesParaUsuario(MV, userSession);
 		
 		return MV;
 	}
@@ -101,19 +133,35 @@ public class TareaController {
 	
 	
 	@RequestMapping(value={ "edit-tarea.html" }, method= { RequestMethod.GET,RequestMethod.POST})
-	public ModelAndView redireccionAltaTarea(Integer idTarea){
+	public ModelAndView redireccionAltaTarea(Integer idTarea,@SessionAttribute("Sessuser") Usuario userSession){
 	
-		Tarea Tarea = tareaServicio.obtenerById(idTarea);
-		List<Proyecto> lstProyectos = proyectoServicio.obtenerAllActivos();
+		Tarea tarea = tareaServicio.obtenerById(idTarea);
+		
+		Set<Proyecto> lstProyectos ;
+		if(userSession != null && userSession.getTipoUsuario().getIdTipoUsuario().equals(TipoUsuario.tipo_user)) {
+			
+			lstProyectos = tarea.getUsuarioReporta().getLsProyectos();
+		}
+		else
+			lstProyectos = proyectoServicio.obtenerAllActivos().stream().collect(Collectors.toSet());
+		
 		List<Prioridad> lstPrioridades = prioridadServicio.obtenerAllActivos();
 		List<EstadoTarea> lstEstadoTareas = estadoTareaServicio.obtenerAllActivos();
 		List<TipoTarea> lstTipoTareas = tipoTareaServicio.obtenerAllActivos();
 		
-		Set<Usuario> lstUsuarios = null ;
+		
+		Set<Usuario> lstUsuariosPosibles = new HashSet<Usuario>() ;
 		try {
-			lstUsuarios= usuarioServicio.obtenerAllActivos().stream().					
-				filter(r->r.getLsProyectos() != null && r.getLsProyectos().stream().
-				anyMatch(s-> s.getIdProyecto().equals(Tarea.getProyecto().getIdProyecto()) ) ).distinct().collect(Collectors.toSet()); 
+				for(Proyecto item : lstProyectos ) {
+					if(item.getUsuariosByProyecto() != null && item.getUsuariosByProyecto().size()>0)
+						lstUsuariosPosibles.addAll(item.getUsuariosByProyecto());
+				}
+	
+			
+			
+			//			lstUsuariosPosibles= usuarioServicio.obtenerAllActivos().stream().					
+//				filter(r->r.getLsProyectos() != null && r.getLsProyectos().stream().
+//				anyMatch(s-> s.getIdProyecto().equals(Tarea.getProyecto().getIdProyecto()) ) ).distinct().collect(Collectors.toSet()); 
 			
 		}
 		catch(Exception e) {
@@ -121,20 +169,20 @@ public class TareaController {
 		}
 		
 		ModelAndView MV = new ModelAndView();
-		MV.addObject("IdTarea", Tarea.getIdTarea());
-		MV.addObject("TareaTitulo", Tarea.getTitulo());
-		MV.addObject("TareaDescripcion", Tarea.getDescripcion());
-		MV.addObject("TareaProyectoId", Tarea.getProyecto().getIdProyecto());
-		MV.addObject("TareaPrioridadId", Tarea.getPrioridad().getIdPrioridad());
-		MV.addObject("TareaEstadoTareaId", Tarea.getEstadoTarea().getIdEstadoTarea());
-		MV.addObject("TareaTipoTareaId", Tarea.getTipoTarea().getIdTipoTareas());
-		MV.addObject("TareaUsuarioReportaId", Tarea.getUsuarioReporta().getIdUsuario());
-		MV.addObject("usuarioReportaId", Tarea.getUsuarioReporta().getIdUsuario());
-		MV.addObject("usuarioReportaNombreUsuario", Tarea.getUsuarioReporta().getNombreUsuario());
+		MV.addObject("IdTarea", tarea.getIdTarea());
+		MV.addObject("TareaTitulo", tarea.getTitulo());
+		MV.addObject("TareaDescripcion", tarea.getDescripcion());
+		MV.addObject("TareaProyectoId", tarea.getProyecto().getIdProyecto());
+		MV.addObject("TareaPrioridadId", tarea.getPrioridad().getIdPrioridad());
+		MV.addObject("TareaEstadoTareaId", tarea.getEstadoTarea().getIdEstadoTarea());
+		MV.addObject("TareaTipoTareaId", tarea.getTipoTarea().getIdTipoTareas());
+		MV.addObject("TareaUsuarioReportaId", tarea.getUsuarioReporta().getIdUsuario());
+		MV.addObject("usuarioReportaId", tarea.getUsuarioReporta().getIdUsuario());
+		MV.addObject("usuarioReportaNombreUsuario", tarea.getUsuarioReporta().getNombreUsuario());
 		
-		if(Tarea.getUsuarioAsignado() != null) {
-			MV.addObject("usuarioAsignadoId", Tarea.getUsuarioAsignado().getIdUsuario());
-			MV.addObject("usuarioAsignadoNombreUsuario", Tarea.getUsuarioAsignado().getNombreUsuario());
+		if(tarea.getUsuarioAsignado() != null) {
+			MV.addObject("usuarioAsignadoId", tarea.getUsuarioAsignado().getIdUsuario());
+			MV.addObject("usuarioAsignadoNombreUsuario", tarea.getUsuarioAsignado().getNombreUsuario());
 			
 		}
 		else {
@@ -146,9 +194,11 @@ public class TareaController {
 		MV.addObject("lstPrioridades", lstPrioridades);
 		MV.addObject("lstEstadoTareas", lstEstadoTareas);
 		MV.addObject("lstTipoTareas", lstTipoTareas);
-		MV.addObject("lstUsuarios", lstUsuarios);
+		MV.addObject("lstUsuarios", lstUsuariosPosibles);
 		MV.addObject("headerTitle", "Editar Tarea");
 		MV.setViewName("AltaTareas");
+		
+		asignarRolesParaUsuario(MV, userSession);
 		
 		return MV;
 	}
@@ -177,16 +227,16 @@ public class TareaController {
 		if(cmbUsuarioAsignadoId != null && cmbUsuarioAsignadoId>0)
 			usuarioAsignado= usuarioServicio.obtenerById(cmbUsuarioAsignadoId);
 		
-		Tarea Tarea = new Tarea(null,  titulo, descripcion,true,tipoTarea,estadoTarea,prioridad,proyecto,usuarioReporta,usuarioAsignado);
+		Tarea tarea = new Tarea(null,  titulo, descripcion,true,tipoTarea,estadoTarea,prioridad,proyecto,usuarioReporta,usuarioAsignado);
 		
 	
 		if(IdTarea != null && IdTarea>0)
-			Tarea.setIdTarea(IdTarea);
+			tarea.setIdTarea(IdTarea);
 	
-		if(Tarea.getIdTarea() == null)
-			tareaServicio.insertar(Tarea);
+		if(tarea.getIdTarea() == null)
+			tareaServicio.insertar(tarea);
 		else
-			tareaServicio.actualizar(Tarea);
+			tareaServicio.actualizar(tarea);
 		
 		ModelAndView MV = new ModelAndView();
 		MV.setViewName("forward:/IrListarTareas.html");
@@ -205,5 +255,17 @@ public class TareaController {
 	}
 	
 	
+	public void asignarRolesParaUsuario(ModelAndView MV, Usuario user){
+		
+		Set<Rol> lstRoles = rolServicio.obtenerAllActivos().stream().collect(Collectors.toSet());
+		
+		for (Rol rol : lstRoles) {
+			if(user != null && user.getLsRoles()!= null && user.getLsRoles().stream().anyMatch(r-> r.getCodigo().equals(rol.getCodigo())))
+				MV.addObject(rol.getCodigo(),1);
+			else
+				MV.addObject(rol.getCodigo(),0);
+		}
+			
+	}
 	
 }

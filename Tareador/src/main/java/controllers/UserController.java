@@ -81,9 +81,17 @@ public class UserController {
 		return MV;
 	}
 	@RequestMapping(value={"Inicio.html"})
-	public ModelAndView redireccionUserIn(){
+	public ModelAndView redireccionUserIn(  @SessionAttribute("Sessuser") Usuario userSession){
 		ModelAndView MV = new ModelAndView();
-		MV.setViewName("userin"); 
+		
+		
+		MV.setViewName("userin");
+		MV.addObject("nombre", userSession.getNombreUsuario());
+		MV.addObject("Usuario",userSession);
+		MV.setViewName("userin");
+			
+		asignarRolesParaUsuario(MV, userSession);
+		 
 		return MV;
 	}
 	@RequestMapping("IrLogin.html")
@@ -111,7 +119,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(value={ "/EliminarUsuario-{idUsuario}" }, method= { RequestMethod.GET})
-	 public ModelAndView eliminarUsuario(@PathVariable Integer idUsuario) throws JsonParseException, JsonMappingException, IOException {
+	 public ModelAndView eliminarUsuario(@PathVariable Integer idUsuario , @SessionAttribute("Sessuser") Usuario userSession) throws JsonParseException, JsonMappingException, IOException {
 		ModelAndView MV = new ModelAndView();
 	usuarioService.bajaLogica(idUsuario);
 	Set<Usuario> userList = usuarioService.obtenerAll();
@@ -119,13 +127,15 @@ public class UserController {
 	MV.addObject("tiposUsuario", tipoUsuarioService.obtenerAll());
 	MV.addObject("usuarios", userList);	
 	
+	asignarRolesParaUsuario(MV, userSession);
+	
 	MV.setViewName("ListarUsuario");
 	return MV;
 	}
 	
 	@RequestMapping(value={ "/EditarUsuario-{idUsuario}" }, method= { RequestMethod.GET})
 
-	 public ModelAndView editarUsuario(@PathVariable Integer idUsuario) throws JsonParseException, JsonMappingException, IOException {
+	 public ModelAndView editarUsuario(@PathVariable Integer idUsuario, @SessionAttribute("Sessuser") Usuario userSession) throws JsonParseException, JsonMappingException, IOException {
  
  
 		ModelAndView MV = new ModelAndView();
@@ -163,12 +173,14 @@ public class UserController {
 //				System.out.println(r.getDescripcion());
 //		}
 //		
+		asignarRolesParaUsuario(MV, userSession);
+		
 		MV.setViewName("EditarUsuario"); 
 		return MV;
 	}
 	
 	@RequestMapping("IrListarUsuarios.html")
-	public ModelAndView redireccionListarUsuarios(){
+	public ModelAndView redireccionListarUsuarios( @SessionAttribute("Sessuser") Usuario userSession){
 		ModelAndView MV = new ModelAndView();
 
 		Set<Usuario> userList = usuarioService.obtenerAll();
@@ -176,11 +188,13 @@ public class UserController {
 		MV.addObject("tiposUsuario", tipoUsuarioService.obtenerAll());
 		MV.addObject("usuarios", userList);
 		
+		asignarRolesParaUsuario(MV, userSession);
+		
 		MV.setViewName("ListarUsuario");
 		return MV;
 	}
 	@RequestMapping(value= "IrListarUsuariosMensaje.html" ,method= { RequestMethod.POST})
-	public ModelAndView redireccionListarUsuarios(String Mensaje){
+	public ModelAndView redireccionListarUsuarios(String Mensaje ,  @SessionAttribute("Sessuser") Usuario userSession){
 		ModelAndView MV = new ModelAndView();
 
 		Set<Usuario> userList = usuarioService.obtenerAll();
@@ -189,6 +203,7 @@ public class UserController {
 		MV.addObject("usuarios", userList);
 		MV.addObject("Mensaje", Mensaje);
 		
+		asignarRolesParaUsuario(MV, userSession);
 		
 		MV.setViewName("ListarUsuario");
 		return MV;
@@ -300,39 +315,39 @@ public class UserController {
 	
 	
      
-	@RequestMapping(value ="/eliminarUsuario.html" , method= { RequestMethod.GET, RequestMethod.POST})
-	public ModelAndView eliminarUsuario(Integer id, String nombreU, String passU){
-		ModelAndView MV = new ModelAndView();
-		usuarioService.eliminar(id);
-		MV.addObject("listaUsuarios",this.usuarioService.obtenerAllActivos());
-		MV.setViewName("Usuarios"); 
-		MV.addObject("Mensaje", "Usuario eliminado");
-		return MV;
-	}
-	
-	@RequestMapping(value = { "/delete-user-{ssoId}" }, method = RequestMethod.GET)
-    public ModelAndView deleteUser(@PathVariable Integer ssoId) {
-		usuarioService.eliminar(ssoId);
-		ModelAndView MV = new ModelAndView();
-		MV.setViewName("Usuarios");
-		
-		//Actualiza los usuarios
-		MV.addObject("listaUsuarios",this.usuarioService.obtenerAllActivos());
-		MV.setViewName("Usuarios"); 
-		return MV;
-    }
-	
-
- 
-	
-	@RequestMapping(value ="/recargaGrillaUsuarios.html" , method= { RequestMethod.GET, RequestMethod.POST})
-	public ModelAndView recargarUsuario(){
-		ModelAndView MV = new ModelAndView();
-		MV.addObject("listaUsuarios",this.usuarioService.obtenerAllActivos());
-		MV.setViewName("Usuarios"); 
-		return MV;
-		
-	}
+//	@RequestMapping(value ="/eliminarUsuario.html" , method= { RequestMethod.GET, RequestMethod.POST})
+//	public ModelAndView eliminarUsuario(Integer id, String nombreU, String passU){
+//		ModelAndView MV = new ModelAndView();
+//		usuarioService.eliminar(id);
+//		MV.addObject("listaUsuarios",this.usuarioService.obtenerAllActivos());
+//		MV.setViewName("Usuarios"); 
+//		MV.addObject("Mensaje", "Usuario eliminado");
+//		return MV;
+//	}
+//	
+//	@RequestMapping(value = { "/delete-user-{ssoId}" }, method = RequestMethod.GET)
+//    public ModelAndView deleteUser(@PathVariable Integer ssoId) {
+//		usuarioService.eliminar(ssoId);
+//		ModelAndView MV = new ModelAndView();
+//		MV.setViewName("Usuarios");
+//		
+//		//Actualiza los usuarios
+//		MV.addObject("listaUsuarios",this.usuarioService.obtenerAllActivos());
+//		MV.setViewName("Usuarios"); 
+//		return MV;
+//    }
+//	
+//
+// 
+//	
+//	@RequestMapping(value ="/recargaGrillaUsuarios.html" , method= { RequestMethod.GET, RequestMethod.POST})
+//	public ModelAndView recargarUsuario(){
+//		ModelAndView MV = new ModelAndView();
+//		MV.addObject("listaUsuarios",this.usuarioService.obtenerAllActivos());
+//		MV.setViewName("Usuarios"); 
+//		return MV;
+//		
+//	}
 	
 	@RequestMapping(value ="IngresoUsuario.html" , method= { RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView validarUsuario(String nombreU, String passU, @SessionAttribute("Sessuser") Usuario userSession){
@@ -346,9 +361,6 @@ public class UserController {
 		String Message="";
 		HashSet<Usuario> listausuarios =  (HashSet<Usuario>)usuarioService.obtenerAllActivos();
 
-//		int cantidad = listausuarios.size();
-//		Integer cant = cantidad;
-		//Message = listausuarios.get(4).getNombreUsuario();
 		
 		for(Usuario user : listausuarios) {
 			if (user.getNombreUsuario().compareTo(nombreU) == 0) {
@@ -382,9 +394,13 @@ public class UserController {
 				MV.setViewName("userin");
 				MV.addObject("nombre", x.getNombreUsuario());
 				MV.addObject("Usuario",x);
-				MV.setViewName("userin"); 
-
+				MV.setViewName("userin");
 				MV.addObject("Sessuser",x);
+				
+				
+				asignarRolesParaUsuario(MV, x);
+			
+				
 			}
 			catch(Exception e)
 			{
@@ -480,5 +496,18 @@ public class UserController {
 	 public Usuario usuarioSession() {
 		return new Usuario();
 	 }
+	
+	public void asignarRolesParaUsuario(ModelAndView MV, Usuario user){
+			
+		Set<Rol> lstRoles = rolServicio.obtenerAllActivos().stream().collect(Collectors.toSet());
+		
+		for (Rol rol : lstRoles) {
+			if(user != null && user.getLsRoles()!= null && user.getLsRoles().stream().anyMatch(r-> r.getCodigo().equals(rol.getCodigo())))
+				MV.addObject(rol.getCodigo(),1);
+			else
+				MV.addObject(rol.getCodigo(),0);
+		}
+			
+	}
 	
 }

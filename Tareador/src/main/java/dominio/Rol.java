@@ -1,10 +1,14 @@
 package dominio;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 
@@ -40,6 +44,9 @@ public class Rol {
 		
 		@Column(name="Is_Activo")
 		private Boolean IsActivo;
+		
+		@ManyToMany(mappedBy="lsRoles" ,fetch=FetchType.EAGER)
+		private Set<Usuario> usuariosByRol;
 		
 		
 //	    @ManyToMany(cascade= {CascadeType.ALL})
@@ -110,6 +117,14 @@ public class Rol {
 
 		public void setIsActivo(Boolean isActivo) {
 			IsActivo = isActivo;
+		}
+
+		public Set<Usuario> getUsuariosByRol() {
+			return usuariosByRol;
+		}
+
+		public void setUsuariosByRol(Set<Usuario> usuariosByRol) {
+			this.usuariosByRol = usuariosByRol;
 		}
 	    
 

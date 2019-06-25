@@ -2,6 +2,7 @@ package controllers;
 
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import javax.persistence.Convert;
 import javax.servlet.ServletConfig;
@@ -13,6 +14,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.ModelAndView;
@@ -39,24 +41,28 @@ public class ProyectoController {
 	@Autowired
 	public  TipoUsuarioServicio tipoUsuarioService;
 	
+	@Autowired
+	public RolServicio rolServicio;
 	
 	@RequestMapping("IrAdministrarProyectos.html")
-	public ModelAndView redireccionAdministrarProyectos(){
+	public ModelAndView redireccionAdministrarProyectos( ){
 		ModelAndView MV = new ModelAndView();
 		MV.setViewName("AdministrarProyectos");
+		
 		return MV;
 	}
 	@RequestMapping("IrAltaProyecto.html")
-	public ModelAndView redireccionAltaProyecto(){
+	public ModelAndView redireccionAltaProyecto(  ){
 		List<Departamento> lstDepartamentos = departamentoServicio.obtenerAllActivos();
 		ModelAndView MV = new ModelAndView();
 		MV.setViewName("AltaProyectos");
 		MV.addObject("headerTitle", "Nuevo Proyecto");
 		MV.addObject("lstDepartamentos", lstDepartamentos);
+		
 		return MV;
 	}
 	@RequestMapping("IrListarProyectos.html")
-	public ModelAndView redireccionListarProyectos(){
+	public ModelAndView redireccionListarProyectos(@SessionAttribute("Sessuser") Usuario userSession){
 
 		List<Proyecto> lstProyectos = proyectoServicio.obtenerAllActivos();
 		List<Departamento> lstDepartamentos = departamentoServicio.obtenerAllActivos();
@@ -64,6 +70,9 @@ public class ProyectoController {
 		MV.setViewName("ListarProyectos");
 		MV.addObject("lstProyectos", lstProyectos);
 		MV.addObject("lstDepartamentos", lstDepartamentos);
+		
+		asignarRolesParaUsuario(MV, userSession);
+		
 		return MV;
 	}
 	
@@ -160,5 +169,17 @@ public class ProyectoController {
 		return MV;
 	}
 	
+	public void asignarRolesParaUsuario(ModelAndView MV, Usuario user){
+		
+		Set<Rol> lstRoles = rolServicio.obtenerAllActivos().stream().collect(Collectors.toSet());
+		
+		for (Rol rol : lstRoles) {
+			if(user != null && user.getLsRoles()!= null && user.getLsRoles().stream().anyMatch(r-> r.getCodigo().equals(rol.getCodigo())))
+				MV.addObject(rol.getCodigo(),1);
+			else
+				MV.addObject(rol.getCodigo(),0);
+		}
+			
+	}
 	
 }

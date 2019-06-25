@@ -108,19 +108,33 @@
 				<form method="post" action="save-tarea.html">
 					<table>
 					
+						
 						<tr>
-							<td>Titulo:</td>
-							<td><input maxlength="30" type="text" style=" color: black " size="20" required="required" name="titulo" value="<c:out value="${ TareaTitulo.toString() }"/>"></td>
-						</tr>
+						
+						<td>Titulo:</td>
+						<td><input type="text" class="form-control z-depth-1" id="titulo" placeholder="Titulo de la Tarea" required="required" name="titulo" value="<c:out value="${ TareaTitulo.toString() }"/>"></td>
+						    
+						
+						</tr>				
+<!-- 						<tr> -->
+<!-- 							<td>Titulo:</td> -->
+<%-- 							<td><input maxlength="30" type="text" style=" color: black " size="20" required="required" name="titulo" value="<c:out value="${ TareaTitulo.toString() }"/>"></td> --%>
+<!-- 						</tr> -->
 						
 						<tr>
 						<td>Descripcion:</td>
-						<td>
-							<textarea rows="5" cols="18" style=" color: black " required="required" name="descripcion" 
-							><c:out value="${ TareaDescripcion.toString() }" /></textarea>
-							
-						</td>
+						  <td><textarea class="form-control z-depth-1" id="descripcion"  required="required" name="descripcion" cols="3" rows="3" placeholder="Descripción de la Tarea"
+						  ><c:out value="${ TareaDescripcion.toString() }" /></textarea></td>
+						
 						</tr>
+<!-- 						<tr> -->
+<!-- 						<td>Descripcion:</td> -->
+<!-- 						<td> -->
+<!-- 							<textarea rows="5" cols="18" style=" color: black " required="required" name="descripcion" -->
+<%-- 							><c:out value="${ TareaDescripcion.toString() }" /></textarea> --%>
+							
+<!-- 						</td> -->
+<!-- 						</tr> -->
 						
 						<tr><td><br></td></tr>
 						
@@ -147,7 +161,7 @@
 						</tr>
 						<tr>
 						
-						<tr><td><br></td></tr>
+						<tr><td></td></tr>
 						
 						<tr>			
 						<td style="padding-top:5px; padding-bottom:5px;">Tipo Tarea:</td>
@@ -172,7 +186,7 @@
 						</tr>
 						<tr>
 						
-						<tr><td><br></td></tr>
+						<tr><td></td></tr>
 						
 						<tr>			
 						<td style="padding-top:5px; padding-bottom:5px;">Estado Tarea:</td>
@@ -197,7 +211,7 @@
 						</tr>
 						<tr>
 						
-						<tr><td><br></td></tr>
+						<tr><td></td></tr>
 						
 						<tr>			
 						<td style="padding-top:5px; padding-bottom:5px;">Proyecto:</td>
@@ -250,7 +264,7 @@
 						<tr>
 						
 						<td>Usuario Reporta:</td>
-							<td><input maxlength="30" type="text" style=" color: black " readonly="readonly" required="required" name="usuarioReportaNombreUsuario" value="<c:out value="${ usuarioReportaNombreUsuario.toString() }"/>"></td>
+							<td><input maxlength="30" class="form-control z-depth-1"  type="text" style=" color: black " readonly="readonly" required="required" name="usuarioReportaNombreUsuario" value="<c:out value="${ usuarioReportaNombreUsuario.toString() }"/>"></td>
 												
 						</tr>
 						
@@ -267,14 +281,21 @@
 						</td>
 						
 						</tr>
+						
+								<tr><td><br></td></tr>
 						<tr>
 						<td colspan="2" align="center">
 							
-						<input type="submit" name="btnGuardarTarea"  value="Guardar" class="btn btn-success"/>
+							
+						<c:if test="${IdTarea == null && NEW_TAREA == 1}">
+							<input type="submit" name="btnGuardarTarea"  value="Guardar" class="btn btn-success"/>
+						</c:if>
 						
+						<c:if test="${IdTarea != null && EDIT_TAREA == 1}">
+							<input type="submit" name="btnGuardarTarea"  value="Guardar" class="btn btn-success"/>
+						</c:if>
 						
-						
-						<c:if test="${ IdTarea != null }">
+						<c:if test="${ IdTarea != null && DEL_TAREA == 1}">
 						
 								<a type="button" href="<c:url value="/baja-tarea-${IdTarea}"/>" name="btnBorrarTarea" value="Eliminar_Tarea" class="btn btn-danger">Eliminar</a>
 						</c:if>
@@ -292,6 +313,32 @@
         </div>
     </header>
 
+
+<script type=text/javascript>
+
+//ver para filtrar los usuarios posibles de elegir por el proyecto seleccionado antes
+
+function refreshLstUsuarios(idProyecto) {
+	  
+	
+	var listaUsuariosNueva=new Array();
+	
+		for ( var item_usuario in lstUsuarios) {
+			
+			for(var item_proyecto in item_usuario.lsProyectos)
+			{
+				if(item_proyecto.idProyecto == idProyecto){
+					listaUsuariosNueva
+				}
+			}
+			
+		}
+	
+	
+	}
+
+
+</script>
 
 
 
