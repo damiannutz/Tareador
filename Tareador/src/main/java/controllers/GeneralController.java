@@ -1,6 +1,7 @@
 package controllers;
 
 import java.util.ArrayList;
+
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -11,6 +12,7 @@ import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import dominio.*;
@@ -23,6 +25,7 @@ import servicio.TipoTareaServicio;
 import servicio.TipoUsuarioServicio;
 import servicio.UsuarioServicio;
 
+@SessionAttributes("Sessuser")
 @Controller
 public class GeneralController {
 

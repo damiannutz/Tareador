@@ -20,6 +20,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -332,7 +333,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(value ="IngresoUsuario.html" , method= { RequestMethod.GET, RequestMethod.POST})
-	public ModelAndView validarUsuario(String nombreU, String passU){
+	public ModelAndView validarUsuario(String nombreU, String passU, @SessionAttribute("Sessuser") Usuario userSession){
 		ModelAndView MV = new ModelAndView();
 
 		boolean flagname = false;
@@ -369,10 +370,10 @@ public class UserController {
 				x = usuarioService.obtenerById(x.getIdUsuario());
 				//Message = "bien";
 				MV.setViewName("userin");
-				MV.addObject("Mensaje", Message);
+				MV.addObject("nombre", x.getNombreUsuario());
 				MV.addObject("Usuario",x);
 				MV.setViewName("userin"); 
-				MV.addObject("Sessuser",x.getNombreUsuario());
+				MV.addObject("Sessuser",x);
 			}
 			catch(Exception e)
 			{
@@ -450,5 +451,23 @@ public class UserController {
 		MV.setViewName("forward:/IrListarRoles.html"); 
 		return MV;
 	}
+	
+	@RequestMapping(value={ "CerrarSesion.html" }, method= { RequestMethod.GET,RequestMethod.POST})
+
+	 public ModelAndView cerrarSession(@SessionAttribute("Sessuser") Usuario userSession){
+
+
+		ModelAndView MV = new ModelAndView();
+		userSession = null;
+
+		
+		MV.setViewName("forward:/Index.html"); 
+		return MV;
+	}
+	
+	@ModelAttribute("Sessuser")
+	 public Usuario usuarioSession() {
+		return new Usuario();
+	 }
 	
 }
