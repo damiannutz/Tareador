@@ -60,16 +60,18 @@ input:invalid, textarea:invalid {
 <body id="page-top">
 
 <%
-    String nombreU; 
-    if((Usuario)session.getAttribute("Sessuser") != null){
-    	nombreU = ((Usuario)session.getAttribute("Sessuser")).getNombreUsuario();
-    }
-    else
-    {
-    	nombreU = "LOG IN";
-    	UserController us = new UserController();
-    	us.redireccion();
-    }
+String nombreU; 
+Integer idU = null;
+if((Usuario)session.getAttribute("Sessuser") != null){
+	nombreU = ((Usuario)session.getAttribute("Sessuser")).getNombreUsuario();
+	idU = ((Usuario)session.getAttribute("Sessuser")).getIdUsuario();
+}
+else
+{
+	nombreU = "LOG IN";
+	UserController us = new UserController();
+	us.redireccion();
+}
 
 %>
 
@@ -81,7 +83,7 @@ input:invalid, textarea:invalid {
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand page-scroll" href="<c:url value='Index.html' />"  >Tareador</a>
+                <a class="navbar-brand page-scroll" href="<c:url value='Inicio.html' />"  >Tareador</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -91,7 +93,17 @@ input:invalid, textarea:invalid {
                         <a class="page-scroll" href="<c:url value='IrListarUsuarios.html' />"  >VOLVER</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#about"><%= nombreU %></a>
+<%--                         <a class="page-scroll" href="#about"><%= nombreU %></a> --%>
+ <a class="page-scroll"  
+                    	<%
+		            		if(((Usuario)session.getAttribute("Sessuser")).getNombreUsuario() == null){
+		            			
+								// 
+		            			out.print("style='display: none;'");
+		            	    }
+                    		///EditarUsuario-${Usuario.idUsuario}
+						%>  href='EditarUsuario-<%= idU %>'><%= nombreU %></a>
+						
                     </li>
                     <li>
                         <a class="page-scroll" href="<c:url value='CerrarSesion.html' />"  >Cerrar Sesion</a>
@@ -135,72 +147,137 @@ input:invalid, textarea:invalid {
 						<td>Correo:</td>
 						<td><input id="inputCorreo" maxlength="40" type="text" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Mail invalido" size="20"  value="<c:out value="${ email.toString() }"/>" style=" color: black " required="required" name="correo"></td>
 						</tr>
-						<tr>
-						<td>Usuario:</td>
-						<td><input id="inputUsuario"  pattern="^[A-Za-z][A-Za-z0-9._%+-]*$" title="No se permiten espacios"   maxlength="30" type="text" size="20"  value="<c:out value="${ nombreUsuario.toString() }" />"  style=" color: black " required="required" name="usuario"></td>
-<!-- 						  pattern="^[A-Za-z][A-Za-z0-9]*$" -->
-						</tr>
+						
+						<c:choose>
+					    <c:when  test="${ ADM_USERS == 1 }">
+							<tr>
+							<td>Usuario:</td>
+							<td><input id="inputUsuario"  pattern="^[A-Za-z][A-Za-z0-9._%+-]*$" title="No se permiten espacios"   maxlength="30" type="text" size="20"  value="<c:out value="${ nombreUsuario.toString() }" />"  style=" color: black " required="required" name="usuario"></td>
+							</tr>
+						 </c:when>    
+						    <c:otherwise>
+						        <tr>
+							<td>Usuario:</td>
+							<td><input id="inputUsuario" readonly="readonly" pattern="^[A-Za-z][A-Za-z0-9._%+-]*$" title="No se permiten espacios"   maxlength="30" type=text size="20"  value="<c:out value="${ nombreUsuario.toString() }" />"  style=" color: black " required="required" name="usuario"></td>
+							</tr>
+						    </c:otherwise>
+						</c:choose>
 						<tr>
 						<td>Contraseña:</td>
 						<td><input maxlength="25"  value="<c:out value="${ contrasenia.toString() }" />" id="inputPassword" pattern=".{6,}" title="Seis o mas caracteres" type="password"  style=" color: black " required="required" size="20" name="contrasenia" /></td>
 						</tr>
 												
-						
-						<tr>
+<c:choose>
+					    <c:when  test="${ ADM_USERS == 1 }">
+							<tr>
 						<td style="padding-top:5px; padding-bottom:5px;">Departamento:</td>
 							<td style="padding-top:5px; padding-bottom:5px;">
-								<select  id="cmbDepartamento" name="cmTipoUsuario" required="required" class="btn btn-info dropdown-toggle">
-								
 
-											   <option id="selectedDep"  value="<c:out value="${ idDepartamento.toString() }" />" value="${idDepartamento}" selected="selected"><c:out value="${ nombreDepartamento.toString() }" /></option>
+								<select  id="cmbDepartamento" name="cmDepartamento" required="required" class="btn btn-info dropdown-toggle">
+								
+										<option value="0" >Ninguno</option>
+										<c:forEach items="${departamentos}" var="item">
+										<c:choose>
+										    <c:when test="${ idDepartamento != null && idDepartamento == item.idDepartamento }">
+										       	<option id="cmbDepartamento" value="<c:out value="${item.idDepartamento}" />"  selected="selected" >${item.descripcion}</option>
+<!-- 										       	selectedDep -->
+										    </c:when>    
+										    <c:otherwise>
+										        <option  value="${item.idDepartamento}">${item.descripcion}</option>
+										    </c:otherwise>
+										</c:choose>
 										
-							<c:forEach items="${departamentos}" var="item">
-								
-								
-								<option value="${item.idDepartamento}" >${item.descripcion}</option>
-								
-								
-								
-							
-							</c:forEach>
-									
-						
+										</c:forEach>
+
 							</select> 	
 							</td>
 						</tr>
+						 </c:when>    
+						    <c:otherwise>
+						  <tr>
+						<td style="padding-top:5px; padding-bottom:5px;">Departamento:</td>
+							<td style="padding-top:5px; padding-bottom:5px;">
+
+								<select disabled="disabled"  id="cmbDepartamento" name="cmDepartamento" required="required" class="btn btn-info dropdown-toggle">
+								
+										<option value="0" >Ninguno</option>
+										<c:forEach items="${departamentos}" var="item">
+										<c:choose>
+										    <c:when test="${ idDepartamento != null && idDepartamento == item.idDepartamento }">
+										       	<option  id="cmbDepartamento" value="<c:out value="${item.idDepartamento}" />"  selected="selected" >${item.descripcion}</option>
+<!-- 										       	selectedDep -->
+										    </c:when>    
+										    <c:otherwise>
+										        <option  value="${item.idDepartamento}">${item.descripcion}</option>
+										    </c:otherwise>
+										</c:choose>
+										
+										</c:forEach>
+
+							</select> 	
+							</td>
+						</tr>
+						    </c:otherwise>
+						</c:choose>						
+						
+						
+						
+						
 						<tr >
 						<td style="padding-top:5px; padding-bottom:5px;">Tipo de usuario:</td>
 						<td style="padding-top:5px; padding-bottom:5px;">
 						
-						
-						<select  id="cmbTipoUsuario" name="cmTipoUsuario" required="required" class="btn btn-info dropdown-toggle">
+						<c:choose>
+					    <c:when  test="${ ADM_USERS == 1 }">
+							<select  id="cmbTipoUsuario" name="cmTipoUsuario" required="required" class="btn btn-info dropdown-toggle">
 								
-
-												<option id="selectedTipo"  value="<c:out value="${ idTipo.toString() }" />"  selected="selected" ><c:out value="${ descripcionTipo.toString() }" /></option>
+									<c:forEach items="${tiposUsuario}" var="item">
+										<c:choose>
+										    <c:when test="${ idTipo != null && idTipo == item.idTipoUsuario }">
+										       	<option id="cmbTipoUsuario" value="<c:out value="${item.idTipoUsuario}" />"  selected="selected" >${item.descripcion}</option>
+<!-- 										       	selectedTipo -->
+										    </c:when>    
+										    <c:otherwise>
+										        <option  value="${item.idTipoUsuario}">${item.descripcion}</option>
+										    </c:otherwise>
+										</c:choose>
 										
-							<c:forEach items="${tiposUsuario}" var="item">
+										</c:forEach>
 								
-								<option value="${item.idTipoUsuario}" >${item.descripcion}</option>
-								
-								
-
-		
-								
-								
-								
-							
-							</c:forEach>
-									
 						
 							</select> 	
-							
+						 </c:when>    
+						    <c:otherwise>
+						      <select disabled="disabled"  id="cmbTipoUsuario" name="cmTipoUsuario" required="required" class="btn btn-info dropdown-toggle">
+								
+									<c:forEach items="${tiposUsuario}" var="item">
+										<c:choose>
+										    <c:when test="${ idTipo != null && idTipo == item.idTipoUsuario }">
+										       	<option id="cmbTipoUsuario" value="<c:out value="${item.idTipoUsuario}" />"  selected="selected" >${item.descripcion}</option>
+<!-- 										       	selectedTipo -->
+										    </c:when>    
+										    <c:otherwise>
+										        <option  value="${item.idTipoUsuario}">${item.descripcion}</option>
+										    </c:otherwise>
+										</c:choose>
+										
+										</c:forEach>
+								
+						
+							</select> 	
+						    </c:otherwise>
+						</c:choose>
+						
+						
 							</td>
 						</tr>
 						
 						<tr>
 						<td colspan="2" align="center">
 						
-						<input type="button"  id="btnEliminar" data-id="/EliminarUsuario-${idUsuario}"  value="Eliminar" class="btn btn-danger" onclick="eliminarUsuario()"></button>					
+						<c:if test="${ ADM_USERS == 1 }">
+							<input type="button"  id="btnEliminar" data-id="/EliminarUsuario-${idUsuario}"  value="Eliminar" class="btn btn-danger" onclick="eliminarUsuario()"></button>					
+						</c:if>
 						
 						<input type="button" name="btnGuardarUsuario"  myContextPath="${pageContext.request.contextPath}"  onclick="guardarUsuario(this)"  value="Guardar" class="btn btn-success"/>
 						<input hidden="true" id="idUsuario" value="<c:out value="${ idUsuario.toString() }" />" />
@@ -217,6 +294,8 @@ input:invalid, textarea:invalid {
 						</tr>
 		</table>
 
+	
+	<a rel="nofollow" id="enlace" href="#" class="automatic"></a>
 			                
             </div>
         </div>
@@ -257,26 +336,45 @@ input:invalid, textarea:invalid {
 
 <script type=text/javascript>
 
-
 $( document ).ready(function() {
-debugger;
-	$("#cmbDepartamento").children().each(function(index,elem){
-		if($("#selectedDep").text() == $(elem).text()){
-		$(elem).remove();
-		}
-		});
-		
-		
-	$("#cmbTipoUsuario").children().each(function(index,elem){
-		if($("#selectedTipo").text() == $(elem).text()){
-		$(elem).remove();
-		}
-		});
-});
+	debugger;
+		$("#cmbDepartamento").children().each(function(index,elem){
+//	 		if($("#selectedDep").text() == $(elem).text()){
+			if($("#cmbDepartamento").text() == $(elem).text()){
+			$(elem).remove();
+			}
+			});
+			
+			
+		$("#cmbTipoUsuario").children().each(function(index,elem){
+//	 		if($("#selectedTipo").text() == $(elem).text()){
+			if($("#cmbTipoUsuario").text() == $(elem).text()){
+			$(elem).remove();
+			}
+			});
+	});
+
 
 var eliminarUsuario= function(){
 	debugger;
-	alert('Eliminado correctamente'); window.location.replace("http://localhost:8080/Tareador/"+$("#btnEliminar").attr('data-id')+"")
+	alert('Eliminado correctamente'); 
+	
+	
+	//document.getElementById('enlace').setAttribute('href', baseUrl+ $("#btnEliminar").attr('data-id'));
+	//location.href= "//" + $("#btnEliminar").attr('data-id');
+	
+// 	form = document.createElement('form');
+// 	form.setAttribute('method', 'GET');
+// 	form.setAttribute('action', + $("#btnEliminar").attr('data-id')+"");
+// 	myvar = document.createElement('input');
+// 	//myvar.setAttribute('name', 'idProyecto');
+// 	//myvar.setAttribute('type', 'hidden');
+// 	//myvar.setAttribute('value', idProyecto);
+// 	form.appendChild(myvar);
+// 	document.body.appendChild(form);
+// 	form.submit();   
+	
+	window.location.replace("http://localhost:8081/Tareador"+$("#btnEliminar").attr('data-id')+"")
 }
 
 
@@ -348,8 +446,26 @@ var CONTEXT_PATH =	$(element).attr('myContextPath');
 			if (result.success) 
 			{ alert('en el true'); } 
 			else { alert('en el false') } }, 
-			error:function(error) {alert('Editado correctamente'); window.location.replace("http://localhost:8080/Tareador/IrListarUsuarios.html");
-; } });
+			error:function(error) {alert('Editado correctamente'); //window.location.replace("http://localhost:8081/Tareador/IrListarUsuarios.html");
+
+			form = document.createElement('form');
+			form.setAttribute('method', 'POST');
+			form.setAttribute('action', 'IrListarUsuarios.html');
+			myvar = document.createElement('input');
+			myvar.setAttribute('name', 'idProyecto');
+			myvar.setAttribute('type', 'hidden');
+			//myvar.setAttribute('value', idProyecto);
+			form.appendChild(myvar);
+			document.body.appendChild(form);
+			form.submit();   
+			
+;
+
+
+			
+			
+			
+			} });
 	
 	
 }

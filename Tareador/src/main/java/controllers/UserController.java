@@ -122,7 +122,7 @@ public class UserController {
 	 public ModelAndView eliminarUsuario(@PathVariable Integer idUsuario , @SessionAttribute("Sessuser") Usuario userSession) throws JsonParseException, JsonMappingException, IOException {
 		ModelAndView MV = new ModelAndView();
 	usuarioService.bajaLogica(idUsuario);
-	Set<Usuario> userList = usuarioService.obtenerAll();
+	Set<Usuario> userList = usuarioService.obtenerAllActivos();
 	MV.addObject("departamentos", departamentoService.obtenerAll());
 	MV.addObject("tiposUsuario", tipoUsuarioService.obtenerAll());
 	MV.addObject("usuarios", userList);	
@@ -181,23 +181,29 @@ public class UserController {
 	
 	@RequestMapping("IrListarUsuarios.html")
 	public ModelAndView redireccionListarUsuarios( @SessionAttribute("Sessuser") Usuario userSession){
+		
 		ModelAndView MV = new ModelAndView();
 
-		Set<Usuario> userList = usuarioService.obtenerAll();
+		Set<Usuario> userList = usuarioService.obtenerAllActivos();
 		MV.addObject("departamentos", departamentoService.obtenerAllActivos());
 		MV.addObject("tiposUsuario", tipoUsuarioService.obtenerAll());
 		MV.addObject("usuarios", userList);
 		
 		asignarRolesParaUsuario(MV, userSession);
 		
-		MV.setViewName("ListarUsuario");
+		if(userSession.getTipoUsuario().getIdTipoUsuario().equals(TipoUsuario.tipo_user))
+			MV.setViewName("forward:/Inicio.html"); 
+		else
+			MV.setViewName("ListarUsuario");
+		
+		
 		return MV;
 	}
 	@RequestMapping(value= "IrListarUsuariosMensaje.html" ,method= { RequestMethod.POST})
 	public ModelAndView redireccionListarUsuarios(String Mensaje ,  @SessionAttribute("Sessuser") Usuario userSession){
 		ModelAndView MV = new ModelAndView();
 
-		Set<Usuario> userList = usuarioService.obtenerAll();
+		Set<Usuario> userList = usuarioService.obtenerAllActivos();
 		MV.addObject("departamentos", departamentoService.obtenerAllActivos());
 		MV.addObject("tiposUsuario", tipoUsuarioService.obtenerAll());
 		MV.addObject("usuarios", userList);
@@ -233,7 +239,9 @@ public class UserController {
 		String Message="";
 		
 		try{
-			
+			if(usuario.getDepartamento()!= null && usuario.getDepartamento().getIdDepartamento() == 0)
+				usuario.setDepartamento(null);
+				
 			usuarioService.insertar(usuario);
 			Message = "Usuario agregado";
 		}
@@ -276,11 +284,19 @@ public class UserController {
 		        usuarioAEditar.setIsActivo(usuario.getIsActivo());
 		        usuarioAEditar.setContrasenia(usuario.getContrasenia());
 		        
-		        if(usuarioAEditar.getDepartamento().getIdDepartamento() != usuario.getDepartamento().getIdDepartamento()) {
+		        if(usuario.getDepartamento() != null || usuario.getDepartamento().getIdDepartamento()> 0) {
 		        	Departamento dep=	departamentoService.obtenerById(usuario.getDepartamento().getIdDepartamento());
 		        	usuarioAEditar.setDepartamento(dep);
 		        }
-		        	
+		        else {
+		        	usuarioAEditar.setDepartamento(null);	
+		        }
+//		        
+//		        if(usuarioAEditar.getDepartamento().getIdDepartamento() != usuario.getDepartamento().getIdDepartamento()) {
+//		        	Departamento dep=	departamentoService.obtenerById(usuario.getDepartamento().getIdDepartamento());
+//		        	usuarioAEditar.setDepartamento(dep);
+//		        }
+//		        	
 		        if(usuarioAEditar.getTipoUsuario().getIdTipoUsuario() != usuario.getTipoUsuario().getIdTipoUsuario() ) {
 		        	TipoUsuario tipo= tipoUsuarioService.obtenerById(usuario.getTipoUsuario().getIdTipoUsuario());
 					usuarioAEditar.setTipoUsuario(tipo);

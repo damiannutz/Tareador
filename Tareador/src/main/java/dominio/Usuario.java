@@ -14,6 +14,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import dominio.Departamento;
 import dominio.Proyecto;
@@ -44,7 +45,7 @@ public class Usuario {
 	 private String Email;
 	
 
-	@Column(name = "NombreUsuario", nullable = false)
+	@Column(name = "NombreUsuario", nullable = false, unique=true)
 	 private String NombreUsuario;
 	
 
