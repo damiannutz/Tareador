@@ -63,7 +63,7 @@ input:invalid, textarea:invalid {
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand page-scroll" href="Inicio.html">Tareador</a>
+                <a class="navbar-brand page-scroll" href="Index.jsp">Tareador</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -287,9 +287,11 @@ var CONTEXT_PATH =	$(element).attr('myContextPath');
 			if (result.success) 
 			{ alert(result.message); } 
 			else { alert(result.message) } }, 
-			error:function(error) { alert(error.message); } });
+			error:function(error) {alert('Agregado correctamente'); window.location.replace("http://localhost:8080/Tareador/IrListarUsuarios.html");
 	
-	
+			; } });
+			
+			
 }
 			
 </script>

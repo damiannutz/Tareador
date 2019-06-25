@@ -109,9 +109,16 @@ public class UserController {
 	}
 	
 	@RequestMapping(value={ "/EliminarUsuario-{idUsuario}" }, method= { RequestMethod.GET})
-	 public void eliminarUsuario(@PathVariable Integer idUsuario) throws JsonParseException, JsonMappingException, IOException {
-
+	 public ModelAndView eliminarUsuario(@PathVariable Integer idUsuario) throws JsonParseException, JsonMappingException, IOException {
+		ModelAndView MV = new ModelAndView();
 	usuarioService.bajaLogica(idUsuario);
+	List<Usuario> userList = usuarioService.obtenerAll();
+	MV.addObject("departamentos", departamentoService.obtenerAll());
+	MV.addObject("tiposUsuario", tipoUsuarioService.obtenerAll());
+	MV.addObject("usuarios", userList);	
+	
+	MV.setViewName("ListarUsuario");
+	return MV;
 	}
 	
 	@RequestMapping(value={ "/EditarUsuario-{idUsuario}" }, method= { RequestMethod.GET})
@@ -193,14 +200,7 @@ public class UserController {
 	}
 	
 	
-	
-	
-	//@RequestMapping(value ="/AgregarUsuario" , method= { RequestMethod.POST})
-//	@ResponseBody
-	//public   String AgregarUsuario(@RequestBody final Usuario user) {
-//	public ModelAndView AgregarUsuario(String nombreU, String apellido, String contraseña, String correo,Integer idDepartamento, String departamento,String tipoUsuario, String idTipoUsuario ){
-	
-		
+
 		@RequestMapping(value={"/AgregarUsuario"},method = RequestMethod.POST,  consumes  = "application/json")
 	//	public ModelAndView AgregarUsuario(@RequestBody Usuario user) {			
 			 
